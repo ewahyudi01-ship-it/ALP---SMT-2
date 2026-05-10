@@ -108,9 +108,8 @@ public class Main {
                 if (!n.isEmpty()  || !n2.isEmpty()) {
                     for (int i = 0; i < user.size(); i++) {
                         if(user.get(i).getNama().equals(n) && user.get(i).getPassword().equals(n2)) {
-
-                            user.get(i).menuUtama(sc, cafe, foodList);
                             System.out.println("=== Logged in successfully! ===");
+                            user.get(i).menuUtama(sc, cafe, foodList);
 
                         }
                     }
