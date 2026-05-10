@@ -20,6 +20,7 @@ public class Cafetaria {
     }
 
     public void showMenu(){
+        System.out.println("\n=== MENU ===");
         for (int i = 0; i < foodItems.size(); i++) {
             System.out.println( i+1+". "+foodItems.get(i).displayInfo());
         }
