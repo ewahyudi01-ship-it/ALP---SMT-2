@@ -9,6 +9,9 @@ public class Main {
     public static void main(String[] args) {
                 Scanner sc = new Scanner(System.in);
                 ArrayList<User> user = new ArrayList<>();
+                ArrayList<FoodItem> foodList = new ArrayList<>();
+                Cafetaria cafe=new Cafetaria();
+
                 boolean isloged = true;
 
                 while (isloged) {
@@ -21,11 +24,11 @@ public class Main {
                         int n = sc.nextInt();
                         switch (n) {
                             case 1:
-                                register(sc, user);
+                                register(sc, user, foodList, cafe);
                                 break;
 
                             case 2:
-                                login(sc, user);
+                                login(sc, user, foodList, cafe);
                                 break;
 
                             case 0:
@@ -43,7 +46,7 @@ public class Main {
                 }
             }
 
-            public static void register(Scanner sc, ArrayList<User> user) {
+            public static void register(Scanner sc, ArrayList<User> user, ArrayList<FoodItem> foodList, Cafetaria cafe) {
                 sc.nextLine();
 
                 System.out.print("\ninsert username: ");
@@ -77,14 +80,17 @@ public class Main {
                     if (n4Filled == false) {
                         if (n2.equals(n3)) {
                             if (n4 == 1) {
-                                User newUser = new Siswa(n, n3);
+                                User newUser = new Siswa(n, n3,0 ,0);
                                 user.add(newUser);
+                                newUser.menuUtama(sc, cafe, foodList);
 
                             } else if (n4 == 2) {
-                                User newUser = new MahaSiswa(n, n3);
+                                User newUser = new MahaSiswa(n, n3,0 ,0);
                                 user.add(newUser);
+                                newUser.menuUtama(sc, cafe, foodList);
                             }
                             System.out.println("=== Created new account! ===");
+
 
                         } else {
                             System.out.println("=== match the password! ===");
@@ -93,7 +99,7 @@ public class Main {
                 }
             }
 
-            public static void login(Scanner sc, ArrayList<User> user) {
+            public static void login(Scanner sc, ArrayList<User> user , ArrayList<FoodItem> foodList, Cafetaria cafe) {
                 System.out.println("\nEnter username: ");
                 String n = sc.nextLine();
                 System.out.println("Enter password: ");
@@ -103,7 +109,7 @@ public class Main {
                     for (int i = 0; i < user.size(); i++) {
                         if(user.get(i).getNama().equals(n) && user.get(i).getPassword().equals(n2)) {
 
-                            user.get(i).menuUtama();
+                            user.get(i).menuUtama(sc, cafe, foodList);
                             System.out.println("=== Logged in successfully! ===");
 
                         }

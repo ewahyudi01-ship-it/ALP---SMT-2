@@ -1,12 +1,8 @@
 public class Siswa extends User{
-    public Siswa(String username, String password){
-        super(username, password);
+    public Siswa(String username, String password, double saldo, int points){
+        super(username, password, saldo, points);
     }
 
-    @Override
-    public void menuUtama() {
-        System.out.println("=== Welcome to the Smart Canteen  "+username+"! ===");
-    }
 
     @Override
     public double getDiscount() {

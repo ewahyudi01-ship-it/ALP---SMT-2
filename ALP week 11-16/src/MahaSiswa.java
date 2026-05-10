@@ -1,11 +1,6 @@
 public class MahaSiswa extends User {
-    public MahaSiswa(String username, String password) {
-        super(username, password);
-    }
-
-    @Override
-    public void menuUtama() {
-        System.out.println("=== Welcome to the Smart Canteen  "+username+"! :0 ===");
+    public MahaSiswa(String username, String password, double saldo, int points) {
+        super(username, password, saldo, points);
     }
 
     @Override
