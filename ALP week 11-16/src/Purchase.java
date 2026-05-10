@@ -4,17 +4,20 @@ public class Purchase {
     private FoodItem foodItem;
     private int quantity;
 
-    public  Purchase(User user, FoodItem foodItem, int quantity){
+    public Purchase(User user, FoodItem foodItem, int quantity){
         this.user = user;
         this.foodItem = foodItem;
         this.quantity = quantity;
     }
 
     public double calculateTotal() {
-        return 0;
+        return foodItem.harga * this.quantity;
     }
 
-    public void printReceiptt() {
+    public void printReceipt() {
+        System.out.println("you bought " + foodItem.foodName+ " for " + this.quantity);
+        System.out.println("Cost: "+calculateTotal());
+
     }
 
 }
