@@ -1,23 +1,37 @@
-public class Purchase {
+public class FoodItem {
 
-    private User user;
-    private FoodItem foodItem;
-    private int quantity;
+    protected String foodName;
+    protected int calories;
+    protected double harga;
+    protected int sugarLvl;
+    protected int protein;
+    protected int stock;
 
-    public Purchase(User user, FoodItem foodItem, int quantity){
-        this.user = user;
-        this.foodItem = foodItem;
-        this.quantity = quantity;
+    public FoodItem(String foodName, int calories, double harga, int sugarLvl, int protein , int stock){
+        this.foodName = foodName;
+        this.calories = calories;
+        this.harga = harga;
+        this.sugarLvl = sugarLvl;
+        this.protein = protein;
+        this.stock = stock;
     }
 
-    public double calculateTotal() {
-        return foodItem.harga * this.quantity;
+    public String displayInfo(){
+        return  foodName + " | calories: " + this.calories + " | sugar lvl: " + this.sugarLvl +
+                " | sisa stock: " + this.stock + " | harga: " + this.harga;
     }
 
-    public void printReceipt() {
-        System.out.println("you bought " + foodItem.foodName+ " for " + this.quantity);
-        System.out.println("Cost: "+calculateTotal());
+    public boolean isHealthy(){
+        if(calories < 500 && sugarLvl < 20 && protein > 10) {
+            return true;
+        }
+        return false;
+    }
+
+    public void reduceStock(){
 
     }
+
+
 
 }
