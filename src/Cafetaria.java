@@ -34,6 +34,9 @@ public class Cafetaria {
     public  Queue<Purchase> getOrders() {
         return orders;
     }
+    public int getMenuSize() {
+        return menuList.size();
+    }
 
 }
 

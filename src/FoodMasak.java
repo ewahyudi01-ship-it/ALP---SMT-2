@@ -9,9 +9,16 @@ public class FoodMasak extends FoodItem {
         this.bahanBakuList = new ArrayList<BahanBaku>();
     }
 
+    public ArrayList<BahanBaku> getBahanBakuList() {
+        return bahanBakuList;
+    }
+
+
+
     @Override
     public String displayInfo() {
-        return "";
+        return foodName + " | calories: "+ " | sugar lvl: "  +
+                " | sisa stock: " + this.stock + " | harga: " + this.harga;
     }
 
     @Override
