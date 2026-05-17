@@ -14,8 +14,8 @@ public abstract class FoodItem {
 
     public abstract boolean isHealthy();
 
-    public void reduceStock(){
-        this.stock -= 1;
+    public void reduceStock(int n3){
+        this.stock -= n3;
     }
     public String getFoodName() {
         return foodName;
@@ -27,6 +27,8 @@ public abstract class FoodItem {
         return harga;
     }
 
-
+    public FoodItem getFoodItem(){
+        return this;
+    }
 
 }

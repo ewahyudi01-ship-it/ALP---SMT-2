@@ -1,8 +1,8 @@
 public class FoodJadi extends FoodItem {
 
-    private int calories;
+    private double calories;
     private double protein;
-    private int sugarLvl;
+    private double sugarLvl;
 
     public FoodJadi(String foodName, int calories, double harga, int sugarLvl, int protein, int stock) {
         super(foodName, harga, stock);
@@ -10,9 +10,14 @@ public class FoodJadi extends FoodItem {
         this.protein = protein;
         this.sugarLvl = sugarLvl;
     }
+
+    public void reduceStock (int n3){
+        this.stock -= n3;
+    }
+
     @Override
     public String displayInfo(){
-        return  foodName + " | calories: " + this.calories + " | sugar lvl: " + this.sugarLvl +
+        return  foodName + " | calories: " + this.calories + " | sugar lvl: " + this.sugarLvl + " | protein: " + this.protein +
                 " | sisa stock: " + this.stock + " | harga: " + this.harga;
     }
 
@@ -23,6 +28,7 @@ public class FoodJadi extends FoodItem {
         }
         return false;
     }
+
 
 
 }

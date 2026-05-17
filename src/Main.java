@@ -23,6 +23,10 @@ public class Main {
             return name;
         }
     }
+
+    // bahan baku
+    public static ArrayList<BahanBaku> bahanBakuList = new ArrayList<>(); // static karena dipakai 2 file dan banyak objek
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<User> user = new ArrayList<>(); // <--- user saat ini
@@ -37,12 +41,55 @@ public class Main {
         foodList.add(new FoodJadi("Salad", 12, 8000, 5, 0, 19));
         foodList.add(new FoodJadi("Indomilk 100ml", 72, 5000, 4, 3, 14));
 
-        // food masak
-        foodList.add(new FoodJadi("Steak", 300, 46000, 0, 20, 15));
-        foodList.add(new FoodJadi("Toast Bread", 65, 5000, 2, 9, 5));
-        foodList.add(new FoodJadi("Nasi Goreng", 65, 5000, 2, 9, 5));
-        foodList.add(new FoodJadi("Nasi Goreng", 65, 5000, 2, 9, 5));
+        // memasukan bahan baku ke stock bahan baku
+        bahanBakuList.add(new BahanBaku("beef", 5));
+        bahanBakuList.add(new BahanBaku("potato", 10));
+        bahanBakuList.add(new BahanBaku("butter", 8));
+        bahanBakuList.add(new BahanBaku("white bread", 6));
+        bahanBakuList.add(new BahanBaku("margarine", 5));
+        bahanBakuList.add(new BahanBaku("condensed milk", 5));
+        bahanBakuList.add(new BahanBaku("rice", 5));
+        bahanBakuList.add(new BahanBaku("egg", 5));
+        bahanBakuList.add(new BahanBaku("chicken", 5));
+        bahanBakuList.add(new BahanBaku("sweet soy sauce", 5));
+        bahanBakuList.add(new BahanBaku("vegetable oil", 5));
+        bahanBakuList.add(new BahanBaku("spring roll wrapper", 5));
+        bahanBakuList.add(new BahanBaku("bamboo shoots", 5));
+        bahanBakuList.add(new BahanBaku("chicken", 5));
+        bahanBakuList.add(new BahanBaku("sugar", 5));
 
+        // food masak
+        FoodItem steak = new FoodMasak("Steak", 23000,0);
+        ((FoodMasak) steak).setWaktuBuat(320);
+        ((FoodMasak) steak).tambahResep("beef");
+        ((FoodMasak) steak).tambahResep("potato");
+        ((FoodMasak) steak).tambahResep("butter");
+
+        FoodItem toastBread =  new FoodMasak("Toast Bread", 6500,0);
+        ((FoodMasak) toastBread).setWaktuBuat(230);
+        ((FoodMasak) toastBread).tambahResep("white bread");
+        ((FoodMasak) toastBread).tambahResep("margarine");
+        ((FoodMasak) toastBread).tambahResep("condensed milk");
+
+        FoodItem nasiGoreng = new FoodMasak("Nasi Goreng",17000,0);
+        ((FoodMasak) nasiGoreng).setWaktuBuat(450);
+        ((FoodMasak) nasiGoreng).tambahResep("rice");
+        ((FoodMasak) nasiGoreng).tambahResep("egg");
+        ((FoodMasak) nasiGoreng).tambahResep("chicken");
+        ((FoodMasak) nasiGoreng).tambahResep("sweet soy sauce");
+        ((FoodMasak) nasiGoreng).tambahResep("vegetable oil");
+
+        FoodItem lumpia = new FoodMasak("Lumpia",9800,0);
+        ((FoodMasak) lumpia).setWaktuBuat(150);
+        ((FoodMasak) lumpia).tambahResep("spring roll wrapper");
+        ((FoodMasak) lumpia).tambahResep("bamboo shoots");
+        ((FoodMasak) lumpia).tambahResep("chicken");
+        ((FoodMasak) lumpia).tambahResep("sugar");
+
+        foodList.add(steak);
+        foodList.add(toastBread);
+        foodList.add(nasiGoreng);
+        foodList.add(lumpia);
 
         ArrayList<Menu> menuList = new ArrayList<>();
         menuList.add(new Menu("Menu utama", foodList));
@@ -95,9 +142,9 @@ public class Main {
     public static void register(Scanner sc, ArrayList<User> user, Cafetaria cafe) {
         sc.nextLine();
 
-        System.out.print("\n - insert username: ");
+        System.out.print("\n - username: ");
         String n = sc.nextLine();
-        System.out.print(" - insert password: ");
+        System.out.print(" - password: ");
         String n2 = sc.nextLine();
         System.out.print(" - Confirm password: ");
         String n3 = sc.nextLine();

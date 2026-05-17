@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 public class User {
 
@@ -29,6 +26,28 @@ public class User {
     //method2 void dll
     public void menuUtama(Scanner sc, Cafetaria cafe) {
 
+        // 1. MEMBUAT TIMER BACKGROUND
+        Timer timerOtomatis = new Timer(true); // 'true' berarti berjalan sebagai daemon thread (background)
+
+        // Jadwalkan tugas untuk mengecek pesanan setiap 1000 milidetik (1 detik)
+        timerOtomatis.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                // Cek apakah ada pesanan di stack
+                if (!recentPurchases.empty()) {
+                    Purchase current = recentPurchases.peek();
+                    long waktuSekarang = System.currentTimeMillis() / 1000;
+                    long sisaWaktu = current.totalWaktu - (waktuSekarang - current.waktuPesan);
+
+                    // Jika waktu sudah habis (0 atau minus)
+                    if (sisaWaktu <= 0) {
+                        recentPurchases.pop(); // Hapus otomatis dari stack
+                        System.out.print("\n[NOTIFICATION] Your " + current.getFoodItem().getFoodName() + " order is ready! \nChoice: ");
+                    }
+                }
+            }
+        }, 1000, 1000);
+
         while (true) {
             System.out.println("\n" +
                     "---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---\n" +
@@ -45,6 +64,19 @@ public class User {
             System.out.println("Name: " + username);
             System.out.println("Berat badan: " + beratBadan);
             System.out.println("role: " + roles);
+            System.out.println("saldo: " + saldo);
+            System.out.println("------------------");
+            if (!recentPurchases.empty()) {
+                Purchase current = recentPurchases.peek();
+                long waktuSekarang = System.currentTimeMillis() / 1000;
+                long sisaWaktu = current.totalWaktu - (waktuSekarang - current.waktuPesan);
+
+                // Hitung mundur dinamis saat menu dicetak
+                long tampilkanDetik = sisaWaktu > 0 ? sisaWaktu : 0;
+                System.out.println("Current order: " + current + " | Wait atleast around: " + tampilkanDetik + " sec");
+            } else {
+                System.out.println("Current order: Tidak ada pesanan aktif");
+            }
             System.out.println("------------------");
             System.out.println("1. buy food");
             System.out.println("2. purchase history");
@@ -89,6 +121,7 @@ public class User {
 
                     default:
                         System.out.println(" - Wrong input! - ");
+
                 }
             } catch (InputMismatchException e) {
                 System.out.println(" - Input with number! - ");
@@ -111,8 +144,8 @@ public class User {
                 if (n <= cafe.getMenuSize() && n > 0) {
                     while (isOn) {
                         System.out.println("\n=== Choose Products! ===");
-                        for (int i = 0; i < cafe.getMenu(n-1).getFoodItem().size(); i++) {
-                            System.out.println(i+1+". "+cafe.getMenu(n - 1).getFoodItem().get(i).getFoodName() + " | Harga: " + cafe.getMenu(n-1).getFoodItem().get(i).getHarga());
+                        for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
+                            System.out.println(i + 1 + ". " + cafe.getMenu(n - 1).getFoodItem().get(i).getFoodName() + " | Harga: " + cafe.getMenu(n - 1).getFoodItem().get(i).getHarga());
                         }
                         System.out.print("-- Choose: ");
 
@@ -120,19 +153,39 @@ public class User {
 
                             int n2 = sc.nextInt(); //choose products
 
+                            if (!recentPurchases.empty() && cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
+                                System.out.println("Tidak bisa order food masak lagi! tunggu sampai selesai pesanan sebelumnya!");
+                                return;
+                            }
                             if (n2 <= cafe.getMenu(n - 1).getFoodItem().size() && n > 0) {
+                                System.out.println("Produk dipilih: " + cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).displayInfo());
                                 System.out.print("-- Quantity: ");
 
                                 int n3 = 0;
                                 try {
-
                                     n3 = sc.nextInt(); //quantity products
 
-                                    Purchase purchase = new Purchase(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3);
-                                    purchase.calculateTotal();
-                                    purchase.printReceipt();
-                                    isOn = false;
+                                    if (n3 > 0 && n3 <= cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getStock()) { //input is in stock or 0
 
+                                        if (Purchase.calculateCheck(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3) <= saldo) {
+                                            //melakukan transaksi
+                                            Purchase purchase = new Purchase(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3);
+                                            purchase.calculateTotal();
+                                            purchase.printReceipt();
+                                            isOn = false;
+
+                                            if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodJadi) {
+                                                cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).reduceStock(n3);
+
+                                            } else if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
+                                                ((FoodMasak) cafe.getMenu(n - 1).getFoodItem().get(n2 - 1)).reduceStockBahanBaku(n3);
+                                                recentPurchases.push(purchase); // masuk ke stack (ONLY food masak)
+
+                                            }
+                                        } else {
+                                            System.out.println(" - invalid input!, please input quantity between amount of items product! - ");
+                                        }
+                                    }
                                 } catch (InputMismatchException e) {
                                     System.out.println(" - Input with number! - ");
                                 }
@@ -149,10 +202,6 @@ public class User {
                 sc.next();
             }
         }
-    }
-
-    public void lihatMenu(Cafetaria cafe) {
-        cafe.showAllMenu();
     }
 
     public void melihatHistori() {
