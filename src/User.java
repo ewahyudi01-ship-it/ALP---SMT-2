@@ -12,6 +12,9 @@ public class User {
     private MemberCard memberCard;
     private String roles;
 
+    // Tambahkan list thread-safe untuk menampung notifikasi tertunda
+    private final List<String> pendingNotifications = Collections.synchronizedList(new ArrayList<>());
+
     public User(String username, String password, int beratBadan, double saldo, String roles) {
         this.username = username;
         this.password = password;
@@ -21,6 +24,19 @@ public class User {
         recentPurchases = new Stack<>();
         historiPembelian = new ArrayList<>();
 
+    }
+
+    // Helper method untuk menampilkan notifikasi yang tertunda tanpa merusak alur input
+    private void flushNotifications() {
+        synchronized (pendingNotifications) {
+            if (!pendingNotifications.isEmpty()) {
+                System.out.println();
+                for (String notification : pendingNotifications) {
+                    System.out.println(notification);
+                }
+                pendingNotifications.clear();
+            }
+        }
     }
 
     //method2 void dll
@@ -43,14 +59,15 @@ public class User {
                     if (sisaWaktu <= 0) {
                         recentPurchases.pop(); // Hapus otomatis dari stack
                         cafe.removeOrder();
-                            System.out.print("\n[NOTIFICATION] Order of " + current.getFoodItem().getFoodName() + " is finished! \nChoice: ");
-
+                        // Alih-alih langsung di-print, simpan pesan notifikasi ke antrean
+                        pendingNotifications.add("[NOTIFICATION] Order of " + current.getFoodItem().getFoodName() + " is finished!");
                     }
                 }
             }
         }, 1000, 1000);
 
         while (true) {
+            flushNotifications(); // Tampilkan notifikasi sebelum menggambar menu utama
             System.out.println("\n" +
                     "---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---\n" +
                     " o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o \n" +
@@ -141,6 +158,7 @@ public class User {
         boolean isOn = true;
 
         while (isOn) {
+            flushNotifications(); // Tampilkan notifikasi jika ada makanan selesai saat berada di menu belanja
             System.out.println("\n=== Choose Menu! ===");
             cafe.showAllMenu();
             System.out.print("-- Choose menu: ");
@@ -150,6 +168,7 @@ public class User {
 
                 if (n <= cafe.getMenuSize() && n > 0) {
                     while (isOn) {
+                        flushNotifications(); // Cek lagi sebelum masuk pilihan produk
                         System.out.println("\n=== Choose Products! ===");
                         for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
                             System.out.println(i + 1 + ". " + cafe.getMenu(n - 1).getFoodItem().get(i).getFoodName() + " | Harga: " + cafe.getMenu(n - 1).getFoodItem().get(i).getHarga());
@@ -240,4 +259,3 @@ public class User {
     }
 
 }
-
