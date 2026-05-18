@@ -42,7 +42,9 @@ public class User {
                     // Jika waktu sudah habis (0 atau minus)
                     if (sisaWaktu <= 0) {
                         recentPurchases.pop(); // Hapus otomatis dari stack
-                        System.out.print("\n[NOTIFICATION] Your " + current.getFoodItem().getFoodName() + " order is ready! \nChoice: ");
+                        cafe.removeOrder();
+                            System.out.print("\n[NOTIFICATION] Order of " + current.getFoodItem().getFoodName() + " is finished! \nChoice: ");
+
                     }
                 }
             }
@@ -78,6 +80,11 @@ public class User {
                 System.out.println("Current order: Tidak ada pesanan aktif");
             }
             System.out.println("------------------");
+            if (!cafe.getOrders().isEmpty() && roles.equals("Owner")) {
+                System.out.println("------- order -------");
+                cafe.showOrders();
+                System.out.println("------------------");
+            }
             System.out.println("1. buy food");
             System.out.println("2. purchase history");
             System.out.println("3. health report");
@@ -168,9 +175,18 @@ public class User {
                                     if (n3 > 0 && n3 <= cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getStock()) { //input is in stock or 0
 
                                         if (Purchase.calculateCheck(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3) <= saldo) {
+
                                             //melakukan transaksi
                                             Purchase purchase = new Purchase(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3);
+
+                                            int timeProduct = 0;
+                                            if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // masukin timer roduct
+                                                timeProduct = ((FoodMasak)cafe.getMenu(n - 1).getFoodItem().get(n2 - 1)).getWaktuBuat();
+                                                purchase.addWaktu(timeProduct);
+                                            }
                                             purchase.calculateTotal();
+
+                                            cafe.addOrder((purchase));
                                             purchase.printReceipt();
                                             isOn = false;
 
@@ -185,6 +201,8 @@ public class User {
                                         } else {
                                             System.out.println(" - invalid input!, please input quantity between amount of items product! - ");
                                         }
+                                    } else {
+                                        System.out.println(" - Invalid input! - ");
                                     }
                                 } catch (InputMismatchException e) {
                                     System.out.println(" - Input with number! - ");

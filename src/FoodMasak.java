@@ -24,34 +24,6 @@ public class FoodMasak extends FoodItem {
     }
 
 
-    public void startCooking(int quantity) {
-
-        int totalBuat = waktuBuat * quantity;
-
-        try {
-
-            for(int i = totalBuat; i >= 0; i--) {
-
-                System.out.print(
-                        "\rCooking "
-                                + foodName
-                                + " x" + quantity
-                                + " | remaining: "
-                                + i + "s     "
-                );
-
-                Thread.sleep(1000);
-            }
-
-            System.out.println("\nOrder selesai!");
-
-        }
-        catch (InterruptedException e) {
-
-            System.out.println("Timer error");
-        }
-    }
-
     public void getStockFoodMasak() {
         int maks = 999;
 

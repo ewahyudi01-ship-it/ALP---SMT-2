@@ -9,6 +9,7 @@ public class Cafetaria {
     public Cafetaria(String namaCafeteria, ArrayList<Menu> menuList) {
         this.namaCafeteria = namaCafeteria;
         this.menuList = menuList;
+        this.orders = new LinkedList<Purchase>();
     }
 
     public void showAllMenu(){
@@ -25,6 +26,14 @@ public class Cafetaria {
             System.out.println(i+". "+order);
             i++;
         }
+    }
+
+    public void removeOrder(){
+        orders.poll();
+    }
+
+    public void addOrder(Purchase order){
+        orders.add(order);
     }
 
     //getter & setter

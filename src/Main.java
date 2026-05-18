@@ -80,7 +80,7 @@ public class Main {
         ((FoodMasak) nasiGoreng).tambahResep("vegetable oil");
 
         FoodItem lumpia = new FoodMasak("Lumpia",9800,0);
-        ((FoodMasak) lumpia).setWaktuBuat(150);
+        ((FoodMasak) lumpia).setWaktuBuat(10);
         ((FoodMasak) lumpia).tambahResep("spring roll wrapper");
         ((FoodMasak) lumpia).tambahResep("bamboo shoots");
         ((FoodMasak) lumpia).tambahResep("chicken");

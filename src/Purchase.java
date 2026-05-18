@@ -5,14 +5,12 @@ public class Purchase {
     private int quantity;
 
     public long waktuPesan = System.currentTimeMillis() / 1000; // mencatat detik saat ini
-    public int totalWaktu = 10 * quantity; // Ketentuan: 10 detik per produk (otomatis bertambah sesuai kuantitas)
+    public int totalWaktu;
 
     public Purchase(User user, FoodItem foodItem, int quantity){
         this.user = user;
         this.foodItem = foodItem;
         this.quantity = quantity;
-
-        this.totalWaktu = 10 * quantity;
     }
 
     public double calculateTotal(){
@@ -29,21 +27,19 @@ public class Purchase {
         System.out.println("Cost: "+calculateTotal());
 
     }
-    public int getTotalCookingTime() {
-        return (int) foodItem.harga * quantity;
-    }
 
     public FoodItem getFoodItem() {
         return foodItem;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
     @Override
     public String toString() {
 
         return foodItem.getFoodName() +
                 " x" + quantity;
+    }
+
+    public void addWaktu(int waktuPesan) {
+        this.totalWaktu = waktuPesan * quantity;
     }
 }
