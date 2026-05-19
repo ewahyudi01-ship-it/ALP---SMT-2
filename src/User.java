@@ -43,7 +43,6 @@ public class User {
                     if (sisaWaktu <= 0) {
                         recentPurchases.pop(); // Hapus otomatis dari stack
                         cafe.removeOrder();
-                            System.out.print("\n[NOTIFICATION] Order of " + current.getFoodItem().getFoodName() + " is finished! \nChoice: ");
 
                     }
                 }
