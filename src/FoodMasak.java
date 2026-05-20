@@ -99,6 +99,7 @@ public class FoodMasak extends FoodItem {
             }
         }
     }
+
     public int getWaktuBuat() {
         return this.waktuBuat;
     }

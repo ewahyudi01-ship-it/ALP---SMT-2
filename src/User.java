@@ -1,3 +1,5 @@
+import com.google.gson.stream.JsonToken;
+
 import java.util.*;
 
 public class User {
@@ -23,7 +25,7 @@ public class User {
 
     }
 
-    //method2 void dll
+    // method2 void dll
     public void menuUtama(Scanner sc, Cafetaria cafe) {
 
         // 1. MEMBUAT TIMER BACKGROUND
@@ -42,14 +44,16 @@ public class User {
                     // Jika waktu sudah habis (0 atau minus)
                     if (sisaWaktu <= 0) {
                         recentPurchases.pop(); // Hapus otomatis dari stack
-                        cafe.removeOrder();
+                        System.out.println();
+                        System.out.print("\n[NOTIFICATION] Order of " + current.getFoodItem().getFoodName() + " is finished! \nChoice: ");
 
                     }
                 }
             }
         }, 1000, 1000);
 
-        while (true) {
+        boolean isTrue = true;
+        while (isTrue) {
             System.out.println("\n" +
                     "---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---\n" +
                     " o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o \n" +
@@ -67,7 +71,28 @@ public class User {
             System.out.println("role: " + roles);
             System.out.println("saldo: " + saldo);
             System.out.println("------------------");
+
+            if (roles.equals("Owner")) {
+                if (reminderBahanBaku() == 1) {
+                    System.out.println("\n------ REMINDER ------");
+                    System.out.println("WARNING! your raw material stock for products is empty, please refill!");
+                        showAllIngredientToRefill();
+
+                    System.out.println("Type '6' to restock it now! ");
+                    System.out.println("----------------------");
+
+                } else if (reminderBahanBaku() == 2) {
+                    System.out.println("\n------ REMINDER ------");
+                    System.out.println("WARNING! your raw material stock for products is almost empty, please refill!");
+                        showAllIngredientToRefill();
+
+                    System.out.println("Type '6' to restock it now! ");
+                    System.out.println("----------------------");
+                }
+            }
+
             if (!recentPurchases.empty()) {
+
                 Purchase current = recentPurchases.peek();
                 long waktuSekarang = System.currentTimeMillis() / 1000;
                 long sisaWaktu = current.totalWaktu - (waktuSekarang - current.waktuPesan);
@@ -78,12 +103,9 @@ public class User {
             } else {
                 System.out.println("Current order: Tidak ada pesanan aktif");
             }
-            System.out.println("------------------");
-            if (!cafe.getOrders().isEmpty() && roles.equals("Owner")) {
-                System.out.println("------- order -------");
-                cafe.showOrders();
-                System.out.println("------------------");
-            }
+
+            System.out.println("----------------------");
+
             System.out.println("1. buy food");
             System.out.println("2. purchase history");
             System.out.println("3. health report");
@@ -103,7 +125,7 @@ public class User {
                         break;
 
                     case 2:
-
+                        purchaseHistory(sc);
                         break;
 
                     case 3:
@@ -120,21 +142,134 @@ public class User {
                         break;
 
                     case 6:
+                        boolean isOn = true;
+                        while (isOn) {
+                            if (roles.equals("Owner")) {
+                                System.out.println("\n¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸ REFILL STOCK INGREDIENT ¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸");
+                                    showAllIngredientToRefill();
+                                System.out.println("0. back");
+                                System.out.print("Choose: ");
+
+                                try { // choose
+                                    int choice = sc.nextInt();
+
+                                    if (choice > 0 && choice <= showAllIngredientToRefill()) {
+                                        System.out.print("Refill ammount: ");
+
+                                        try { // ammount
+                                            int n2 = sc.nextInt();
+
+                                            if (n2 > 0) { // jika ingredient tidak dikasih 0
+                                                int number = 1;
+
+                                                for (int i = 0; i < Main.bahanBakuList.size(); i++) {
+                                                    if (Main.bahanBakuList.get(i).getStockBaku() < 3) {
+
+                                                        if (number == choice) {
+                                                            Main.bahanBakuList.get(i).addIngredient(n2);
+                                                            System.out.println("Successfully restock " + Main.bahanBakuList.get(i).getNamaBahanBaku() + " for " + n2);
+                                                            break;
+                                                        }
+
+                                                        number++;
+                                                    }
+                                                }
+                                            }
+
+                                        } catch (InputMismatchException e) {
+                                            System.out.println(" - Input with number! - ");
+                                            sc.next();
+                                        }
+
+                                    } else if (choice == 0){
+                                        isOn = false;
+
+                                    } else {
+                                        System.out.println(" - Invalid input! - ");
+                                    }
+                                } catch (InputMismatchException e) {
+                                    System.out.println(" - Invalid input! - ");
+                                    sc.next();
+                                }
+
+                            } else {
+                                System.out.println("Your not the Owner!");
+                                isOn = false;
+                            }
+                        }
+                        break;
+
+                    case 7:
+                        isOn = true;
+                        while (isOn) {
+                        if (roles.equals("Owner")) {
+
+                            System.out.println("\n-=ø¤º°`°º¤ø=-=- CUSTOMER ORDER LIST -=-=ø¤º°`°º¤ø=-");
+                            if (cafe.getOrders().isEmpty()) {
+                                System.out.println("no one order a food, for now.");
+                            } else {
+                                cafe.showOrders();
+                            }
+
+                            System.out.println("ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø");
+
+                                System.out.println("1.Remove current order");
+                                System.out.println("0.back");
+                                System.out.print("Choice: ");
+                                try {
+                                    n = sc.nextInt();
+                                    switch (n) {
+                                        case 1:
+                                            if (!cafe.getOrders().isEmpty()) {   // menghapus order list dari owner, serta stack dari sisi pelanggan yang di target
+                                                Purchase pesananYangDihapus = cafe.removeOrder(); // return nya objek "purchase" sebelum order menghapus datanya dengan poll()
+                                                User targetUser = pesananYangDihapus.getUser();
+                                                    targetUser.recentPurchases.remove(pesananYangDihapus); // menghapus stack user yang ditargetkan
+                                            }
+                                            break;
+
+                                        case 0:
+                                            isOn = false;
+                                            break;
+                                    }
+
+                                } catch (InputMismatchException e) {
+                                    System.out.println(" - Please enter a number - ");
+                                    sc.next();
+                                }
+
+                            } else {
+                                System.out.println("Your not the Owner!");
+                                isOn = false;
+                            }
+                        }
+                        break;
+
+                    case 8:
+                        if (!recentPurchases.empty()) {
+                            recentPurchases.pop();
+
+                            System.out.println("Your order has been cancelled!");
+                        } else {
+                            System.out.println("There is no ongoing cooking for current order!");
+                        }
                         break;
 
                     case 0:
-                        return;
+                        isTrue = false;
+                        break;
 
                     default:
-                        System.out.println(" - Wrong input! - ");
+                        System.out.println(" - Invalid input! - ");
 
                 }
             } catch (InputMismatchException e) {
                 System.out.println(" - Input with number! - ");
                 sc.next(); // tanpa perintah ini maka infinite loop
             }
+
         }
     }
+
 
     public void buyFood(Scanner sc, Cafetaria cafe) {
         boolean isOn = true;
@@ -145,7 +280,8 @@ public class User {
             System.out.print("-- Choose menu: ");
 
             try {
-                int n = sc.nextInt(); //choose menu
+
+                int n = sc.nextInt(); // choose menu
 
                 if (n <= cafe.getMenuSize() && n > 0) {
                     while (isOn) {
@@ -157,35 +293,35 @@ public class User {
 
                         try {
 
-                            int n2 = sc.nextInt(); //choose products
+                            int n2 = sc.nextInt(); // choose products
 
                             if (!recentPurchases.empty() && cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
                                 System.out.println("Tidak bisa order food masak lagi! tunggu sampai selesai pesanan sebelumnya!");
                                 return;
                             }
-                            if (n2 <= cafe.getMenu(n - 1).getFoodItem().size() && n > 0) {
+
+                            if (n2 <= cafe.getMenu(n - 1).getFoodItem().size() && n2 > 0) {
                                 System.out.println("Produk dipilih: " + cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).displayInfo());
                                 System.out.print("-- Quantity: ");
 
                                 int n3 = 0;
                                 try {
-                                    n3 = sc.nextInt(); //quantity products
+                                    n3 = sc.nextInt(); // quantity products
 
-                                    if (n3 > 0 && n3 <= cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getStock()) { //input is in stock or 0
+                                    if (n3 > 0 && n3 <= cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getStock()) { // input is 0 or more
+                                        if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getHarga() * n3 <= this.saldo) { //cek saldo user
 
-                                        if (Purchase.calculateCheck(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3) <= saldo) {
-
-                                            //melakukan transaksi
+                                            // melakukan transaksi
                                             Purchase purchase = new Purchase(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3);
 
                                             int timeProduct = 0;
-                                            if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // masukin timer roduct
-                                                timeProduct = ((FoodMasak)cafe.getMenu(n - 1).getFoodItem().get(n2 - 1)).getWaktuBuat();
+                                            if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // masukin timer product
+                                                timeProduct = ((FoodMasak) cafe.getMenu(n - 1).getFoodItem()
+                                                        .get(n2 - 1)).getWaktuBuat();
                                                 purchase.addWaktu(timeProduct);
                                             }
-                                            purchase.calculateTotal();
 
-                                            cafe.addOrder((purchase));
+                                            historiPembelian.add(purchase); // arraylist
                                             purchase.printReceipt();
                                             isOn = false;
 
@@ -193,19 +329,23 @@ public class User {
                                                 cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).reduceStock(n3);
 
                                             } else if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
+                                                cafe.addOrder((purchase)); // orderlist Queue
                                                 ((FoodMasak) cafe.getMenu(n - 1).getFoodItem().get(n2 - 1)).reduceStockBahanBaku(n3);
                                                 recentPurchases.push(purchase); // masuk ke stack (ONLY food masak)
-
                                             }
                                         } else {
-                                            System.out.println(" - invalid input!, please input quantity between amount of items product! - ");
+                                            System.out.println(" - Not enough ammount of balance :( - ");
+                                            return;
                                         }
                                     } else {
-                                        System.out.println(" - Invalid input! - ");
+                                        System.out.println(" - invalid input!, please input quantity between amount of items product! - ");
                                     }
                                 } catch (InputMismatchException e) {
                                     System.out.println(" - Input with number! - ");
+                                    sc.next();
                                 }
+                            } else {
+                                System.out.println(" - invalid input! - ");
                             }
                         } catch (InputMismatchException e) {
                             System.out.println(" - Please enter a number - ");
@@ -221,6 +361,61 @@ public class User {
         }
     }
 
+    private void purchaseHistory(Scanner sc) {
+        System.out.println("\n¸,ø¤º°`°º¤ø¤º°`°º¤ø,¸, Purchase History ,¸,ø¤º°`°º¤ø¤º°`°º¤ø,¸");
+        boolean isOn = true;
+        while (isOn){
+            if (!historiPembelian.isEmpty()) {
+                for (int i = 0; i < historiPembelian.size(); i++) {
+                    System.out.println(i+1+". "+historiPembelian.get(i).getFoodItem().getFoodName() + " | Quantity: " + historiPembelian.get(i).getQuantity() +
+                            " | total: " + historiPembelian.get(i).getCalculateTotal());
+                }
+            } else {
+                System.out.println("There's no transaction. yet!");
+            }
+            System.out.println("0.back");
+            System.out.print("Choice: ");
+
+            int n  = sc.nextInt();
+            try {
+                switch (n) {
+                    case 0:
+                        isOn = false;
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println(" - Input with number! - ");
+                isOn = false;
+                sc.next();
+            }
+        }
+    }
+
+    public char reminderBahanBaku() {
+        for (BahanBaku stok : Main.bahanBakuList) {
+            if (stok.getStockBaku() <= 0) {
+                return 1; //almost empty
+            } else if (stok.getStockBaku() < 3 && stok.getStockBaku() > 0) {
+                return 2; // empty
+            }
+        }
+        return 0;
+    }
+
+    private int showAllIngredientToRefill() {
+        int jumlahItemYangKurang = 0;
+        int j = 0;
+
+        for (BahanBaku stok : Main.bahanBakuList) {
+            if (stok.getStockBaku() < 3) {
+                j++;
+                System.out.println(j + ". " + stok.getNamaBahanBaku() + " | stock: " + stok.getStockBaku());
+                jumlahItemYangKurang++;
+            }
+        }
+        return jumlahItemYangKurang;
+    }
+
     public void melihatHistori() {
 
     }
@@ -229,7 +424,7 @@ public class User {
 
     }
 
-    //setter & getter
+    // setter & getter
     public String getNama() {
         return username;
     }
@@ -239,4 +434,3 @@ public class User {
     }
 
 }
-

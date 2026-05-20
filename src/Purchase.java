@@ -13,23 +13,30 @@ public class Purchase {
         this.quantity = quantity;
     }
 
-    public double calculateTotal(){
+    public double getCalculateTotal(){
         return foodItem.getHarga() * quantity;
     }
 
-    public static double calculateCheck(User user, FoodItem foodItem, int quantity) {
+    public double calculateCheck(User user, FoodItem foodItem, int quantity) {
         return user.saldo - foodItem.harga * quantity;
 
     }
 
     public void printReceipt() {
         System.out.println("Transaction completed! you bought " + foodItem.foodName+ " for " + this.quantity);
-        System.out.println("Cost: "+calculateTotal());
+        System.out.println("Cost: "+ getCalculateTotal());
 
     }
 
     public FoodItem getFoodItem() {
         return foodItem;
+    }
+
+    public User getUser (){
+        return user;
+    }
+    public int getQuantity() {
+        return quantity;
     }
 
     @Override

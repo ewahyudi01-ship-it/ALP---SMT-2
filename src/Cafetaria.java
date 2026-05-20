@@ -28,8 +28,8 @@ public class Cafetaria {
         }
     }
 
-    public void removeOrder(){
-        orders.poll();
+    public Purchase removeOrder() {
+        return orders.poll();
     }
 
     public void addOrder(Purchase order){

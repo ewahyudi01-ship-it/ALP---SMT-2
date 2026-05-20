@@ -1,10 +1,9 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.ArrayList;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Main {
 
@@ -30,7 +29,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<User> user = new ArrayList<>(); // <--- user saat ini
-        user.add(new User("Owner", "smart121", 65, 40000,"Owner"));
+        user.add(new User("Owner", "smart121", 65, 290000,"Owner"));
+        user.add(new User("1", "1", 65, 40000, Roles.SMA.getRoleName()));
 
         ArrayList<FoodItem> foodList = new ArrayList<>();
         // food jadi
@@ -45,18 +45,18 @@ public class Main {
         bahanBakuList.add(new BahanBaku("beef", 5));
         bahanBakuList.add(new BahanBaku("potato", 10));
         bahanBakuList.add(new BahanBaku("butter", 8));
-        bahanBakuList.add(new BahanBaku("white bread", 6));
-        bahanBakuList.add(new BahanBaku("margarine", 5));
+        bahanBakuList.add(new BahanBaku("white bread", 16));
+        bahanBakuList.add(new BahanBaku("margarine", 9));
         bahanBakuList.add(new BahanBaku("condensed milk", 5));
-        bahanBakuList.add(new BahanBaku("rice", 5));
-        bahanBakuList.add(new BahanBaku("egg", 5));
-        bahanBakuList.add(new BahanBaku("chicken", 5));
-        bahanBakuList.add(new BahanBaku("sweet soy sauce", 5));
-        bahanBakuList.add(new BahanBaku("vegetable oil", 5));
-        bahanBakuList.add(new BahanBaku("spring roll wrapper", 5));
-        bahanBakuList.add(new BahanBaku("bamboo shoots", 5));
-        bahanBakuList.add(new BahanBaku("chicken", 5));
-        bahanBakuList.add(new BahanBaku("sugar", 5));
+        bahanBakuList.add(new BahanBaku("rice", 6));
+        bahanBakuList.add(new BahanBaku("egg", 8));
+        bahanBakuList.add(new BahanBaku("chicken", 15));
+        bahanBakuList.add(new BahanBaku("sweet soy sauce", 9));
+        bahanBakuList.add(new BahanBaku("vegetable oil", 15));
+        bahanBakuList.add(new BahanBaku("spring roll wrapper", 7));
+        bahanBakuList.add(new BahanBaku("bamboo shoots", 8));
+        bahanBakuList.add(new BahanBaku("chicken", 11));
+        bahanBakuList.add(new BahanBaku("sugar", 6));
 
         // food masak
         FoodItem steak = new FoodMasak("Steak", 23000,0);
@@ -102,9 +102,9 @@ public class Main {
             System.out.println("                                                                                    ^    ^");
             System.out.println("                         -- WELCOME TO THE --                                      / \\--/ |");
             System.out.println("¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸  (  o  o)");
-            System.out.println("_.-.              _   |/-._   ..          ,..  ,.        _____ ___  __. .   .       \\  ^ /\n" +
+            System.out.println("_.-.              _   |/-._   ..          ,..  ,.        _____ ___  ___ .   .       \\  ^ /\n" +
                     ".|'     ,\\  /     /\\.  ||  '|  ||        /''   ,/. |\\  |   |   |    |    |\\. |      /'-\"-|\n" +
-                    " '\"..   /\\\\//\\   // \\  ||_,,'--||--'    .'     / \\ |'\\ |   |   |___ |,__ | \\   |  _/ < ; (;\n" +
+                    " '\"..   /\\\\//\\   // \\  ||_,,'--||--'    .'     / \\ |'\\ |   |   |___ |,__ | \\ |    _/ < ; (;\n" +
                     "    |  //+\\/ \\\\ //---\\ ||-(.   ||       |.    |,,.||  \\|   |   |    |    |  \\|   / ,_ |_|_\\\n" +
                     "`,_,' -/     '|//    `\\|'  '\\. `'-==     ''-.'|   \\|   \\   |   |,__ |,__ |   \\   ( _,,)\\,,),)");
             System.out.println("¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·..·´¯`·.¸ \\ '.___,");
@@ -196,13 +196,13 @@ public class Main {
                             "          `-    \\`_`\"'-");
 
                     if (n4 == 1) {
-                        User newUser = new User(n, n3, n5, 0, Roles.SMP.getRoleName());
+                        User newUser = new User(n, n3, n5, 99999990, Roles.SMP.getRoleName());
                         user.add(newUser);
                         System.out.println("=== Created new account! ===");
                         newUser.menuUtama(sc, cafe);
 
                     } else if (n4 == 2) {
-                        User newUser = new User(n, n3, n5, 0, Roles.SMA.getRoleName());
+                        User newUser = new User(n, n3, n5, 9999990, Roles.SMA.getRoleName());
                         user.add(newUser);
                         System.out.println("=== Created new account! ===");
                         newUser.menuUtama(sc, cafe);
@@ -230,6 +230,7 @@ public class Main {
                             "          `-    \\`_`\"'-");
                     System.out.println("=== Logged in successfully! ===");
                     user.get(i).menuUtama(sc, cafe);
+                    return;
 
                 } else {
                     System.out.println("=== Invalid Username or password! ===");

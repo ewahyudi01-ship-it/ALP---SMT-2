@@ -58,6 +58,11 @@ public class BahanBaku {
         }
     }
 
+    public void addIngredient(int n) {
+        stockBaku += n;
+    }
+
+
     public int getStockBaku() {
         return stockBaku;
     }
