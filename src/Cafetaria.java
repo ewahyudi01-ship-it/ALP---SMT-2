@@ -40,6 +40,10 @@ public class Cafetaria {
     public Menu getMenu(int n) {
         return menuList.get(n);
     }
+    public Menu getMainMenu() {
+        return menuList.get(0);
+    }
+
     public  Queue<Purchase> getOrders() {
         return orders;
     }

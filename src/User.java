@@ -1,5 +1,3 @@
-import com.google.gson.stream.JsonToken;
-
 import java.util.*;
 
 public class User {
@@ -78,6 +76,7 @@ public class User {
                     System.out.println("WARNING! your raw material stock for products is empty, please refill!");
                         showAllIngredientToRefill();
 
+
                     System.out.println("Type '6' to restock it now! ");
                     System.out.println("----------------------");
 
@@ -111,7 +110,7 @@ public class User {
             System.out.println("3. health report");
             System.out.println("4. Member card");
             System.out.println("5. Create new menu");
-            System.out.println("6. Restock Ingredient");
+            System.out.println("6. Restock");
             System.out.println("7. List of Orders");
             System.out.println("8. Cancel Order");
             System.out.println("0. log out");
@@ -145,50 +144,104 @@ public class User {
                         boolean isOn = true;
                         while (isOn) {
                             if (roles.equals("Owner")) {
-                                System.out.println("\n¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸ REFILL STOCK INGREDIENT ¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸");
-                                    showAllIngredientToRefill();
+                                System.out.println("\n¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸   REFILL STOCK INGREDIENT   ¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸");
+                                    showAllIngredientToRefill(); // food masak
+                                System.out.println("\n¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸ REFILL STOCK READY PRODUCTS ¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸");
+                                    showAllFoodJadiStockToRefill(cafe); // food jadi
+                                System.out.println("\n=========================================================================");
+                                System.out.println("1. Ingredient");
+                                System.out.println("2. Products");
                                 System.out.println("0. back");
                                 System.out.print("Choose: ");
 
-                                try { // choose
-                                    int choice = sc.nextInt();
+                                try {
+                                    n = sc.nextInt();  // choose section ingreedient
+                                    if(n == 1){
+                                        System.out.print("\nChoose Ingredient: ");
+                                        try {
+                                            int choice = sc.nextInt();  // choose ingredient
 
-                                    if (choice > 0 && choice <= showAllIngredientToRefill()) {
-                                        System.out.print("Refill ammount: ");
+                                            if (choice > 0 && choice <= showAllIngredientToRefill()) {
+                                                System.out.print("Refill ammount: ");
 
-                                        try { // ammount
-                                            int n2 = sc.nextInt();
+                                                try { // ammount
+                                                    int n2 = sc.nextInt();
 
-                                            if (n2 > 0) { // jika ingredient tidak dikasih 0
-                                                int number = 1;
+                                                    if (n2 > 0) { // jika ingredient tidak dikasih 0
+                                                        int number = 1;
 
-                                                for (int i = 0; i < Main.bahanBakuList.size(); i++) {
-                                                    if (Main.bahanBakuList.get(i).getStockBaku() < 3) {
+                                                        for (int i = 0; i < Main.bahanBakuList.size(); i++) {
+                                                            if (Main.bahanBakuList.get(i).getStockBaku() < 3) {
 
-                                                        if (number == choice) {
-                                                            Main.bahanBakuList.get(i).addIngredient(n2);
-                                                            System.out.println("Successfully restock " + Main.bahanBakuList.get(i).getNamaBahanBaku() + " for " + n2);
-                                                            break;
+                                                                if (number == choice) {
+                                                                    Main.bahanBakuList.get(i).addIngredient(n2);
+                                                                    System.out.println("Successfully restock " + Main.bahanBakuList.get(i).getNamaBahanBaku() + " for " + n2);
+                                                                    break;
+                                                                }
+                                                                number++;
+
+                                                            }
                                                         }
-
-                                                        number++;
                                                     }
+
+                                                } catch (InputMismatchException e) {
+                                                    System.out.println(" - Input with number! - ");
+                                                    sc.next();
                                                 }
+                                            } else {
+                                                System.out.println(" - Invalid input! - ");
                                             }
 
                                         } catch (InputMismatchException e) {
-                                            System.out.println(" - Input with number! - ");
+                                            System.out.println(" - Invalid input! - ");
+                                            sc.next();
+                                        }
+                                    } else if (n == 2) {  // choose section products
+                                        System.out.print("\nChoose Products: ");
+
+                                        try {
+                                            int choice = sc.nextInt();  // choose products
+
+                                            if (choice > 0 && choice <= showAllFoodJadiStockToRefill(cafe)) {
+                                                System.out.print("Refill ammount: ");
+
+                                                try {
+                                                    int n2 = sc.nextInt();  // amount to be refill the products
+
+                                                    if (n2 > 0) {
+                                                        int number = 1;
+                                                        Menu mainMenu = cafe.getMainMenu();
+
+                                                        for (int i = 0; i < mainMenu.getFoodItem().size(); i++) {
+
+                                                            if (mainMenu.getFoodItem().get(i).getStock() < 3 && mainMenu.getFoodItem().get(i) instanceof FoodJadi) {
+                                                                if (number == choice) {
+                                                                    ((FoodJadi) mainMenu.getFoodItem().get(i)).addStock(n2);
+                                                                    System.out.println("Successfully restock " + mainMenu.getFoodItem().get(i).getFoodName() + " for " + n2);
+                                                                    break;
+                                                                }
+                                                                number++;
+                                                            }
+                                                        }
+                                                    }
+
+                                                } catch (RuntimeException e) {
+                                                    System.out.println(" - Input with number! -");
+                                                    sc.next();
+                                                }
+                                            }
+                                        } catch (RuntimeException e) {
+                                            System.out.println(" - Input with number! -");
                                             sc.next();
                                         }
 
-                                    } else if (choice == 0){
+                                    } else if (n == 0){ // choose back to main menu
                                         isOn = false;
 
-                                    } else {
-                                        System.out.println(" - Invalid input! - ");
                                     }
-                                } catch (InputMismatchException e) {
-                                    System.out.println(" - Invalid input! - ");
+
+                                } catch (RuntimeException e) {
+                                    System.out.println(" - Input with number! -");
                                     sc.next();
                                 }
 
@@ -247,7 +300,6 @@ public class User {
                     case 8:
                         if (!recentPurchases.empty()) {
                             recentPurchases.pop();
-
                             System.out.println("Your order has been cancelled!");
                         } else {
                             System.out.println("There is no ongoing cooking for current order!");
@@ -316,8 +368,7 @@ public class User {
 
                                             int timeProduct = 0;
                                             if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // masukin timer product
-                                                timeProduct = ((FoodMasak) cafe.getMenu(n - 1).getFoodItem()
-                                                        .get(n2 - 1)).getWaktuBuat();
+                                                timeProduct = ((FoodMasak) cafe.getMenu(n - 1).getFoodItem().get(n2 - 1)).getWaktuBuat();
                                                 purchase.addWaktu(timeProduct);
                                             }
 
@@ -376,8 +427,9 @@ public class User {
             System.out.println("0.back");
             System.out.print("Choice: ");
 
-            int n  = sc.nextInt();
             try {
+                int n  = sc.nextInt();
+
                 switch (n) {
                     case 0:
                         isOn = false;
@@ -385,7 +437,6 @@ public class User {
                 }
             } catch (InputMismatchException e) {
                 System.out.println(" - Input with number! - ");
-                isOn = false;
                 sc.next();
             }
         }
@@ -411,6 +462,22 @@ public class User {
                 j++;
                 System.out.println(j + ". " + stok.getNamaBahanBaku() + " | stock: " + stok.getStockBaku());
                 jumlahItemYangKurang++;
+            }
+        }
+        return jumlahItemYangKurang;
+    }
+
+    private int showAllFoodJadiStockToRefill(Cafetaria cafe) {
+        int jumlahItemYangKurang = 0;
+        int j = 0;
+
+        for (FoodItem stok : cafe.getMainMenu().getFoodItem()) {
+            if(stok instanceof FoodJadi) {
+                if (stok.getStock() < 3) {
+                    j++;
+                    System.out.println(j + ". " + stok.getFoodName() + " | stock: " + stok.getStock());
+                    jumlahItemYangKurang++;
+                }
             }
         }
         return jumlahItemYangKurang;

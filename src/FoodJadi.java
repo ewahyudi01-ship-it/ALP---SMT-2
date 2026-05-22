@@ -15,6 +15,10 @@ public class FoodJadi extends FoodItem {
         this.stock -= n3;
     }
 
+    public void addStock(int n3){
+        this.stock += n3;
+    }
+
     @Override
     public String displayInfo(){
         return  foodName + " | calories: " + this.calories + " | sugar lvl: " + this.sugarLvl + " | protein: " + this.protein +
