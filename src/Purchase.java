@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 // 1. URL Alamat Resmi DynamicPDF Cloud API (Tanpa sub-folder /file/create)
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 // Tambahkan library JSON, misalnya Jackson atau org.json
 // Contoh di bawah pakai org.json:
@@ -34,7 +35,10 @@ public class Purchase {
 
     }
 
-    public void printReceipt() {
+    public void printReceipt(ArrayList<User>user) {
+        User owner = getOwner(user);
+        owner.tambahSaldo(getCalculateTotal());
+
         System.out.println("Transaction completed! you bought " + foodItem.foodName + " for " + this.quantity);
         System.out.println("Cost: " + getCalculateTotal());
         try {
@@ -131,6 +135,18 @@ public class Purchase {
         }
     }
 
+    public User getOwner(ArrayList<User>user) {
+        for (int i = 0; i < user.size(); i++) {
+            if (user.get(i).getRoles().equals(Main.Roles.OWNER)) {
+                return user.get(i);
+            }
+        }
+        return null;
+    }
+
+    public void addWaktu(int waktuPesan) {
+        this.totalWaktu = waktuPesan * quantity;
+    }
 
     public FoodItem getFoodItem() {
         return foodItem;
@@ -149,9 +165,5 @@ public class Purchase {
 
         return foodItem.getFoodName() +
                 " x" + quantity;
-    }
-
-    public void addWaktu(int waktuPesan) {
-        this.totalWaktu = waktuPesan * quantity;
     }
 }

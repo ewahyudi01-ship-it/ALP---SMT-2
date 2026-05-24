@@ -196,16 +196,16 @@ public class Main {
                             "          `-    \\`_`\"'-");
 
                     if (n4 == 1) {
-                        User newUser = new User(n, n3, n5, 99999990, Roles.SMP.getRoleName());
+                        User newUser = new User(n, n3, n5, 999900, Roles.SMP.getRoleName());
                         user.add(newUser);
                         System.out.println("=== Created new account! ===");
-                        newUser.menuUtama(sc, cafe);
+                        newUser.menuUtama(user, sc, cafe);
 
                     } else if (n4 == 2) {
-                        User newUser = new User(n, n3, n5, 9999990, Roles.SMA.getRoleName());
+                        User newUser = new User(n, n3, n5, 999990, Roles.SMA.getRoleName());
                         user.add(newUser);
                         System.out.println("=== Created new account! ===");
-                        newUser.menuUtama(sc, cafe);
+                        newUser.menuUtama(user, sc, cafe);
                     }
                 }
             }
@@ -229,7 +229,7 @@ public class Main {
                             "    `-.-' \\ )-`( , o o)\n" +
                             "          `-    \\`_`\"'-");
                     System.out.println("=== Logged in successfully! ===");
-                    user.get(i).menuUtama(sc, cafe);
+                    user.get(i).menuUtama(user,sc, cafe);
                     return;
 
                 } else {

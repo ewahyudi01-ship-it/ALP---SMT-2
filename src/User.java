@@ -24,7 +24,7 @@ public class User {
     }
 
     // method2 void dll
-    public void menuUtama(Scanner sc, Cafetaria cafe) {
+    public void menuUtama(ArrayList<User>user,Scanner sc, Cafetaria cafe) {
 
         // 1. MEMBUAT TIMER BACKGROUND
         Timer timerOtomatis = new Timer(true); // 'true' berarti berjalan sebagai daemon thread (background)
@@ -120,7 +120,7 @@ public class User {
                 int n = sc.nextInt();
                 switch (n) {
                     case 1:
-                        buyFood(sc, cafe);
+                        buyFood(user,sc, cafe);
                         break;
 
                     case 2:
@@ -132,6 +132,105 @@ public class User {
                         break;
 
                     case 4:
+                        boolean isOn = true;
+                        while (isOn){
+                           if (memberCard != null){ //jika ada member card
+                               System.out.println("\n_\\|/__\\|/__\\|/__\\|/_   MEMBER CARD   _\\|/__\\|/__\\|/__\\|/_");
+                               System.out.println("Info Stats:");
+                               System.out.println("ID       : " + memberCard.getIdCard());
+                               System.out.println("Rank     : " + memberCard.getRankSubscription());
+                               System.out.println("Expire in: " + memberCard.getMemberCard());
+                               System.out.println("----------------------------------------------------------");
+                               System.out.println("1. Upgrade Member card");
+                               System.out.println("2. Extend duration member card");
+                               System.out.println("0. return to main menu");
+                               System.out.print("Choice: ");
+
+                               try {
+                                   int choice = sc.nextInt();
+                                   switch (choice) {
+                                       case 1: // upgrade to premium
+                                           if (!memberCard.getRankSubscription().equals(MemberCard.Rank.PREMIUM)) {
+                                               System.out.println("\nUpgrade to Premium! no more expire duration, 20% discount all the time! for Rp.850.000");
+                                               System.out.println("1.pay");
+                                               System.out.println("0.back");
+                                               System.out.print("Choice: ");
+                                               try {
+                                                   choice = sc.nextInt();
+                                                   switch (choice) {
+                                                       case 1:
+                                                           int premium = 850000;
+
+                                                           if (saldo >= 850000) {
+                                                               this.memberCard.upgradeCardPremium();
+                                                               saldo -= premium;
+                                                               System.out.println("Purchase member card upgrade to premium succesful!");
+                                                               break;
+                                                           } else {
+                                                               System.out.println("Not enough balance!");
+                                                           }
+                                                       case 0:
+                                                           break;
+                                                   }
+
+                                               } catch (InputMismatchException e) {
+                                                   System.out.println(" - Input with number! - ");
+                                                   sc.next();
+                                               }
+                                           } else {
+                                               System.out.println("You already have Premium member card subscription!");
+                                           }
+                                           break;
+
+                                       case 2: //extend time duration
+                                            if (memberCard.getRankSubscription().equals(MemberCard.Rank.REGULAR)) {
+                                                System.out.println("¸,ø¤º°`°º¤ø¤º°`°º¤ø,¸");
+                                                System.out.println("1. Extend to 3 days! for Rp.5000");
+                                                System.out.println("2. Extend to 1 weeks! for Rp.10650");
+                                                System.out.println("3. Extend to 1 month (30 day)! for Rp.34.500");
+                                                System.out.println("0. Back");
+                                            } else {
+                                                System.out.println("You already have Premium member card subscription!");
+                                            }
+                                            break;
+
+                                       case 0:
+                                           isOn = false;
+
+                                   }
+
+                               } catch (InputMismatchException e) {
+                                   System.out.println(" - Input with number! - ");
+                                   sc.next();
+                               }
+
+                           } else if (memberCard == null) { //jika tidak ada member card
+                               System.out.println("\n_\\|/__\\|/__\\|/__\\|/_ BUY MEMBER CARD _\\|/__\\|/__\\|/__\\|/_");
+                               System.out.println("Buy your first Member Card, cost for: Rp.14.000, last for 3 days");
+                               System.out.println("1. Buy new Member card");
+                               System.out.println("0. return to main menu");
+                               System.out.print("Choice: ");
+
+                               try {
+                                   int choice = sc.nextInt();
+                                   switch (choice) {
+                                       case 1:
+                                           int regular = 14000;
+
+                                           saldo -= regular;
+                                           memberCard = new MemberCard("ID#" + getNama() + "0"+roles, MemberCard.Rank.REGULAR, 3);
+                                           break;
+
+                                           case 0: // kembali
+                                               isOn = false;
+                                   }
+                               } catch (InputMismatchException e) {
+                                   System.out.println(" - Input with number! - ");
+                                   sc.next();
+                               }
+                           }
+                       }
+
                         break;
 
                     case 5:
@@ -141,7 +240,7 @@ public class User {
                         break;
 
                     case 6:
-                        boolean isOn = true;
+                        isOn = true;
                         while (isOn) {
                             if (roles.equals("Owner")) {
                                 System.out.println("\n¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸   REFILL STOCK INGREDIENT   ¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸");
@@ -193,7 +292,7 @@ public class User {
                                             }
 
                                         } catch (InputMismatchException e) {
-                                            System.out.println(" - Invalid input! - ");
+                                            System.out.println(" - Input with number! - ");
                                             sc.next();
                                         }
                                     } else if (n == 2) {  // choose section products
@@ -323,7 +422,7 @@ public class User {
     }
 
 
-    public void buyFood(Scanner sc, Cafetaria cafe) {
+    public void buyFood(ArrayList<User>user ,Scanner sc , Cafetaria cafe) {
         boolean isOn = true;
 
         while (isOn) {
@@ -342,9 +441,7 @@ public class User {
                             System.out.println(i + 1 + ". " + cafe.getMenu(n - 1).getFoodItem().get(i).getFoodName() + " | Harga: " + cafe.getMenu(n - 1).getFoodItem().get(i).getHarga());
                         }
                         System.out.print("-- Choose: ");
-
                         try {
-
                             int n2 = sc.nextInt(); // choose products
 
                             if (!recentPurchases.empty() && cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
@@ -360,11 +457,12 @@ public class User {
                                 try {
                                     n3 = sc.nextInt(); // quantity products
 
-                                    if (n3 > 0 && n3 <= cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getStock()) { // input is 0 or more
+                                    if (n3 > 0 && n3 <= cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getStock()) { // input is 0 or too much than available stock
                                         if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getHarga() * n3 <= this.saldo) { //cek saldo user
 
                                             // melakukan transaksi
                                             Purchase purchase = new Purchase(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3);
+                                            this.saldo -= purchase.getCalculateTotal();
 
                                             int timeProduct = 0;
                                             if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // masukin timer product
@@ -373,7 +471,7 @@ public class User {
                                             }
 
                                             historiPembelian.add(purchase); // arraylist
-                                            purchase.printReceipt();
+                                            purchase.printReceipt(user);
                                             isOn = false;
 
                                             if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodJadi) {
@@ -483,21 +581,25 @@ public class User {
         return jumlahItemYangKurang;
     }
 
-    public void melihatHistori() {
-
-    }
-
     public void melihatLaporanKesehatan() {
 
     }
 
     // setter & getter
+
+    public void tambahSaldo(double n) {
+        this.saldo += n;
+    }
+
     public String getNama() {
         return username;
     }
 
     public String getPassword() {
         return password;
+    }
+    public String getRoles() {
+        return roles;
     }
 
 }
