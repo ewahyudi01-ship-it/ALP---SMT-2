@@ -472,6 +472,7 @@ public class User {
 
                                             historiPembelian.add(purchase); // arraylist
                                             purchase.printReceipt(user);
+                                            sc.nextLine();
                                             isOn = false;
 
                                             if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodJadi) {

@@ -57,7 +57,7 @@ public class Purchase {
                     + "<p>Quantity: " + getQuantity() + "</p>"
                     + "<p>Total: " + getCalculateTotal() + "</p>"
                     + "<br>" + "<br>"
-                    + "<P>Thanks for shooping by! :)</p>"
+                    + "<P>Thanks for shopping by! :)</p>"
                     + "</body></html>";
 
             String body = "html=" + URLEncoder.encode(notaHtml, StandardCharsets.UTF_8);
@@ -112,6 +112,8 @@ public class Purchase {
                 if ("failed".equalsIgnoreCase(status)) {
                     throw new RuntimeException("PDF generation failed: " + statusResponse);
                 }
+
+                Thread.sleep(2000);
             }
 
             // 3) DOWNLOAD PDF AS BYTES
@@ -130,6 +132,8 @@ public class Purchase {
 
             System.out.println("PDF berhasil dibuat: NotaKantinSmart.pdf");
 
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,7 +141,7 @@ public class Purchase {
 
     public User getOwner(ArrayList<User>user) {
         for (int i = 0; i < user.size(); i++) {
-            if (user.get(i).getRoles().equals(Main.Roles.OWNER)) {
+            if (user.get(i).getRoles().equals(Main.Roles.OWNER.getRoleName())) {
                 return user.get(i);
             }
         }

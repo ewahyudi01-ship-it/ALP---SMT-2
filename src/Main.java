@@ -29,7 +29,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<User> user = new ArrayList<>(); // <--- user saat ini
-        user.add(new User("Owner", "smart121", 65, 290000,"Owner"));
+        user.add(new User("Owner", "smart121", 65, 0,"Owner"));
         user.add(new User("1", "1", 65, 40000, Roles.SMA.getRoleName()));
 
         ArrayList<FoodItem> foodList = new ArrayList<>();
@@ -151,7 +151,7 @@ public class Main {
 
         if (n2.equals(n3)) {
 
-            if (!n.isEmpty() || !n2.isEmpty() || !n3.isEmpty()) {
+            if (!n.trim().isEmpty() && !n2.isEmpty() && !n3.isEmpty()) {
                 System.out.println("\nRoles: ");
                 System.out.println("1. siswa SMP");
                 System.out.println("2. Siswa SMA");
