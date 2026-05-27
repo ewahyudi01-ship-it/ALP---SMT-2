@@ -27,7 +27,11 @@ public class Purchase {
         this.foodItem = foodItem;
         this.quantity = quantity;
 
-        this.totalWaktu = 5 * quantity;
+        if (foodItem instanceof FoodMasak) {
+            this.totalWaktu = ((FoodMasak) foodItem).getWaktuBuat() * quantity;
+        } else {
+            this.totalWaktu = 0;
+        }
     }
 
     public double getCalculateTotal() {

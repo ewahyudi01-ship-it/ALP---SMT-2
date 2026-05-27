@@ -40,8 +40,7 @@ public class User {
                         current.waktuPesan = waktuSekarang;
                     }
 
-                    long sisaWaktu =
-                            current.totalWaktu - (waktuSekarang - current.waktuPesan);
+                    long sisaWaktu = current.totalWaktu - (waktuSekarang - current.waktuPesan);
 
                     if (sisaWaktu <= 0) {
                         Purchase selesai = cafe.removeOrder();
@@ -101,7 +100,7 @@ public class User {
                     long now = System.currentTimeMillis() / 1000;
                     long sisa = current.totalWaktu - (now - current.waktuPesan);
 
-                    System.out.println("Current order: " + current.getFoodItem().getFoodName() + " x" + current.getQuantity() + " | Wait for: " + Math.max(sisa, 0) + " sec");
+                    System.out.println("Current order: " + current.getFoodItem().getFoodName() + " x" + current.getQuantity() + " | Wait for: " + sisa + " sec");
                 }
             } else {
                 System.out.println("Current order: Tidak ada pesanan aktif");

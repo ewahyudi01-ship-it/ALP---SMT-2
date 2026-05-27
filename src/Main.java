@@ -125,8 +125,8 @@ public class Main {
 
                     case 0:
                         System.out.println("╔────────────────────╗\n" +
-                                "│      Goodbye!      │\n" +
-                                "╚────────────────────╝");
+                                           "│      Goodbye!      │\n" +
+                                           "╚────────────────────╝");
                         isloged = false;
                         break;
 
