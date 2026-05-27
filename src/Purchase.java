@@ -225,6 +225,10 @@ public class Purchase {
         return user;
     }
 
+    public int getTotalWaktu() {
+        return totalWaktu;
+    }
+
     public int getQuantity() {
         return quantity;
     }

@@ -100,7 +100,7 @@ public class User {
                     long now = System.currentTimeMillis() / 1000;
                     long sisa = current.totalWaktu - (now - current.waktuPesan);
 
-                    System.out.println("Current order: " + current.getFoodItem().getFoodName() + " x" + current.getQuantity() + " | Wait for: " + sisa + " sec");
+                    System.out.println("Current order: " + current.getFoodItem().getFoodName() + " x" + current.getQuantity() + " | Wait for: " + current.getTotalWaktu() + " sec");
                 }
             } else {
                 System.out.println("Current order: Tidak ada pesanan aktif");
