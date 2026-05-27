@@ -18,7 +18,9 @@ public class Cafetaria {
             for (int j = 0; j < getMenu(i).getFoodItem().size(); j++) {
                 System.out.println("- "+getMenu(i).getFoodItem().get(j).getFoodName() + " | harga: Rp." + getMenu(i).getFoodItem().get(j).getHarga());
             }
+            System.out.println("");
         }
+        System.out.println("---------------------------------------------------");
     }
     public void showOrders(){
         int i = 1;
@@ -42,6 +44,14 @@ public class Cafetaria {
     }
     public Menu getMainMenu() {
         return menuList.get(0);
+    }
+
+    public ArrayList<Menu> getMenuList() {
+        return menuList;
+    }
+
+    public Purchase getCurrentOrder() {
+        return orders.peek();
     }
 
     public  Queue<Purchase> getOrders() {

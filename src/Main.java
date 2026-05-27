@@ -8,17 +8,17 @@ import java.util.Scanner;
 public class Main {
 
     enum Roles {
-        OWNER ("Owner"),
-        SMA ("SMA"),
-        SMP ("SMP");
+        OWNER("Owner"),
+        SMA("SMA"),
+        SMP("SMP");
 
-        private  String name;
+        private String name;
 
-        Roles (String name){
+        Roles(String name) {
             this.name = name;
         }
 
-        String getRoleName(){
+        String getRoleName() {
             return name;
         }
     }
@@ -29,7 +29,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<User> user = new ArrayList<>(); // <--- user saat ini
-        user.add(new User("Owner", "smart121", 65, 0,"Owner"));
+        user.add(new User("Owner", "smart121", 65, 0, "Owner"));
         user.add(new User("1", "1", 65, 40000, Roles.SMA.getRoleName()));
 
         ArrayList<FoodItem> foodList = new ArrayList<>();
@@ -59,19 +59,19 @@ public class Main {
         bahanBakuList.add(new BahanBaku("sugar", 6));
 
         // food masak
-        FoodItem steak = new FoodMasak("Steak", 23000,0);
+        FoodItem steak = new FoodMasak("Steak", 23000, 0);
         ((FoodMasak) steak).setWaktuBuat(320);
         ((FoodMasak) steak).tambahResep("beef");
         ((FoodMasak) steak).tambahResep("potato");
         ((FoodMasak) steak).tambahResep("butter");
 
-        FoodItem toastBread =  new FoodMasak("Toast Bread", 6500,0);
+        FoodItem toastBread = new FoodMasak("Toast Bread", 6500, 0);
         ((FoodMasak) toastBread).setWaktuBuat(230);
         ((FoodMasak) toastBread).tambahResep("white bread");
         ((FoodMasak) toastBread).tambahResep("margarine");
         ((FoodMasak) toastBread).tambahResep("condensed milk");
 
-        FoodItem nasiGoreng = new FoodMasak("Nasi Goreng",17000,0);
+        FoodItem nasiGoreng = new FoodMasak("Nasi Goreng", 17000, 0);
         ((FoodMasak) nasiGoreng).setWaktuBuat(450);
         ((FoodMasak) nasiGoreng).tambahResep("rice");
         ((FoodMasak) nasiGoreng).tambahResep("egg");
@@ -79,7 +79,7 @@ public class Main {
         ((FoodMasak) nasiGoreng).tambahResep("sweet soy sauce");
         ((FoodMasak) nasiGoreng).tambahResep("vegetable oil");
 
-        FoodItem lumpia = new FoodMasak("Lumpia",9800,0);
+        FoodItem lumpia = new FoodMasak("Lumpia", 9800, 0);
         ((FoodMasak) lumpia).setWaktuBuat(10);
         ((FoodMasak) lumpia).tambahResep("spring roll wrapper");
         ((FoodMasak) lumpia).tambahResep("bamboo shoots");
@@ -124,14 +124,17 @@ public class Main {
                         break;
 
                     case 0:
-                        System.out.println("Goodbye!");
+                        System.out.println("╔────────────────────╗\n" +
+                                "│      Goodbye!      │\n" +
+                                "╚────────────────────╝");
                         isloged = false;
                         break;
+
                     default:
-                        System.out.println("Wrong input!");
+                        System.out.println(" - Wrong input! - ");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Input with number!");
+                System.out.println(" - Input with number! - ");
                 sc.next(); // tanpa perintah ini maka infinite loop
             }
 
@@ -184,7 +187,7 @@ public class Main {
                             System.out.println("- Wrong input! choose between 1 or 2. -");
                         }
                     } catch (InputMismatchException e) {
-                        System.out.println("Input with number!");
+                        System.out.println(" - Input with number! - ");
                         sc.next();
                     }
                 }
@@ -221,7 +224,9 @@ public class Main {
         System.out.print(" - Enter password: ");
         String n2 = sc.nextLine();
 
-        if (!n.isEmpty() || !n2.isEmpty()) {
+        boolean accFound = false;
+
+        if (!n.isEmpty() && !n2.isEmpty()) {
             for (int i = 0; i < user.size(); i++) {
                 if (user.get(i).getNama().equals(n) && user.get(i).getPassword().equals(n2)) {
                     System.out.println(" _._     _,-'\"\"`-._\n" +
@@ -229,13 +234,16 @@ public class Main {
                             "    `-.-' \\ )-`( , o o)\n" +
                             "          `-    \\`_`\"'-");
                     System.out.println("=== Logged in successfully! ===");
-                    user.get(i).menuUtama(user,sc, cafe);
-                    return;
+                    user.get(i).menuUtama(user, sc, cafe);
+                    accFound = true;
 
-                } else {
-                    System.out.println("=== Invalid Username or password! ===");
                 }
             }
+            if (accFound == false) {
+                System.out.println("=== Invalid Username or password! ===");
+            }
+        } else {
+            System.out.println("=== username or password cannot be empty! ===");
         }
     }
 
