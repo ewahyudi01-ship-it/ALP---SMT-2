@@ -30,7 +30,6 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         ArrayList<User> user = new ArrayList<>(); // <--- user saat ini
         user.add(new User("Owner", "smart121", 65, 0, "Owner"));
-        user.add(new User("1", "1", 65, 40000, Roles.SMA.getRoleName()));
 
         ArrayList<FoodItem> foodList = new ArrayList<>();
         // food jadi
@@ -198,6 +197,20 @@ public class Main {
                             "    `-.-' \\ )-`( , o o)\n" +
                             "          `-    \\`_`\"'-");
 
+                    boolean usernameExist = false;
+
+                    for (User u : user) {
+                        if (u.getNama().equalsIgnoreCase(n)) {
+                            usernameExist = true;
+                            break;
+                        }
+                    }
+
+                    if (usernameExist) {
+                        System.out.println("Username already exists!");
+                        return;
+                    }
+
                     if (n4 == 1) {
                         User newUser = new User(n, n3, n5, 999900, Roles.SMP.getRoleName());
                         user.add(newUser);
@@ -236,7 +249,7 @@ public class Main {
                     System.out.println("=== Logged in successfully! ===");
                     user.get(i).menuUtama(user, sc, cafe);
                     accFound = true;
-
+                    break;
                 }
             }
             if (accFound == false) {

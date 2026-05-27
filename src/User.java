@@ -100,6 +100,7 @@ public class User {
                     long now = System.currentTimeMillis() / 1000;
                     long sisa = current.totalWaktu - (now - current.waktuPesan);
 
+
                     System.out.println("Current order: " + current.getFoodItem().getFoodName() + " x" + current.getQuantity() + " | Wait for: " + current.getTotalWaktu() + " sec");
                 }
             } else {
@@ -154,6 +155,7 @@ public class User {
                         break;
 
                     case 0:
+                        timerOtomatis.cancel();
                         isTrue = false;
                         break;
 
@@ -611,19 +613,11 @@ public class User {
 
                                             // melakukan transaksi
                                             Purchase purchase = new Purchase(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3);
-                                            this.saldo -= purchase.getCalculateTotal();
-
-                                            // masukin timer product
-                                            int timeProduct = 0;
-                                            if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
-                                                timeProduct = ((FoodMasak) cafe.getMenu(n - 1).getFoodItem().get(n2 - 1)).getWaktuBuat();
-                                                purchase.addWaktu(timeProduct);
-                                            }
-
                                             historiPembelian.add(purchase); // arraylist
                                             purchase.printReceipt(sc);
 
-                                            User owner = getOwner(user); // tambah saldo owner
+                                            this.saldo -= purchase.getCalculateTotal(); // kurangi saldo kustomer
+                                            User owner = getOwner(user); // tambahi saldo owner
                                             owner.tambahSaldo(purchase.getCalculateTotal());
 
 

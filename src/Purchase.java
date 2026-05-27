@@ -44,8 +44,6 @@ public class Purchase {
     }
 
     public void printReceipt(Scanner scanner) {
-//        User owner = getOwner(user);
-//        owner.tambahSaldo(getCalculateTotal());
 
         System.out.println("Transaction completed! you bought " + foodItem.foodName + " for " + this.quantity);
         System.out.println("Cost: " + getCalculateTotal());
