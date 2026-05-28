@@ -24,7 +24,7 @@ public class FoodMasak extends FoodItem {
     }
 
 
-    public void getStockFoodMasak() {
+    public boolean getStockFoodMasak() {
         int maks = 999;
 
         for (int i = 0; i < getResepBahan().size(); i++) {
@@ -38,6 +38,11 @@ public class FoodMasak extends FoodItem {
             }
         }
         this.stock = maks;
+        if (maks != 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void reduceStockBahanBaku(int n3) {

@@ -585,70 +585,134 @@ public class User {
 
                 int n = sc.nextInt(); // choose menu
 
-                if (n <= cafe.getMenuSize() && n > 0) {
-                    while (isOn) {
-                        System.out.println("\n=== Choose Products! ===");
-                        for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
-                            System.out.println(i + 1 + ". " + cafe.getMenu(n - 1).getFoodItem().get(i).getFoodName() + " | Harga: " + cafe.getMenu(n - 1).getFoodItem().get(i).getHarga());
-                        }
-                        System.out.print("-- Choose: ");
-                        try {
-                            int n2 = sc.nextInt(); // choose products
+                if (n <= cafe.getMenuSize() && n > 0) { // cek input valid atau tidak
 
-                            if (!recentPurchases.empty() && cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
-                                System.out.println("Tidak bisa order food masak lagi! tunggu sampai selesai pesanan sebelumnya!");
-                                return;
+                    if (n == 1) { // if pilih menu utama
+                        while (isOn) {
+                            System.out.println("\n=== Choose Products! ===");
+                            for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
+                                System.out.println(i + 1 + ". " + cafe.getMenu(n - 1).getFoodItem().get(i).getFoodName() + " | Harga: " + cafe.getMenu(n - 1).getFoodItem().get(i).getHarga());
                             }
+                            System.out.print("-- Choose: ");
+                            try {
+                                int n2 = sc.nextInt(); // choose products
 
-                            if (n2 <= cafe.getMenu(n - 1).getFoodItem().size() && n2 > 0) {
-                                System.out.println("Produk dipilih: " + cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).displayInfo());
-                                System.out.print("-- Quantity: ");
+                                if (!recentPurchases.empty() && cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
+                                    System.out.println("Tidak bisa order food masak lagi! tunggu sampai selesai pesanan sebelumnya!");
+                                    return;
+                                }
 
-                                int n3 = 0;
-                                try {
-                                    n3 = sc.nextInt(); // quantity products
+                                if (n2 <= cafe.getMenu(n - 1).getFoodItem().size() && n2 > 0) {
+                                    System.out.println("Produk dipilih: " + cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).displayInfo());
+                                    System.out.print("-- Quantity: ");
 
-                                    if (n3 > 0 && n3 <= cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getStock()) { // input is 0 or too much than available stock
-                                        if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getHarga() * n3 <= this.saldo) { //cek saldo user
+                                    int n3 = 0;
+                                    try {
+                                        n3 = sc.nextInt(); // quantity products
 
-                                            // melakukan transaksi
-                                            Purchase purchase = new Purchase(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3);
-                                            historiPembelian.add(purchase); // arraylist
-                                            purchase.printReceipt(sc);
+                                        if (n3 > 0 && n3 <= cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getStock()) { // input is 0 or too much than available stock
+                                            if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getHarga() * n3 <= this.saldo) { //cek saldo user
 
-                                            this.saldo -= purchase.getCalculateTotal(); // kurangi saldo kustomer
-                                            User owner = getOwner(user); // tambahi saldo owner
-                                            owner.tambahSaldo(purchase.getCalculateTotal());
+                                                // melakukan transaksi
+                                                Purchase purchase = new Purchase(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3);
+                                                historiPembelian.add(purchase); // arraylist
+                                                purchase.printReceipt(sc);
+
+                                                this.saldo -= purchase.getCalculateTotal(); // kurangi saldo kustomer
+                                                User owner = getOwner(user); // tambahi saldo owner
+                                                owner.tambahSaldo(purchase.getCalculateTotal());
 
 
-                                            sc.nextLine();
-                                            isOn = false;  //transaction completed
+                                                sc.nextLine();
+                                                isOn = false;  //transaction completed
 
-                                            if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodJadi) {
-                                                cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).reduceStock(n3);
+                                                if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodJadi) {
+                                                    cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).reduceStock(n3);
 
-                                            } else if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
-                                                cafe.addOrder((purchase)); // orderlist Queue
-                                                ((FoodMasak) cafe.getMenu(n - 1).getFoodItem().get(n2 - 1)).reduceStockBahanBaku(n3);
-                                                recentPurchases.push(purchase); // masuk ke stack (ONLY food masak)
+                                                } else if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
+                                                    cafe.addOrder((purchase)); // orderlist Queue
+                                                    ((FoodMasak) cafe.getMenu(n - 1).getFoodItem().get(n2 - 1)).reduceStockBahanBaku(n3);
+                                                    recentPurchases.push(purchase); // masuk ke stack (ONLY food masak)
+                                                }
+                                            } else {
+                                                System.out.println(" - Not enough ammount of balance :( - ");
+                                                return;
                                             }
                                         } else {
-                                            System.out.println(" - Not enough ammount of balance :( - ");
-                                            return;
+                                            System.out.println(" - invalid input!, please input quantity between amount of items product! - ");
                                         }
-                                    } else {
-                                        System.out.println(" - invalid input!, please input quantity between amount of items product! - ");
+                                    } catch (InputMismatchException e) {
+                                        System.out.println(" - Input with number! - ");
+                                        sc.next();
                                     }
-                                } catch (InputMismatchException e) {
-                                    System.out.println(" - Input with number! - ");
-                                    sc.next();
+                                } else {
+                                    System.out.println(" - invalid input! - ");
                                 }
-                            } else {
-                                System.out.println(" - invalid input! - ");
+                            } catch (InputMismatchException e) {
+                                System.out.println(" - Please enter a number - ");
+                                sc.next();
                             }
-                        } catch (InputMismatchException e) {
-                            System.out.println(" - Please enter a number - ");
-                            sc.next();
+                        }
+                    } else { // menu paket
+                        double hargaTotaldariMenuPaket = 0;
+                        boolean semuaStokAman = true;
+
+                        // 1. Tampilkan item paket & validasi stok semua item terlebih dahulu
+                        System.out.println("\n--- Items inside this Packet ---");
+                        for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
+                            FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
+
+                            if (items instanceof FoodMasak) {
+                                ((FoodMasak) items).getStockFoodMasak();
+                                if (items.getStock() <= 0) {
+                                    System.out.println(" - Sorry, the stock for the " + items.getFoodName() + " is empty :( - ");
+                                    semuaStokAman = false;
+                                }
+                            } else if (items instanceof FoodJadi) {
+                                if (items.getStock() <= 0) {
+                                    System.out.println(" - Sorry, the stock for the " + items.getFoodName() + " is empty :( - ");
+                                    semuaStokAman = false;
+                                }
+                            }
+                            System.out.println((i + 1) + ". " + items.getFoodName() + " | harga: " + items.getHarga());
+                            hargaTotaldariMenuPaket += items.getHarga();
+                        }
+                        System.out.println("-------------------------------------");
+
+                        // Jika ada salah satu item di dalam paket yang habis maka batalkan transaksi
+                        if (!semuaStokAman) {
+                            System.out.println(" - Cannot purchase this packet due to empty stock item! - ");
+                            return;
+                        }
+
+                        System.out.println("Succesfully purchase, in total price for this packet: " + hargaTotaldariMenuPaket);
+
+                        // reduce stock
+                        for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
+                            FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
+                            if (items instanceof FoodMasak) {
+                                ((FoodMasak) items).reduceStockBahanBaku(1);
+                            } else if (items instanceof FoodJadi) {
+                                items.reduceStock(1);
+                            }
+                        }
+
+                        // cek saldo kustomer & profit ke saldo owner
+                        if (hargaTotaldariMenuPaket <= this.saldo) {
+                            this.saldo -= hargaTotaldariMenuPaket;
+                            User owner = getOwner(user);
+                            owner.tambahSaldo(hargaTotaldariMenuPaket);
+
+                            // beli dan nyimpan daftar catatan purchase
+                            for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
+                                FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
+                                Purchase singlePurchase = new Purchase(this, items, 1);
+                                historiPembelian.add(singlePurchase);
+                            }
+                            isOn = false;
+
+                        } else {
+                            System.out.println(" - Sorry, not enough balance! -");
                         }
                     }
                 }
