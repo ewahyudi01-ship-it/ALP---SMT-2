@@ -16,9 +16,6 @@ public class BahanBaku {
     private double protein;
     private double sugarLvl;
 
-    // API Key dari API Ninjas (Ganti dengan API Key milikmu)
-    private static final String API_KEY = "kJuvzfwcnNJdpF7Wjrh3WNEljHKUN1QH8vdezPiV";
-
     public BahanBaku(String namaBahanBaku, int stockBaku) {
         this.namaBahanBaku = namaBahanBaku;
         this.stockBaku = stockBaku;
@@ -61,15 +58,13 @@ public class BahanBaku {
     public void addIngredient(int n) {
         stockBaku += n;
     }
-
-
     public int getStockBaku() {
         return stockBaku;
     }
-
     public void kurangiStockBaku(int n3) {
         this.stockBaku -= n3;
     }
+
     public String getNamaBahanBaku() {
         return namaBahanBaku;
     }

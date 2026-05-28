@@ -12,27 +12,27 @@
   },
 
   "butter": {
-    "calories": 717,
+    "calories": 110,
     "protein": 0.8,
     "sugar": 0.1
   },
 
   "white bread": {
-    "calories": 265,
+    "calories": 32,
     "protein": 9,
     "sugar": 5
   },
 
   "margarine": {
-    "calories": 717,
+    "calories": 415,
     "protein": 0,
     "sugar": 0
   },
 
   "condensed milk": {
-    "calories": 321,
-    "protein": 8,
-    "sugar": 54
+    "calories": 300,
+    "protein": 7,
+    "sugar": 51
   },
 
   "rice": {
@@ -42,31 +42,31 @@
   },
 
   "egg": {
-    "calories": 155,
-    "protein": 13,
+    "calories": 55,
+    "protein": 7.4,
     "sugar": 1.1
   },
 
   "chicken": {
-    "calories": 239,
-    "protein": 27,
+    "calories": 120,
+    "protein": 17,
     "sugar": 0
   },
 
   "sweet soy sauce": {
-    "calories": 188,
+    "calories": 45,
     "protein": 3,
-    "sugar": 40
+    "sugar": 12
   },
 
   "vegetable oil": {
-    "calories": 884,
+    "calories": 120,
     "protein": 0,
     "sugar": 0
   },
 
   "spring roll wrapper": {
-    "calories": 290,
+    "calories": 190,
     "protein": 6,
     "sugar": 1
   },
@@ -78,8 +78,8 @@
   },
 
   "sugar": {
-    "calories": 387,
+    "calories": 57,
     "protein": 0,
-    "sugar": 100
+    "sugar": 14
   }
 }

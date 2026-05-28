@@ -56,6 +56,22 @@ public class FoodMasak extends FoodItem {
         }
     }
 
+
+    @Override
+    public double getCalories() {
+        return caloriesTotal;
+    }
+
+    @Override
+    public double getProtein() {
+        return proteinTotal;
+    }
+
+    @Override
+    public double getSugarLvl() {
+        return sugarLvlTotal;
+    }
+
     public void getTotalCalories() {
         this.caloriesTotal=0;
 
@@ -121,7 +137,6 @@ public class FoodMasak extends FoodItem {
 
     @Override
     public boolean isHealthy() {
-
-        return false;
+        return caloriesTotal < 800 && sugarLvlTotal < 25;
     }
 }

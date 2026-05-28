@@ -20,6 +20,21 @@ public class FoodJadi extends FoodItem {
     }
 
     @Override
+    public double getCalories() {
+        return calories;
+    }
+
+    @Override
+    public double getProtein() {
+        return protein;
+    }
+
+    @Override
+    public double getSugarLvl() {
+        return sugarLvl;
+    }
+
+    @Override
     public String displayInfo(){
         return  foodName + " | calories: " + this.calories + " | sugar lvl: " + this.sugarLvl + " | protein: " + this.protein +
                 " | sisa stock: " + this.stock + " | harga: " + this.harga;
@@ -27,12 +42,10 @@ public class FoodJadi extends FoodItem {
 
     @Override
     public boolean isHealthy() {
-        if(calories < 500 && sugarLvl < 20 && protein > 10) {
+        if(calories < 600 && sugarLvl < 25) {
             return true;
         }
         return false;
     }
-
-
 
 }

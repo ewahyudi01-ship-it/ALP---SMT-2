@@ -14,13 +14,18 @@ public abstract class FoodItem {
 
     public abstract boolean isHealthy();
 
+    // Nutrition getters (to be implemented by subclasses)
+    public abstract double getCalories();
+    public abstract double getProtein();
+    public abstract double getSugarLvl();
+
     public void reduceStock(int n3){
         this.stock -= n3;
     }
     public String getFoodName() {
         return foodName;
     }
-    public int  getStock() {
+    public int getStock() {
         return stock;
     }
     public double getHarga() {

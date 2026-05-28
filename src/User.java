@@ -20,7 +20,7 @@ public class User {
         this.roles = roles;
         recentPurchases = new Stack<>();
         historiPembelian = new ArrayList<>();
-
+        healthReport = new HealthReport(this);
     }
 
     // method2 void dll
@@ -131,7 +131,7 @@ public class User {
                         break;
 
                     case 3:
-
+                        healthReport.displayReport();
                         break;
 
                     case 4:
@@ -154,10 +154,6 @@ public class User {
                         cancelOrder();
                         break;
 
-                    case 9:
-                        gantiBeratBadan();
-                        break;
-
                     case 0:
                         timerOtomatis.cancel();
                         isTrue = false;
@@ -173,10 +169,6 @@ public class User {
             }
 
         }
-    }
-
-    private void gantiBeratBadan() {
-        System.out.println("-=-=-=-=-=- CHANCE WEIGHT -=-=-=-=-=-");
     }
 
     private void cancelOrder() {
@@ -293,8 +285,8 @@ public class User {
 
                             for (int i = 0; i < mainMenu.getFoodItem().size(); i++) {
                                 if (mainMenu.getFoodItem().get(i) instanceof FoodJadi) {
-                                System.out.println(i + 1 + ". " + mainMenu.getFoodItem().get(i).getFoodName() + " | Stock: " + mainMenu.getFoodItem().get(i).getStock());
-                                jumlahProdukJadi++;
+                                    System.out.println(i + 1 + ". " + mainMenu.getFoodItem().get(i).getFoodName() + " | Stock: " + mainMenu.getFoodItem().get(i).getStock());
+                                    jumlahProdukJadi++;
                                 }
                             }
                             System.out.print("\nChoose Products: ");
@@ -423,9 +415,7 @@ public class User {
                 System.out.println("Info Stats:");
                 System.out.println("ID       : " + memberCard.getIdCard());
                 System.out.println("Rank     : " + memberCard.getRankSubscription());
-                if (memberCard.getRankSubscription().equals(MemberCard.Rank.REGULAR)){
-                    System.out.println("Expire in: "+ memberCard.getMemberCardExpiry());
-                }
+                System.out.println("Expire in: " + memberCard.getMemberCardExpiry());
                 System.out.println("----------------------------------------------------------");
                 System.out.println("1. Upgrade Member card");
                 System.out.println("2. Extend duration member card");
@@ -472,7 +462,7 @@ public class User {
 
                         case 2: //extend time duration
                             if (memberCard.getRankSubscription().equals(MemberCard.Rank.REGULAR)) {
-                                System.out.println("\n¸,ø¤º°`°º¤ø,¸,ø¤º°`°º¤ø,¸ EXTENDS ¸,ø¤º°`°º¤ø,¸,ø¤º°`°º¤ø,¸");
+                                System.out.println("¸,ø¤º°`°º¤ø¤º°`°º¤ø,¸");
                                 System.out.println("1. Extend to 3 days! for Rp.5000");
                                 System.out.println("2. Extend to 1 weeks! for Rp.10650");
                                 System.out.println("3. Extend to 1 month (30 day)! for Rp.34.500");
@@ -560,7 +550,7 @@ public class User {
                     switch (choice) {
                         case 1:
                             if (saldo >= MemberCard.PRICE_REGULAR) {
-                                memberCard = new MemberCard("ID#" + getNama() + "-" + roles, MemberCard.Rank.REGULAR, MemberCard.DURATION_3_DAYS);
+                                memberCard = new MemberCard("ID#" + getNama() + "-" + roles , MemberCard.Rank.REGULAR, MemberCard.DURATION_3_DAYS);
                                 saldo -= MemberCard.PRICE_REGULAR;
                                 owner.tambahSaldo(MemberCard.PRICE_REGULAR);
 
@@ -622,6 +612,24 @@ public class User {
 
                                         if (n3 > 0 && n3 <= cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getStock()) { // input is 0 or too much than available stock
                                             if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getHarga() * n3 <= this.saldo) { //cek saldo user
+
+                                                // --- 3.7 Health Check: Nutrition & Safety ---
+                                                FoodItem selectedFood = cafe.getMenu(n - 1).getFoodItem().get(n2 - 1);
+                                                System.out.println("\n--- Nutrition Info for: " + selectedFood.getFoodName() + " ---");
+                                                System.out.printf("  Calories : %.1f kcal%n", selectedFood.getCalories() * n3);
+                                                System.out.printf("  Protein  : %.1f g%n", selectedFood.getProtein() * n3);
+                                                System.out.printf("  Sugar    : %.1f g%n", selectedFood.getSugarLvl() * n3);
+                                                System.out.println("  Healthy  : " + (selectedFood.isHealthy() ? "YES" : "NO"));
+                                                System.out.println("------------------------------------------");
+
+                                                String safetyWarning = healthReport.checkFoodSafety(selectedFood, n3);
+                                                if (safetyWarning != null) {
+                                                    System.out.println("\n⚠ PURCHASE CANCELLED - Health Safety Warning:");
+                                                    System.out.println("  " + safetyWarning);
+                                                    System.out.println("  Please check your health report (option 3) for more info.");
+                                                    return;
+                                                }
+                                                // --- End Health Check ---
 
                                                 // melakukan transaksi
                                                 Purchase purchase = new Purchase(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3);
@@ -696,6 +704,35 @@ public class User {
                         }
 
                         System.out.println("Succesfully purchase, in total price for this packet: " + hargaTotaldariMenuPaket);
+
+                        // --- 3.7 Health Check for Packet Menu ---
+                        System.out.println("\n--- Nutrition Summary for this Packet ---");
+                        double packetCal = 0, packetProt = 0, packetSugar = 0;
+                        for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
+                            FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
+                            packetCal   += items.getCalories();
+                            packetProt  += items.getProtein();
+                            packetSugar += items.getSugarLvl();
+                        }
+                        System.out.printf("  Total Calories : %.1f kcal%n", packetCal);
+                        System.out.printf("  Total Protein  : %.1f g%n", packetProt);
+                        System.out.printf("  Total Sugar    : %.1f g%n", packetSugar);
+                        System.out.println("------------------------------------------");
+
+                        // Check each item in the packet for health safety
+                        String packetWarning = null;
+                        for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
+                            FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
+                            String w = healthReport.checkFoodSafety(items, 1);
+                            if (w != null) { packetWarning = w; break; }
+                        }
+                        if (packetWarning != null) {
+                            System.out.println("\n⚠ PURCHASE CANCELLED - Health Safety Warning:");
+                            System.out.println("  " + packetWarning);
+                            System.out.println("  Please check your health report (option 3) for more info.");
+                            return;
+                        }
+                        // --- End Health Check ---
 
                         // reduce stock
                         for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
