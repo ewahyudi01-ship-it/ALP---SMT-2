@@ -65,7 +65,7 @@ public class MemberCard {
         System.out.println("= - - = - - = - - = - - = - - = - - = - - = - - = - - = - - = - - = - - = - - = - - =");
     }
 
-    public LocalDate getMemberCard() {
+    public LocalDate getMemberCardExpiry() {
         return this.cardExpiry;
     }
 

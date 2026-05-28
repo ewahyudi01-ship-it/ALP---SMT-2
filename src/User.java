@@ -154,6 +154,10 @@ public class User {
                         cancelOrder();
                         break;
 
+                    case 9:
+                        gantiBeratBadan();
+                        break;
+
                     case 0:
                         timerOtomatis.cancel();
                         isTrue = false;
@@ -169,6 +173,10 @@ public class User {
             }
 
         }
+    }
+
+    private void gantiBeratBadan() {
+        System.out.println("-=-=-=-=-=- CHANCE WEIGHT -=-=-=-=-=-");
     }
 
     private void cancelOrder() {
@@ -415,7 +423,9 @@ public class User {
                 System.out.println("Info Stats:");
                 System.out.println("ID       : " + memberCard.getIdCard());
                 System.out.println("Rank     : " + memberCard.getRankSubscription());
-                System.out.println("Expire in: " + memberCard.getMemberCard());
+                if (memberCard.getRankSubscription().equals(MemberCard.Rank.REGULAR)){
+                    System.out.println("Expire in: "+ memberCard.getMemberCardExpiry());
+                }
                 System.out.println("----------------------------------------------------------");
                 System.out.println("1. Upgrade Member card");
                 System.out.println("2. Extend duration member card");
@@ -462,7 +472,7 @@ public class User {
 
                         case 2: //extend time duration
                             if (memberCard.getRankSubscription().equals(MemberCard.Rank.REGULAR)) {
-                                System.out.println("¸,ø¤º°`°º¤ø¤º°`°º¤ø,¸");
+                                System.out.println("\n¸,ø¤º°`°º¤ø,¸,ø¤º°`°º¤ø,¸ EXTENDS ¸,ø¤º°`°º¤ø,¸,ø¤º°`°º¤ø,¸");
                                 System.out.println("1. Extend to 3 days! for Rp.5000");
                                 System.out.println("2. Extend to 1 weeks! for Rp.10650");
                                 System.out.println("3. Extend to 1 month (30 day)! for Rp.34.500");
@@ -550,7 +560,7 @@ public class User {
                     switch (choice) {
                         case 1:
                             if (saldo >= MemberCard.PRICE_REGULAR) {
-                                memberCard = new MemberCard("ID#" + getNama() + "-" + roles + "-", MemberCard.Rank.REGULAR, MemberCard.DURATION_3_DAYS);
+                                memberCard = new MemberCard("ID#" + getNama() + "-" + roles, MemberCard.Rank.REGULAR, MemberCard.DURATION_3_DAYS);
                                 saldo -= MemberCard.PRICE_REGULAR;
                                 owner.tambahSaldo(MemberCard.PRICE_REGULAR);
 
