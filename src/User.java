@@ -76,7 +76,7 @@ public class User {
             if (roles.equals("Owner")) {
                 if (reminderBahanBaku() == 1) {
                     System.out.println("\n------ REMINDER ------");
-                    System.out.println("WARNING! your raw material stock for products is empty, please refill!");
+                    System.out.println("⚠ WARNING! your raw material stock for products is empty, please refill!");
                     showAllIngredientToRefill();
 
 
@@ -85,7 +85,7 @@ public class User {
 
                 } else if (reminderBahanBaku() == 2) {
                     System.out.println("\n------ REMINDER ------");
-                    System.out.println("WARNING! your raw material stock for products is almost empty, please refill!");
+                    System.out.println("⚠ WARNING! your raw material stock for products is almost empty, please refill!");
                     showAllIngredientToRefill();
 
                     System.out.println("Type '6' to restock it now! ");
@@ -188,7 +188,7 @@ public class User {
             switch (n) {
                 case 1:
                     sc.nextLine();
-                    System.out.println("type bellow for your new name | type '0' to cancel)");
+                    System.out.println("type below for your new name | type '0' to cancel)");
                     System.out.print("new name: ");
                     String newUserName = sc.nextLine();
                         if (newUserName.trim().equals("0")) {
@@ -201,7 +201,7 @@ public class User {
 
                 case 2:
                     sc.nextLine();
-                    System.out.println("type bellow for your new password | type '0' to cancel)");
+                    System.out.println("type below for your new password | type '0' to cancel)");
                     System.out.print("new password: ");
                     String newPassword = sc.nextLine();
                     if (newPassword.trim().equals("0")) {
@@ -213,7 +213,7 @@ public class User {
                     break;
 
                     case 3:
-                        System.out.println("type bellow for update body weight | type '0' to cancel)");
+                        System.out.println("type below for update body weight | type '0' to cancel)");
                         System.out.print("body weight: ");
                         try {
                             int updateBodyWeight = sc.nextInt();
@@ -234,7 +234,7 @@ public class User {
                         break;
 
                 case 4:
-                    System.out.println("type bellow for update roles | type '0' to cancel)");
+                    System.out.println("type below for update roles | type '0' to cancel)");
                     System.out.println("1. SMP");
                     System.out.println("2. SMA");
                     System.out.print("your role: ");
