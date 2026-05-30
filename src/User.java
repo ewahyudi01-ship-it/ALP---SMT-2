@@ -154,7 +154,7 @@ public class User {
                         break;
 
                     case 9:
-                        editProfile(sc, user);
+                        editProfile(sc);
                         break;
 
                     case 0:
@@ -174,43 +174,46 @@ public class User {
         }
     }
 
-    private void editProfile(Scanner sc, ArrayList<User> user) {
-        System.out.println("╔═════════════════ EDIT PROFILE ═════════════════╗");
-        System.out.println("1. change username                               ║");
-        System.out.println("2. change password                               ║");
-        System.out.println("3. change body weight                            ║");
-        System.out.println("4. change roles                                  ║");
-        System.out.println("0. back                                          ║");
-        System.out.println("╚════════════════════════════════════════════════╝");
-        System.out.print("- choice: ");
-        try {
-            int n = sc.nextInt();
-            switch (n) {
-                case 1:
-                    sc.nextLine();
-                    System.out.println("type below for your new name | type '0' to cancel)");
-                    System.out.print("new name: ");
-                    String newUserName = sc.nextLine();
+    private void editProfile(Scanner sc) {
+
+        boolean isOn = true;
+        while (isOn) {
+            System.out.println("\n╔═════════════════ EDIT PROFILE ═════════════════╗");
+            System.out.println("1. change username                               ║");
+            System.out.println("2. change password                               ║");
+            System.out.println("3. change body weight                            ║");
+            System.out.println("4. change roles                                  ║");
+            System.out.println("0. back                                          ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
+            System.out.print("- choice: ");
+            try {
+                int n = sc.nextInt();
+                switch (n) {
+                    case 1:
+                        sc.nextLine();
+                        System.out.println("type below for your new name | type '0' to cancel)");
+                        System.out.print("new name: ");
+                        String newUserName = sc.nextLine();
                         if (newUserName.trim().equals("0")) {
                             break;
                         } else {
-                            this.username  = newUserName;
+                            this.username = newUserName;
                             System.out.println("Successfully changed your new name to: " + username);
                         }
-                    break;
-
-                case 2:
-                    sc.nextLine();
-                    System.out.println("type below for your new password | type '0' to cancel)");
-                    System.out.print("new password: ");
-                    String newPassword = sc.nextLine();
-                    if (newPassword.trim().equals("0")) {
                         break;
-                    } else {
-                        this.password  = newPassword;
-                        System.out.println("Successfully changed your new password to: " + password);
-                    }
-                    break;
+
+                    case 2:
+                        sc.nextLine();
+                        System.out.println("type below for your new password | type '0' to cancel)");
+                        System.out.print("new password: ");
+                        String newPassword = sc.nextLine();
+                        if (newPassword.trim().equals("0")) {
+                            break;
+                        } else {
+                            this.password = newPassword;
+                            System.out.println("Successfully changed your new password to: " + password);
+                        }
+                        break;
 
                     case 3:
                         System.out.println("type below for update body weight | type '0' to cancel)");
@@ -233,49 +236,50 @@ public class User {
                         }
                         break;
 
-                case 4:
-                    System.out.println("type below for update roles | type '0' to cancel)");
-                    System.out.println("1. SMP");
-                    System.out.println("2. SMA");
-                    System.out.print("your role: ");
-                    try {
-                        int updateRoles = sc.nextInt();
+                    case 4:
+                        System.out.println("type below for update roles | type '0' to cancel)");
+                        System.out.println("1. SMP");
+                        System.out.println("2. SMA");
+                        System.out.print("your role: ");
+                        try {
+                            int updateRoles = sc.nextInt();
 
-                        if (updateRoles == 0) {
-                            break;
-                        } else if (updateRoles == 1){
-                            if (!roles.equalsIgnoreCase("SMP")) {
-                                this.roles = Main.Roles.SMP.getRoleName();
-                                System.out.println("Successfully update your role to: " + roles);
+                            if (updateRoles == 0) {
+                                break;
+                            } else if (updateRoles == 1) {
+                                if (!roles.equalsIgnoreCase("SMP")) {
+                                    this.roles = Main.Roles.SMP.getRoleName();
+                                    System.out.println("Successfully update your role to: " + roles);
+                                } else {
+                                    System.out.println("⚠ - Invalid input! you already has the same role you've choosen, as SMP!");
+                                }
+
+                            } else if (updateRoles == 2) {
+                                if (!roles.equalsIgnoreCase("SMA")) {
+                                    this.roles = Main.Roles.SMA.getRoleName();
+                                    System.out.println("Successfully update your role to: " + roles);
+                                } else {
+                                    System.out.println("⚠ - Invalid input! you already has the same role you've choosen, as SMA!");
+                                }
+
                             } else {
-                                System.out.println("⚠ - Invalid input! you already has the same role you've choosen, as SMP!");
+                                System.out.println("⚠ - Invalid input! - ");
                             }
 
-                        } else if (updateRoles == 2) {
-                            if (!roles.equalsIgnoreCase("SMA")) {
-                                this.roles = Main.Roles.SMA.getRoleName();
-                                System.out.println("Successfully update your role to: " + roles);
-                            } else {
-                                System.out.println("⚠ - Invalid input! you already has the same role you've choosen, as SMA!");
-                            }
-
-                        } else {
-                            System.out.println("⚠ - Invalid input! - ");
+                        } catch (InputMismatchException e) {
+                            System.out.println("⚠ - please input number! - ");
+                            sc.next();
                         }
-
-                    } catch (InputMismatchException e) {
-                        System.out.println("⚠ - please input number! - ");
-                        sc.next();
-                    }
-                    break;
+                        break;
 
                     case 0:
-                        break;
-            }
+                        isOn = false;
+                }
 
-        } catch (InputMismatchException e) {
-            System.out.println("⚠ - Input with number! - ");
-            sc.next();
+            } catch (InputMismatchException e) {
+                System.out.println("⚠ - Input with number! - ");
+                sc.next();
+            }
         }
     }
 
