@@ -53,16 +53,17 @@ public class MemberCard {
         LocalDate hariIni = LocalDate.now();
 
         if (isCardActive()) {
-            System.out.print("Your member card has been extended from: (" + cardExpiry +")");
+            System.out.println("\n╔═══════════════════════════════════════════════════════════════════════════════╗");
+            System.out.print("║Your member card has been extended from: (" + cardExpiry +") ");
             // Jika masih aktif, akumulasikan dari tanggal expiry yang lama
             this.cardExpiry = this.cardExpiry.plusDays(n);
         } else {
-            System.out.print("Your member card has been extended from: (" + hariIni +")");
+            System.out.print("║Your member card has been extended from: (" + hariIni +") ");
             // Jika sudah hangus, hitung masa aktif baru mulai dari HARI INI, tanpa "hariIni" maka plusDays(n) menambah perpanjangan hari di waktu kartu sudah expire atau bukan HARI INI
             this.cardExpiry = hariIni.plusDays(n);
         }
-        System.out.println("---> ("+  cardExpiry + ")");
-        System.out.println("= - - = - - = - - = - - = - - = - - = - - = - - = - - = - - = - - = - - = - - = - - =");
+        System.out.println("---> ("+  cardExpiry + ")        ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════════════════════════╝");
     }
 
     public LocalDate getMemberCardExpiry() {

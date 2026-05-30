@@ -533,12 +533,12 @@ public class User {
         boolean isOn = true;
         while (isOn) {
             if (memberCard != null) { //jika ada member card
-                System.out.println("\n_\\|/__\\|/__\\|/__\\|/_   MEMBER CARD   _\\|/__\\|/__\\|/__\\|/_");
+                System.out.println("\n__\\|/__\\|/__\\|/__\\|/_   MEMBER CARD   _\\|/__\\|/__\\|/__\\|/__");
                 System.out.println("Info Stats:");
                 System.out.println("ID       : " + memberCard.getIdCard());
                 System.out.println("Rank     : " + memberCard.getRankSubscription());
                 System.out.println("Expire in: " + memberCard.getMemberCardExpiry());
-                System.out.println("----------------------------------------------------------");
+                System.out.println("-----------------------------------------------------------");
                 System.out.println("1. Upgrade Member card");
                 System.out.println("2. Extend duration member card");
                 System.out.println("0. return to main menu");
@@ -567,7 +567,7 @@ public class User {
                                                 System.out.println("Purchase member card upgrade to premium succesful!");
                                                 break;
                                             } else {
-                                                System.out.println("Not enough balance! :{");
+                                                System.out.println("⚠ Not enough balance! :{");
                                             }
                                         case 0:
                                             break;
@@ -578,7 +578,7 @@ public class User {
                                     sc.next();
                                 }
                             } else {
-                                System.out.println("You already have Premium member card subscription!");
+                                System.out.println("⚠ You already have Premium member card subscription!");
                             }
                             break;
 
@@ -604,7 +604,7 @@ public class User {
                                                 owner.tambahSaldo(MemberCard.PRICE_3_DAYS);
 
                                             } else {
-                                                System.out.println("Not enough balance! :{ ");
+                                                System.out.println("⚠ Not enough balance! :{ ");
                                             }
                                             break;
 
@@ -615,7 +615,7 @@ public class User {
                                                 owner.tambahSaldo(MemberCard.PRICE_7_DAYS);
 
                                             } else {
-                                                System.out.println("Not enough balance! :{ ");
+                                                System.out.println("⚠ Not enough balance! :{ ");
                                             }
                                             break;
 
@@ -626,7 +626,7 @@ public class User {
                                                 owner.tambahSaldo(MemberCard.PRICE_30_DAYS);
 
                                             } else {
-                                                System.out.println("Not enough balance! :{ ");
+                                                System.out.println("⚠ Not enough balance! :{ ");
                                             }
                                             break;
 
@@ -644,7 +644,7 @@ public class User {
                                 }
 
                             } else {
-                                System.out.println("You already have Premium member card subscription!");
+                                System.out.println("⚠ You already have Premium member card subscription!");
                             }
                             break;
 
