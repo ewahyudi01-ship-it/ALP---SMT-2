@@ -99,8 +99,6 @@ public class User {
                 if (current != null && current.getUser() == this) {
                     long now = System.currentTimeMillis() / 1000;
                     long sisa = current.totalWaktu - (now - current.waktuPesan);
-
-
                     System.out.println("Current order: " + current.getFoodItem().getFoodName() + " x" + current.getQuantity() + " | Wait for: " + current.getTotalWaktu() + " sec");
                 }
             } else {
@@ -116,6 +114,7 @@ public class User {
             System.out.println("6. Restock");
             System.out.println("7. List of Orders");
             System.out.println("8. Cancel Order");
+            System.out.println("9. Edit profile");
             System.out.println("0. log out");
             System.out.print("Choice: ");
 
@@ -154,20 +153,129 @@ public class User {
                         cancelOrder();
                         break;
 
+                    case 9:
+                        editProfile(sc, user);
+                        break;
+
                     case 0:
                         timerOtomatis.cancel();
                         isTrue = false;
                         break;
 
                     default:
-                        System.out.println(" - Invalid input! - ");
+                        System.out.println("⚠ - Invalid input! - ");
 
                 }
             } catch (InputMismatchException e) {
-                System.out.println(" - Input with number! - ");
+                System.out.println("⚠ - Input with number! - ");
                 sc.next(); // tanpa perintah ini maka infinite loop
             }
 
+        }
+    }
+
+    private void editProfile(Scanner sc, ArrayList<User> user) {
+        System.out.println("╔═════════════════ EDIT PROFILE ═════════════════╗");
+        System.out.println("1. change username                               ║");
+        System.out.println("2. change password                               ║");
+        System.out.println("3. change body weight                            ║");
+        System.out.println("4. change roles                                  ║");
+        System.out.println("0. back                                          ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.print("- choice: ");
+        try {
+            int n = sc.nextInt();
+            switch (n) {
+                case 1:
+                    sc.nextLine();
+                    System.out.println("type bellow for your new name | type '0' to cancel)");
+                    System.out.print("new name: ");
+                    String newUserName = sc.nextLine();
+                        if (newUserName.trim().equals("0")) {
+                            break;
+                        } else {
+                            this.username  = newUserName;
+                            System.out.println("Successfully changed your new name to: " + username);
+                        }
+                    break;
+
+                case 2:
+                    sc.nextLine();
+                    System.out.println("type bellow for your new password | type '0' to cancel)");
+                    System.out.print("new password: ");
+                    String newPassword = sc.nextLine();
+                    if (newPassword.trim().equals("0")) {
+                        break;
+                    } else {
+                        this.password  = newPassword;
+                        System.out.println("Successfully changed your new password to: " + password);
+                    }
+                    break;
+
+                    case 3:
+                        System.out.println("type bellow for update body weight | type '0' to cancel)");
+                        System.out.print("body weight: ");
+                        try {
+                            int updateBodyWeight = sc.nextInt();
+
+                            if (updateBodyWeight == 0) {
+                                break;
+                            } else if (updateBodyWeight > 0) {
+                                this.beratBadan = updateBodyWeight;
+                                System.out.println("Successfully update your body weight to: " + beratBadan);
+                            } else {
+                                System.out.println("⚠ - Invalid input! no negative number! - ");
+                            }
+
+                        } catch (InputMismatchException e) {
+                            System.out.println("⚠ - Input with number! - ");
+                            sc.next();
+                        }
+                        break;
+
+                case 4:
+                    System.out.println("type bellow for update roles | type '0' to cancel)");
+                    System.out.println("1. SMP");
+                    System.out.println("2. SMA");
+                    System.out.print("your role: ");
+                    try {
+                        int updateRoles = sc.nextInt();
+
+                        if (updateRoles == 0) {
+                            break;
+                        } else if (updateRoles == 1){
+                            if (!roles.equalsIgnoreCase("SMP")) {
+                                this.roles = Main.Roles.SMP.getRoleName();
+                                System.out.println("Successfully update your role to: " + roles);
+                            } else {
+                                System.out.println("⚠ - Invalid input! you already has the same role you've choosen, as SMP!");
+                            }
+
+                        } else if (updateRoles == 2) {
+                            if (!roles.equalsIgnoreCase("SMA")) {
+                                this.roles = Main.Roles.SMA.getRoleName();
+                                System.out.println("Successfully update your role to: " + roles);
+                            } else {
+                                System.out.println("⚠ - Invalid input! you already has the same role you've choosen, as SMA!");
+                            }
+
+                        } else {
+                            System.out.println("⚠ - Invalid input! - ");
+                        }
+
+                    } catch (InputMismatchException e) {
+                        System.out.println("⚠ - please input number! - ");
+                        sc.next();
+                    }
+                    break;
+
+                    case 0:
+                        break;
+            }
+
+        } catch (InputMismatchException e) {
+            System.out.println("⚠ - Input with number! - ");
+            sc.next();
         }
     }
 
@@ -179,6 +287,8 @@ public class User {
             System.out.println("There is no ongoing cooking for current order!");
         }
     }
+
+
 
     private void listOfOrders(Scanner sc, Cafetaria cafe) {
         boolean isOn = true;
@@ -214,16 +324,18 @@ public class User {
                     }
 
                 } catch (InputMismatchException e) {
-                    System.out.println(" - Please enter a number - ");
+                    System.out.println("⚠ - Please enter a number - ");
                     sc.next();
                 }
 
             } else {
-                System.out.println("Your not the Owner!");
+                System.out.println("⚠ Your not the Owner!");
                 isOn = false;
             }
         }
     }
+
+
 
     private void restock(Scanner sc, Cafetaria cafe) {
         boolean isOn = true;
@@ -264,15 +376,15 @@ public class User {
                                     }
 
                                 } catch (InputMismatchException e) {
-                                    System.out.println(" - Input with number! - ");
+                                    System.out.println("⚠ - Input with number! - ");
                                     sc.next();
                                 }
                             } else {
-                                System.out.println(" - Invalid input! - ");
+                                System.out.println("⚠ - Invalid input! - ");
                             }
 
                         } catch (InputMismatchException e) {
-                            System.out.println(" - Input with number! - ");
+                            System.out.println("⚠ - Input with number! - ");
                             sc.next();
                         }
 
@@ -306,14 +418,14 @@ public class User {
                                     }
 
                                 } catch (RuntimeException e) {
-                                    System.out.println(" - Input with number! -");
+                                    System.out.println("⚠ - Input with number! -");
                                     sc.next();
                                 }
                             } else {
-                                System.out.println(" - Invalid input! - ");
+                                System.out.println("⚠ - Invalid input! - ");
                             }
                         } catch (RuntimeException e) {
-                            System.out.println(" - Input with number! -");
+                            System.out.println("⚠ - Input with number! -");
                             sc.next();
                         }
 
@@ -323,12 +435,12 @@ public class User {
                     }
 
                 } catch (RuntimeException e) {
-                    System.out.println(" - Input with number! -");
+                    System.out.println("⚠ - Input with number! -");
                     sc.next();
                 }
 
             } else {
-                System.out.println("Your not the Owner!");
+                System.out.println("⚠ Your not the Owner!");
                 isOn = false;
             }
         }
@@ -348,6 +460,12 @@ public class User {
                 for (int i = 0; i < cafe.getMainMenu().getFoodItem().size(); i++) {
                     System.out.println(i + 1 + ". " + cafe.getMainMenu().getFoodItem().get(i).getFoodName());
                 }
+                if (!foodItems.isEmpty()) {
+                    System.out.println("-<>--<>--<>--<>--<>--<>- current menu -<>--<>--<>--<>--<>--<>-");
+                    for (int i = 0; i < foodItems.size(); i++) {
+                        System.out.println(i + 1 + ". " + foodItems.get(i).getFoodName());
+                    }
+                }
                 System.out.println("-<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>-");
                 System.out.println("1. Add products");
                 System.out.println("2. Finish");
@@ -363,11 +481,11 @@ public class User {
                                 if (n > 0 && n < cafe.getMainMenu().getFoodItem().size()) { // cek input valid or not
                                     foodItems.add(cafe.getMainMenu().getFoodItem().get(n - 1));
                                 } else {
-                                    System.out.println(" - Invalid input! -");
+                                    System.out.println("⚠ - Invalid input! -");
                                 }
 
                             } catch (InputMismatchException e) {
-                                System.out.println(" - Input with number! - ");
+                                System.out.println("⚠ - Input with number! - ");
                                 sc.next();
                             }
                             break;
@@ -397,13 +515,13 @@ public class User {
                     }
 
                 } catch (InputMismatchException e) {
-                    System.out.println(" - Input with number! - ");
+                    System.out.println("⚠ - Input with number! - ");
                     sc.next();
                 }
 
             }
         } else {
-            System.out.println("Your not the Owner!");
+            System.out.println("⚠ Your not the Owner!");
         }
     }
 
@@ -452,7 +570,7 @@ public class User {
                                     }
 
                                 } catch (InputMismatchException e) {
-                                    System.out.println(" - Input with number! - ");
+                                    System.out.println("⚠ - Input with number! - ");
                                     sc.next();
                                 }
                             } else {
@@ -512,12 +630,12 @@ public class User {
                                             break;
 
                                         default:
-                                            System.out.println("- Wrong input! select from 0 - 3! -");
+                                            System.out.println("⚠ - Wrong input! select from 0 - 3! -");
                                             break;
                                     }
 
                                 } catch (InputMismatchException e) {
-                                    System.out.println(" - Input with number! - ");
+                                    System.out.println("⚠ - Input with number! - ");
                                     sc.next();
                                 }
 
@@ -532,14 +650,16 @@ public class User {
                     }
 
                 } catch (InputMismatchException e) {
-                    System.out.println(" - Input with number! - ");
+                    System.out.println("⚠ - Input with number! - ");
                     sc.next();
                 }
 
             } else if (memberCard == null) { //jika tidak ada member card
-                System.out.println("\n__\\|/__\\|/__\\|/__\\|/_ BUY MEMBER CARD _\\|/__\\|/__\\|/__\\|/__");
-                System.out.println("Buy your first Member Card | Cost: Rp.14.000 | Duration: 3 days");
-                System.out.println("----------------------------------------------------------");
+                System.out.println("\n╔══════════════════════- BUY MEMBER CARD -════════════════════════╗");
+                System.out.println("║__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/_\\|/__\\|/__\\|/__\\|/__\\|/__\\|/_║");
+                System.out.println("║Buy your first Member Card | Cost: Rp.14.000 | Duration: 3 days  ║");
+                System.out.println("║-----------------------------------------------------------------║");
+                System.out.println("╚═════════════════════════════════════════════════════════════════╝");
                 System.out.println("1. Buy new Member card");
                 System.out.println("0. return to main menu");
                 System.out.print("Choice: ");
@@ -556,7 +676,7 @@ public class User {
 
                                 System.out.println("Successfully bought your member card!");
                             } else {
-                                System.out.println("Not enough balance! :{ ");
+                                System.out.println("⚠ Not enough balance! :{ ");
                             }
                             break;
 
@@ -564,7 +684,7 @@ public class User {
                             isOn = false;
                     }
                 } catch (InputMismatchException e) {
-                    System.out.println(" - Input with number! - ");
+                    System.out.println("⚠ - Input with number! - ");
                     sc.next();
                 }
             }
@@ -624,10 +744,32 @@ public class User {
 
                                                 String safetyWarning = healthReport.checkFoodSafety(selectedFood, n3);
                                                 if (safetyWarning != null) {
-                                                    System.out.println("\n⚠ PURCHASE CANCELLED - Health Safety Warning:");
+                                                    System.out.println("\n⚠ PURCHASE HOLD - Health Safety Warning:");
                                                     System.out.println("  " + safetyWarning);
                                                     System.out.println("  Please check your health report (option 3) for more info.");
-                                                    return;
+
+                                                    System.out.println("Are you still willing to purchase"+ cafe.getMenu(n-1).getFoodItem().get(n2-1).getFoodName() + " ?");
+                                                    System.out.println("1. yes");
+                                                    System.out.println("2. no");
+                                                    System.out.print("Choice: ");
+
+                                                    try{
+                                                        int n4 = sc.nextInt();
+                                                        switch (n4){
+                                                            case 1:
+                                                                break;
+
+                                                            case 2:
+                                                                return;
+
+                                                            default:
+                                                                System.out.println("⚠ - Invalid input! -");
+                                                                break;
+                                                        }
+                                                    } catch (InputMismatchException e) {
+                                                        System.out.println("⚠ - Input with number! - ");
+                                                        sc.next();
+                                                    }
                                                 }
                                                 // --- End Health Check ---
 
@@ -653,21 +795,21 @@ public class User {
                                                     recentPurchases.push(purchase); // masuk ke stack (ONLY food masak)
                                                 }
                                             } else {
-                                                System.out.println(" - Not enough ammount of balance :( - ");
+                                                System.out.println("⚠ - Not enough amount of balance :( - ");
                                                 return;
                                             }
                                         } else {
-                                            System.out.println(" - invalid input!, please input quantity between amount of items product! - ");
+                                            System.out.println("⚠ - invalid input!, please input quantity between amount of items product! - ");
                                         }
                                     } catch (InputMismatchException e) {
-                                        System.out.println(" - Input with number! - ");
+                                        System.out.println("⚠ - Input with number! - ");
                                         sc.next();
                                     }
                                 } else {
-                                    System.out.println(" - invalid input! - ");
+                                    System.out.println("⚠ - invalid input! - ");
                                 }
                             } catch (InputMismatchException e) {
-                                System.out.println(" - Please enter a number - ");
+                                System.out.println("⚠ - Please enter a number - ");
                                 sc.next();
                             }
                         }
@@ -724,7 +866,10 @@ public class User {
                         for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
                             FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
                             String w = healthReport.checkFoodSafety(items, 1);
-                            if (w != null) { packetWarning = w; break; }
+                            if (w != null) {
+                                packetWarning = w;
+                                break;
+                            }
                         }
                         if (packetWarning != null) {
                             System.out.println("\n⚠ PURCHASE CANCELLED - Health Safety Warning:");
@@ -759,13 +904,13 @@ public class User {
                             isOn = false;
 
                         } else {
-                            System.out.println(" - Sorry, not enough balance! -");
+                            System.out.println("⚠ - Sorry, not enough balance! -");
                         }
                     }
                 }
 
             } catch (InputMismatchException e) {
-                System.out.println(" - Please enter a number - ");
+                System.out.println("⚠ - Please enter a number - ");
                 sc.next();
             }
         }
@@ -795,7 +940,7 @@ public class User {
                         break;
                 }
             } catch (InputMismatchException e) {
-                System.out.println(" - Input with number! - ");
+                System.out.println("⚠ - Input with number! - ");
                 sc.next();
             }
         }
@@ -842,9 +987,7 @@ public class User {
         return jumlahItemYangKurang;
     }
 
-    public void melihatLaporanKesehatan() {
 
-    }
 
     public User getOwner(ArrayList<User> user) {
         for (int i = 0; i < user.size(); i++) {

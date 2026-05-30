@@ -74,7 +74,7 @@ public class HealthReport {
 
     public void displayReport() {
         System.out.println("\n╔══════════════════════════════════════════════════════════════╗");
-        System.out.println("║              ♥  HEALTH REPORT - " + user.username + "  ♥     ║");
+        System.out.println("              ♥  HEALTH REPORT - " + user.username + "  ♥     ");
         System.out.println("╚══════════════════════════════════════════════════════════════╝");
         System.out.println("Body weight      : " + user.beratBadan + " kg");
         System.out.println("──────────────────────────────────────────────────────────────");

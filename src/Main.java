@@ -29,7 +29,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<User> user = new ArrayList<>(); // <--- user saat ini
-        user.add(new User("Owner", "smart121", 65, 0, "Owner"));
+        user.add(new User("Owner", "smart121", 65, 2000000000, "Owner"));
 
         ArrayList<FoodItem> foodList = new ArrayList<>();
         // food jadi
@@ -130,10 +130,10 @@ public class Main {
                         break;
 
                     default:
-                        System.out.println(" - Wrong input! - ");
+                        System.out.println("⚠ - Wrong input! - ");
                 }
             } catch (InputMismatchException e) {
-                System.out.println(" - Input with number! - ");
+                System.out.println("⚠ - Input with number! - ");
                 sc.next(); // tanpa perintah ini maka infinite loop
             }
 
@@ -177,16 +177,16 @@ public class Main {
                                     }
 
                                 } catch (InputMismatchException e) {
-                                    System.out.println("Input with number!");
+                                    System.out.println("⚠ - Input with number! -");
                                     sc.next();
                                 }
                             }
 
                         } else {
-                            System.out.println("- Wrong input! choose between 1 or 2. -");
+                            System.out.println("⚠ - Wrong input! choose between 1 or 2. -");
                         }
                     } catch (InputMismatchException e) {
-                        System.out.println(" - Input with number! - ");
+                        System.out.println("⚠ - Input with number! - ");
                         sc.next();
                     }
                 }
@@ -207,7 +207,7 @@ public class Main {
                     }
 
                     if (usernameExist) {
-                        System.out.println("Username already exists!");
+                        System.out.println("⚠ Username already exists!");
                         return;
                     }
 
@@ -226,7 +226,7 @@ public class Main {
                 }
             }
         } else {
-            System.out.println("=== match the password! ===");
+            System.out.println("⚠ === match the password! ===");
         }
     }
 
@@ -253,10 +253,10 @@ public class Main {
                 }
             }
             if (accFound == false) {
-                System.out.println("=== Invalid Username or password! ===");
+                System.out.println("⚠ === Invalid Username or password! ===");
             }
         } else {
-            System.out.println("=== username or password cannot be empty! ===");
+            System.out.println("⚠ === username or password cannot be empty! ===");
         }
     }
 

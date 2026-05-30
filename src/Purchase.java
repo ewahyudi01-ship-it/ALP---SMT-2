@@ -48,7 +48,7 @@ public class Purchase {
         System.out.println("Transaction completed! you bought " + foodItem.foodName + " for " + this.quantity);
         System.out.println("Cost: " + getCalculateTotal());
         System.out.println("-------------------------------------------------------------------");
-        System.out.println("Are you want receipt PDF?");
+        System.out.println("Do you want your receipt (PDF)?");
         System.out.println("1.Yes\n2.No");
         System.out.print("Choice: ");
         try {
@@ -169,7 +169,7 @@ public class Purchase {
                         }
 
                         if ("failed".equalsIgnoreCase(status)) {
-                            throw new RuntimeException("PDF receipt generation failed: " + statusResponse);
+                            throw new RuntimeException("⚠ PDF receipt generation failed: " + statusResponse);
                         }
 
                         Thread.sleep(2000);
@@ -189,7 +189,7 @@ public class Purchase {
                         }
                     }
 
-                    System.out.println("Receipt has been succesfully created: NotaKantinSmart.pdf");
+                    System.out.println("Receipt has been successfully created: NotaKantinSmart.pdf");
 
 
                 } catch (Exception e) {
@@ -197,7 +197,7 @@ public class Purchase {
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println(" - Please enter a number - ");
+            System.out.println("⚠ - Please enter a number - ");
             scanner.next();
         }
     }
