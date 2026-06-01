@@ -799,7 +799,7 @@ public class User {
                                                 purchase.printReceipt(sc);
 
                                                 this.saldo -= purchase.getCalculateTotal(); // kurangi saldo kustomer
-                                                User owner = getOwner(user); // tambahi saldo owner
+                                                User owner = getOwner(user);                // tambahi saldo owner
                                                 owner.tambahSaldo(purchase.getCalculateTotal());
 
 
@@ -892,7 +892,7 @@ public class User {
                             }
                         }
                         if (packetWarning != null) {
-                            System.out.println("\n⚠ PURCHASE CANCELLED - Health Safety Warning:");
+                            System.out.println("\n⚠ - PURCHASE CANCELLED - Health Safety Warning:");
                             System.out.println("  " + packetWarning);
                             System.out.println("  Please check your health report (option 3) for more info.");
                             return;
@@ -909,15 +909,15 @@ public class User {
                             for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
                                 FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
 
-                                if (cafe.getMenu(n - 1).getFoodItem().get(n - 1) instanceof FoodMasak) {
-                                    Purchase foodMasak = new Purchase(this, items, 1); // orderlist Queue
-                                    cafe.addOrder(foodMasak);
+                                if (items instanceof FoodMasak) {
+                                    Purchase foodMasak = new Purchase(this, items, 1);
+                                    cafe.addOrder(foodMasak);        // orderlist Queue
                                     recentPurchases.push(foodMasak); // masuk ke stack (ONLY food masak)
+                                    historiPembelian.add(foodMasak);
                                 } else {
                                     Purchase singlePurchase = new Purchase(this, items, 1);
                                     historiPembelian.add(singlePurchase);
                                 }
-
                             }
                             isOn = false;
 
