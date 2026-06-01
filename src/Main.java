@@ -29,7 +29,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<User> user = new ArrayList<>(); // <--- user saat ini
-        user.add(new User("Owner", "smart121", 65, 2000000000, "Owner"));
+        user.add(new User("Owner", "smart121", 65, 0, "Owner"));
 
         ArrayList<FoodItem> foodList = new ArrayList<>();
         // food jadi

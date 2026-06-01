@@ -515,7 +515,23 @@ public class User {
                             break;
 
                         case 0:
-                            isOn = false;
+                            if (!foodItems.isEmpty()) {
+                                System.out.println("Are you sure? There still a menu!");
+                                System.out.println("1. yes (back to main menu)");
+                                System.out.println("0. no (cancel)");
+                            }
+                            try {
+                                n = sc.nextInt();
+                                if (n == 1){
+                                    isOn = false;
+                                } else {
+                                    isOn = true;
+                                }
+
+                            } catch (InputMismatchException e) {
+                                System.out.println("⚠ - Input with number! - ");
+                                sc.next();
+                            }
                     }
 
                 } catch (InputMismatchException e) {
@@ -881,7 +897,7 @@ public class User {
                             System.out.println("  Please check your health report (option 3) for more info.");
                             return;
                         }
-                        // --- End Health Check ---
+                        // --- End Health Check menu paket ---
 
                         // cek saldo kustomer & profit ke saldo owner
                         if (hargaTotaldariMenuPaket <= this.saldo) {
@@ -892,8 +908,16 @@ public class User {
                             // beli dan nyimpan daftar catatan purchase
                             for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
                                 FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
-                                Purchase singlePurchase = new Purchase(this, items, 1);
-                                historiPembelian.add(singlePurchase);
+
+                                if (cafe.getMenu(n - 1).getFoodItem().get(n - 1) instanceof FoodMasak) {
+                                    Purchase foodMasak = new Purchase(this, items, 1); // orderlist Queue
+                                    cafe.addOrder(foodMasak);
+                                    recentPurchases.push(foodMasak); // masuk ke stack (ONLY food masak)
+                                } else {
+                                    Purchase singlePurchase = new Purchase(this, items, 1);
+                                    historiPembelian.add(singlePurchase);
+                                }
+
                             }
                             isOn = false;
 
@@ -901,12 +925,12 @@ public class User {
                             System.out.println("⚠ - Sorry, not enough balance! -");
                             return;
                         }
-
                         // reduce stock
                         for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
                             FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
                             if (items instanceof FoodMasak) {
                                 ((FoodMasak) items).reduceStockBahanBaku(1);
+
                             } else if (items instanceof FoodJadi) {
                                 items.reduceStock(1);
                             }
