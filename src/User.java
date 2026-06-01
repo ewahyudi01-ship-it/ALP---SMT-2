@@ -711,7 +711,7 @@ public class User {
 
                 if (n <= cafe.getMenuSize() && n > 0) { // cek input valid atau tidak
 
-                    if (n == 1) { // if pilih menu utama
+                    if (n == 1) { // if pilih menu
                         while (isOn) {
                             System.out.println("\n=== Choose Products! ===");
                             for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
@@ -883,16 +883,6 @@ public class User {
                         }
                         // --- End Health Check ---
 
-                        // reduce stock
-                        for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
-                            FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
-                            if (items instanceof FoodMasak) {
-                                ((FoodMasak) items).reduceStockBahanBaku(1);
-                            } else if (items instanceof FoodJadi) {
-                                items.reduceStock(1);
-                            }
-                        }
-
                         // cek saldo kustomer & profit ke saldo owner
                         if (hargaTotaldariMenuPaket <= this.saldo) {
                             this.saldo -= hargaTotaldariMenuPaket;
@@ -909,7 +899,19 @@ public class User {
 
                         } else {
                             System.out.println("⚠ - Sorry, not enough balance! -");
+                            return;
                         }
+
+                        // reduce stock
+                        for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
+                            FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
+                            if (items instanceof FoodMasak) {
+                                ((FoodMasak) items).reduceStockBahanBaku(1);
+                            } else if (items instanceof FoodJadi) {
+                                items.reduceStock(1);
+                            }
+                        }
+
                     }
                 }
 
