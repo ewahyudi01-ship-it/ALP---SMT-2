@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class AppSystem {
 
-    public void startMainMenu(Scanner sc, ArrayList<User> user, Cafetaria cafe) {
+    public void startMainMenu(Scanner sc, ArrayList<User> user, Cafetaria cafe, ArrayList<Cafetaria> cafeList) {
         boolean isloged = true;
         while (isloged) {
             System.out.println("                                                                                    ^    ^");
@@ -18,6 +18,7 @@ public class AppSystem {
             System.out.println("¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·.¸.·´¯`·..·´¯`·.¸ \\ '.___,");
             System.out.println("1. Register                                                                        '-----'");
             System.out.println("2. Login");
+            System.out.println("3. Switch cafeteria");
             System.out.println("0. Exit");
             System.out.print("Choice: ");
             try {
@@ -31,10 +32,14 @@ public class AppSystem {
                         login(sc, user, cafe);
                         break;
 
+                    case 3:
+                        cafe = switchCafe(sc, cafeList);
+                        break;
+
                     case 0:
                         System.out.println("╔────────────────────╗\n" +
-                                "│      Goodbye!      │\n" +
-                                "╚────────────────────╝");
+                                           "│      Goodbye!      │\n" +
+                                           "╚────────────────────╝");
                         isloged = false;
                         break;
 
@@ -47,6 +52,37 @@ public class AppSystem {
             }
 
         }
+    }
+
+    private Cafetaria switchCafe(Scanner sc, ArrayList<Cafetaria> cafeList) {
+        boolean isOn = true;
+        while (isOn) {
+            System.out.println("¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸   PICK CAFETERIA   ¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸");
+            for (int i = 0; i < cafeList.size(); i++) { // display all cafeteria
+                System.out.println(i+1+". " + cafeList.get(i).getNamaCafeteria());
+            }
+            System.out.println("0. Back");
+            System.out.print("Choice: ");
+            try {
+                int n = sc.nextInt();
+
+                if (n > 0 && n <= cafeList.size()) {
+                    return cafeList.get(n-1);
+
+                } else if (n == 0){
+                    isOn = false;
+
+                } else {
+                    System.out.println("⚠ - Invalid Input! - ");
+                }
+
+
+            } catch (InputMismatchException e) {
+                System.out.println("⚠ - Input with number! - ");
+                sc.next();
+            }
+        }
+        return cafeList.get(0);
     }
 
 

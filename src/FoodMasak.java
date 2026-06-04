@@ -44,8 +44,8 @@ public class FoodMasak extends FoodItem {
             return false;
         }
     }
-
-    public void reduceStockBahanBaku(int n3) {
+    @Override
+    public void reduceStock(int n3) {
         for (int i = 0; i < getResepBahan().size(); i++) {
             for (BahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {

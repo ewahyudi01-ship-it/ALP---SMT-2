@@ -815,19 +815,17 @@ public class User {
                                                 purchase.printReceipt(sc);
 
                                                 this.saldo -= purchase.getCalculateTotal(); // kurangi saldo kustomer
-                                                User owner = getOwner(user);                // tambahi saldo owner
-                                                owner.tambahSaldo(purchase.getCalculateTotal());
-
+                                                User owner = getOwner(user);
+                                                owner.tambahSaldo(purchase.getCalculateTotal()); // tambahi saldo owner
 
                                                 sc.nextLine();
                                                 isOn = false;  //transaction completed
 
-                                                if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodJadi) {
+                                                    //polymorphism karena mengurangi bahan baku atau stok food jadi
                                                     cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).reduceStock(n3);
 
-                                                } else if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
+                                                if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
                                                     cafe.addOrder((purchase)); // orderlist Queue
-                                                    ((FoodMasak) cafe.getMenu(n - 1).getFoodItem().get(n2 - 1)).reduceStockBahanBaku(n3);
                                                     recentPurchases.push(purchase); // masuk ke stack (ONLY food masak)
                                                 }
                                             } else {
@@ -861,12 +859,12 @@ public class User {
                             if (items instanceof FoodMasak) {
                                 ((FoodMasak) items).getStockFoodMasak();
                                 if (items.getStock() <= 0) {
-                                    System.out.println(" - Sorry, the stock for the " + items.getFoodName() + " is empty :( - ");
+                                    System.out.println("⚠ - Sorry, the stock for the " + items.getFoodName() + " is empty :( - ");
                                     semuaStokAman = false;
                                 }
                             } else if (items instanceof FoodJadi) {
                                 if (items.getStock() <= 0) {
-                                    System.out.println(" - Sorry, the stock for the " + items.getFoodName() + " is empty :( - ");
+                                    System.out.println("⚠ - Sorry, the stock for the " + items.getFoodName() + " is empty :( - ");
                                     semuaStokAman = false;
                                 }
                             }
@@ -877,7 +875,7 @@ public class User {
 
                         // Jika ada salah satu item di dalam paket yang habis maka batalkan transaksi
                         if (!semuaStokAman) {
-                            System.out.println(" - Cannot purchase this packet due to empty stock item! - ");
+                            System.out.println("⚠ - Cannot purchase this packet due to empty stock item! - ");
                             return;
                         }
 
@@ -968,11 +966,15 @@ public class User {
                         for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
                             FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
                             if (items instanceof FoodMasak) {
-                                ((FoodMasak) items).reduceStockBahanBaku(1);
+                                ((FoodMasak) items).reduceStock(1);
 
                             } else if (items instanceof FoodJadi) {
                                 items.reduceStock(1);
                             }
+                        }
+
+                        for (FoodItem foodItem : cafe.getMenu(n - 1).getFoodItem()) {
+                            foodItem.reduceStock(1);
                         }
 
                     }
