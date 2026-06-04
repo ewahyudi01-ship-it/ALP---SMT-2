@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class HealthReport {
     private User user;
 
@@ -7,7 +5,7 @@ public class HealthReport {
         this.user = user;
     }
 
-    public double getTotalCalories() {
+    public double getTotalCaloriesFromAllTransactions() {
         double total = 0;
         for (Purchase p : user.historiPembelian) {
             FoodItem food = p.getFoodItem();
@@ -16,7 +14,7 @@ public class HealthReport {
         return total;
     }
 
-    public double getTotalProtein() {
+    public double getTotalProteinFromAllTransactions() {
         double total = 0;
         for (Purchase p : user.historiPembelian) {
             FoodItem food = p.getFoodItem();
@@ -25,7 +23,7 @@ public class HealthReport {
         return total;
     }
 
-    public double getTotalSugar() {
+    public double getTotalSugarFromAllTransactions() {
         double total = 0;
         for (Purchase p : user.historiPembelian) {
             FoodItem food = p.getFoodItem();
@@ -51,7 +49,7 @@ public class HealthReport {
     }
 
     public String getCalorieStatus() {
-        double consumed = getTotalCalories();
+        double consumed = getTotalCaloriesFromAllTransactions();
         double recommended = getRecommendedCalories();
         if (consumed > recommended * 1.2) return "OVER (exceeds daily limit)";
         else if (consumed < recommended * 0.5) return "LOW (below daily need)";
@@ -59,14 +57,14 @@ public class HealthReport {
     }
 
     public String getProteinStatus() {
-        double consumed = getTotalProtein();
+        double consumed = getTotalProteinFromAllTransactions();
         double recommended = getRecommendedProtein();
         if (consumed >= recommended) return "SUFFICIENT";
         else return "LOW (below daily need)";
     }
 
     public String getSugarStatus() {
-        double consumed = getTotalSugar();
+        double consumed = getTotalSugarFromAllTransactions();
         double maxSugar = getRecommendedMaxSugar();
         if (consumed > maxSugar) return "HIGH (exceeds safe limit)";
         else return "NORMAL";
@@ -81,11 +79,11 @@ public class HealthReport {
         System.out.printf("%-25s %-15s %-15s%n", "Nutrition", "Consumed", "Recommended");
         System.out.println("──────────────────────────────────────────────────────────────");
         System.out.printf("%-25s %-15.1f %-15.1f%n",
-                "Calories (kcal):", getTotalCalories(), getRecommendedCalories());
+                "Calories (kcal):", getTotalCaloriesFromAllTransactions(), getRecommendedCalories());
         System.out.printf("%-25s %-15.1f %-15.1f%n",
-                "Protein (g):", getTotalProtein(), getRecommendedProtein());
+                "Protein (g):", getTotalProteinFromAllTransactions(), getRecommendedProtein());
         System.out.printf("%-25s %-15.1f %-15.1f%n",
-                "Sugar (g):", getTotalSugar(), getRecommendedMaxSugar());
+                "Sugar (g):", getTotalSugarFromAllTransactions(), getRecommendedMaxSugar());
         System.out.println("──────────────────────────────────────────────────────────────");
         System.out.println("Health Status:");
         System.out.println("  Calorie intake : " + getCalorieStatus());
@@ -105,8 +103,8 @@ public class HealthReport {
      * Returns null if safe, or a reason string if unsafe.
      */
     public String checkFoodSafety(FoodItem food, int quantity) {
-        double totalCalAfter = getTotalCalories() + food.getCalories() * quantity;
-        double totalSugarAfter = getTotalSugar() + food.getSugarLvl() * quantity;
+        double totalCalAfter = getTotalCaloriesFromAllTransactions() + food.getCalories() * quantity;
+        double totalSugarAfter = getTotalSugarFromAllTransactions() + food.getSugarLvl() * quantity;
 
         double maxCalories = getRecommendedCalories() * 1.5; // hard cap: 150% daily
         double maxSugar = getRecommendedMaxSugar() * 2;      // hard cap: 2x WHO limit
