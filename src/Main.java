@@ -2,7 +2,6 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -17,7 +16,6 @@ public class Main {
         Roles(String name) {
             this.name = name;
         }
-
         String getRoleName() {
             return name;
         }
@@ -29,7 +27,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<User> user = new ArrayList<>(); // <--- user saat ini
-        user.add(new User("Owner", "smart121", 65, 0, "Owner"));
+        user.add(new User("Owner", "smart121", 65, 2000000000, "Owner"));
 
         ArrayList<FoodItem> foodList = new ArrayList<>();
         // food jadi
@@ -84,7 +82,7 @@ public class Main {
         ((FoodMasak) lumpia).tambahResep("bamboo shoots");
         ((FoodMasak) lumpia).tambahResep("chicken");
         ((FoodMasak) lumpia).tambahResep("sugar");
-
+        // add FoodMasak
         foodList.add(steak);
         foodList.add(toastBread);
         foodList.add(nasiGoreng);

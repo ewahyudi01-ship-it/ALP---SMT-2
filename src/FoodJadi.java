@@ -34,6 +34,10 @@ public class FoodJadi extends FoodItem {
         return sugarLvl;
     }
 
+    public String displayStock(){
+        return  foodName + " | Stock: " + this.stock;
+    }
+
     @Override
     public String displayInfo(){
         return  foodName + " | calories: " + this.calories + " | sugar lvl: " + this.sugarLvl + " | protein: " + this.protein +

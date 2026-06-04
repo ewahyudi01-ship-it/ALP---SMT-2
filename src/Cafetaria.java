@@ -30,6 +30,24 @@ public class Cafetaria {
         }
     }
 
+    public int totalTimeProductionFoodMasak(Purchase current) {
+
+        // 1. Validasi awal: Jika antrean kosong atau pesanan yang dicari null, waktunya jelas 0
+        if (orders == null || orders.isEmpty() || current == null) {
+            return 0;
+        }
+
+        int timeTotal = 0;
+        for (Purchase p : this.orders) {
+            timeTotal += p.totalWaktu;
+            if (p == current) {
+                return timeTotal;
+            }
+
+        }
+    return 0;
+    }
+
     public Purchase removeOrder() {
         return orders.poll();
     }

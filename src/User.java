@@ -92,14 +92,24 @@ public class User {
                     System.out.println("----------------------");
                 }
             }
-
             if (!recentPurchases.empty()) {
-                Purchase current = cafe.getCurrentOrder();
+                Purchase current = null;
 
-                if (current != null && current.getUser() == this) {
-                    long now = System.currentTimeMillis() / 1000;
-                    long sisa = current.totalWaktu - (now - current.waktuPesan);
-                    System.out.println("Current order: " + current.getFoodItem().getFoodName() + " x" + current.getQuantity() + " | Wait for: " + current.getTotalWaktu() + " sec");
+                // Cari di dalam Queue dapur, apakah ada pesanan milik user aktif ini
+                for (Purchase p : cafe.getOrders()) {
+                    if (p.getUser() == this) {
+                        current = p; // Temukan pesanan milik user ini
+                        break;
+                    }
+                }
+
+                // Jika pesanan milik user ini ditemukan di dalam Queue dapur
+                if (current != null) {
+                    System.out.println("Current order: " + current.getFoodItem().getFoodName() +
+                            " x" + current.getQuantity() +
+                            " | Wait for: " + cafe.totalTimeProductionFoodMasak(current) + " sec");
+                } else {
+                    System.out.println("Current order: Sedang diproses / Menunggu antrean");
                 }
             } else {
                 System.out.println("Current order: Tidak ada pesanan aktif");
@@ -305,7 +315,6 @@ public class User {
                 } else {
                     cafe.showOrders();
                 }
-
                 System.out.println("ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø,¸¸,ø¤°`°¤ø");
 
                 System.out.println("1.Remove current order");
@@ -401,7 +410,7 @@ public class User {
 
                             for (int i = 0; i < mainMenu.getFoodItem().size(); i++) {
                                 if (mainMenu.getFoodItem().get(i) instanceof FoodJadi) {
-                                    System.out.println(i + 1 + ". " + mainMenu.getFoodItem().get(i).getFoodName() + " | Stock: " + mainMenu.getFoodItem().get(i).getStock());
+                                    System.out.println(i+1 + ". "+((FoodJadi) mainMenu.getFoodItem().get(i)).displayStock());
                                     jumlahProdukJadi++;
                                 }
                             }
@@ -461,6 +470,7 @@ public class User {
             ArrayList<FoodItem> foodItems = new ArrayList<>();
             boolean isOn = true;
             while (isOn) {
+                System.out.println("list all products:");
                 for (int i = 0; i < cafe.getMainMenu().getFoodItem().size(); i++) {
                     System.out.println(i + 1 + ". " + cafe.getMainMenu().getFoodItem().get(i).getFoodName());
                 }
@@ -553,7 +563,12 @@ public class User {
                 System.out.println("Info Stats:");
                 System.out.println("ID       : " + memberCard.getIdCard());
                 System.out.println("Rank     : " + memberCard.getRankSubscription());
-                System.out.println("Expire in: " + memberCard.getMemberCardExpiry());
+                System.out.print("Expire in: " );
+                if (memberCard.getRankSubscription().equals(MemberCard.Rank.PREMIUM)){
+                    System.out.println("UNLIMITED");
+                } else {
+                    System.out.println(memberCard.getMemberCardExpiry());
+                }
                 System.out.println("-----------------------------------------------------------");
                 System.out.println("1. Upgrade Member card");
                 System.out.println("2. Extend duration member card");
@@ -768,7 +783,7 @@ public class User {
                                                     System.out.println("  " + safetyWarning);
                                                     System.out.println("  Please check your health report (option 3) for more info.");
 
-                                                    System.out.println("Are you still willing to purchase"+ cafe.getMenu(n-1).getFoodItem().get(n2-1).getFoodName() + " ?");
+                                                    System.out.println("Are you still willing to purchase: "+ cafe.getMenu(n-1).getFoodItem().get(n2-1).getFoodName() + "?");
                                                     System.out.println("1. yes");
                                                     System.out.println("2. no");
                                                     System.out.print("Choice: ");
@@ -780,6 +795,7 @@ public class User {
                                                                 break;
 
                                                             case 2:
+                                                                System.out.println("Purchase CANCELED!");
                                                                 return;
 
                                                             default:
@@ -867,7 +883,7 @@ public class User {
 
                         System.out.println("Succesfully purchase, in total price for this packet: " + hargaTotaldariMenuPaket);
 
-                        // --- 3.7 Health Check for Packet Menu ---
+                        // 3.7 Health Check for Packet Menu
                         System.out.println("\n--- Nutrition Summary for this Packet ---");
                         double packetCal = 0, packetProt = 0, packetSugar = 0;
                         for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
@@ -892,10 +908,33 @@ public class User {
                             }
                         }
                         if (packetWarning != null) {
-                            System.out.println("\n⚠ - PURCHASE CANCELLED - Health Safety Warning:");
+                            System.out.println("\n⚠ - PURCHASE HOLD - Health Safety Warning:");
                             System.out.println("  " + packetWarning);
                             System.out.println("  Please check your health report (option 3) for more info.");
-                            return;
+
+                            System.out.println("Are you still willing to purchase: "+ cafe.getMenu(n-1).getNamaMenu() + "?");
+                            System.out.println("1. yes");
+                            System.out.println("2. no");
+                            System.out.print("Choice: ");
+
+                            try{
+                                int n4 = sc.nextInt();
+                                switch (n4){
+                                    case 1:
+                                        break;
+
+                                    case 2:
+                                        System.out.println("Purchase CANCELED!");
+                                        return;
+
+                                    default:
+                                        System.out.println("⚠ - Invalid input! -");
+                                        break;
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("⚠ - Input with number! - ");
+                                sc.next();
+                            }
                         }
                         // --- End Health Check menu paket ---
 
