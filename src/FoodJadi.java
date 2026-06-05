@@ -4,7 +4,7 @@ public class FoodJadi extends FoodItem {
     private double protein;
     private double sugarLvl;
 
-    public FoodJadi(String foodName, int calories, double harga, int sugarLvl, int protein, int stock) {
+    public FoodJadi(String foodName, double calories, double harga, double sugarLvl, double protein, int stock) {
         super(foodName, harga, stock);
         this.calories = calories;
         this.protein = protein;

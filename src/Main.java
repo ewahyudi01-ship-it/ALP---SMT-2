@@ -26,9 +26,10 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<User> user = new ArrayList<>(); // <--- user saat ini
-        user.add(new User("Owner", "smart121", 65, 2000000000, "Owner"));
+        ArrayList<User> userList = new ArrayList<>(); // <--- userList saat ini
+        userList.add(new User("Owner", "smart121", 65, 2000000000, "Owner"));
 
+        //cafe 1
         ArrayList<FoodItem> foodList = new ArrayList<>();
         // food jadi
         foodList.add(new FoodJadi("Apple", 50, 3000, 20, 0, 25));
@@ -90,11 +91,13 @@ public class Main {
 
         ArrayList<Menu> menuList = new ArrayList<>();
         menuList.add(new Menu("Menu utama", foodList));
-        Cafetaria cafe = new Cafetaria("Cafe 1", menuList);
+
+        Cafetaria cafe = new Cafetaria("Cafe utama", menuList);
 
         // start apps
         AppSystem appSystem = new AppSystem();
-        appSystem.startMainMenu(sc, user, cafe);
+        appSystem.startMainMenu(sc, userList, cafe);
+
 
     }
 

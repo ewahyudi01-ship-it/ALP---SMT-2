@@ -11,7 +11,7 @@ public class Cafetaria {
         this.menuList = menuList;
         this.orders = new LinkedList<Purchase>();
     }
-
+    //runtime polymorphism
     public void showAllMenu(){
         for (int i = 0; i < menuList.size(); i++) {
             System.out.println( i+1+". "+getMenu(i).getNamaMenu());
@@ -31,7 +31,6 @@ public class Cafetaria {
     }
 
     public int totalTimeProductionFoodMasak(Purchase current) {
-
         // 1. Validasi awal: Jika antrean kosong atau pesanan yang dicari null, waktunya jelas 0
         if (orders == null || orders.isEmpty() || current == null) {
             return 0;
@@ -79,6 +78,12 @@ public class Cafetaria {
         return menuList.size();
     }
 
+    public String getNamaCafeteria() {
+        return namaCafeteria;
+    }
+    public void setNamaCafeteria(String namaCafeteria) {
+        this.namaCafeteria = namaCafeteria;
+    }
 }
 
-
+//ductype polymorphism
