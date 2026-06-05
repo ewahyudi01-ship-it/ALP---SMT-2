@@ -1,85 +1,87 @@
 {
-  "beef": {
-    "calories": 250,
-    "protein": 26,
-    "sugar": 0
-  },
-
-  "potato": {
-    "calories": 77,
-    "protein": 2,
-    "sugar": 0.8
-  },
-
-  "butter": {
-    "calories": 110,
-    "protein": 0.8,
-    "sugar": 0.1
-  },
-
-  "white bread": {
-    "calories": 32,
-    "protein": 9,
-    "sugar": 5
-  },
-
-  "margarine": {
-    "calories": 415,
-    "protein": 0,
-    "sugar": 0
-  },
-
-  "condensed milk": {
-    "calories": 300,
-    "protein": 7,
-    "sugar": 51
-  },
-
-  "rice": {
-    "calories": 130,
-    "protein": 2.7,
-    "sugar": 0.1
-  },
-
-  "egg": {
-    "calories": 55,
-    "protein": 7.4,
-    "sugar": 1.1
-  },
-
-  "chicken": {
-    "calories": 120,
-    "protein": 17,
-    "sugar": 0
-  },
-
-  "sweet soy sauce": {
-    "calories": 45,
-    "protein": 3,
-    "sugar": 12
-  },
-
-  "vegetable oil": {
-    "calories": 120,
-    "protein": 0,
-    "sugar": 0
-  },
-
-  "spring roll wrapper": {
-    "calories": 190,
-    "protein": 6,
-    "sugar": 1
-  },
-
-  "bamboo shoots": {
-    "calories": 27,
-    "protein": 2.6,
-    "sugar": 3
-  },
-
-  "sugar": {
-    "calories": 57,
-    "protein": 0,
-    "sugar": 14
-  }
+    "butter": {
+        "protein": 0.8,
+        "calories": 110,
+        "sugar": 0.1
+    },
+    "chicken": {
+        "protein": 17,
+        "calories": 120,
+        "sugar": 0
+    },
+    "lomaobirghini": {
+        "protein": 23,
+        "calories": 23,
+        "sugar": 32
+    },
+    "egg": {
+        "protein": 7.4,
+        "calories": 55,
+        "sugar": 1.1
+    },
+    "sweet soy sauce": {
+        "protein": 3,
+        "calories": 45,
+        "sugar": 12
+    },
+    "white bread": {
+        "protein": 9,
+        "calories": 32,
+        "sugar": 5
+    },
+    "lol": {
+        "protein": 32,
+        "calories": 12,
+        "sugar": 12
+    },
+    "vegetable oil": {
+        "protein": 0,
+        "calories": 120,
+        "sugar": 0
+    },
+    "beef": {
+        "protein": 26,
+        "calories": 250,
+        "sugar": 0
+    },
+    "condensed milk": {
+        "protein": 7,
+        "calories": 300,
+        "sugar": 51
+    },
+    "rice": {
+        "protein": 2.7,
+        "calories": 130,
+        "sugar": 0.1
+    },
+    "margarine": {
+        "protein": 0,
+        "calories": 415,
+        "sugar": 0
+    },
+    "potato": {
+        "protein": 2,
+        "calories": 77,
+        "sugar": 0.8
+    },
+    "bamboo shoots": {
+        "protein": 2.6,
+        "calories": 27,
+        "sugar": 3
+    },
+    "spring roll wrapper": {
+        "protein": 6,
+        "calories": 190,
+        "sugar": 1
+    },
+    "sugar": {
+        "protein": 0,
+        "calories": 57,
+        "sugar": 14
+    },
+    "10": {
+        "protein": 3,
+        "calories": 2,
+        "sugar": 4
+    }
 }

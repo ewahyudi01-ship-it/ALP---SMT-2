@@ -39,10 +39,10 @@ public class AppSystem {
                         break;
 
                     default:
-                        System.out.println("⚠ - Wrong input! - ");
+                        System.out.println("⚠ └ Wrong input! - ");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("⚠ - Input with number! - ");
+                System.out.println("⚠ └ Input with number! - ");
                 sc.next(); // tanpa perintah ini maka infinite loop
             }
 
@@ -70,13 +70,13 @@ public class AppSystem {
                 int n5 = 0; //berat badan
                 boolean n4Filled = true;
                 while (n4Filled) {
-                    System.out.print("└choose: ");
+                    System.out.print("└ choose: ");
                     try {
                         n4 = sc.nextInt(); //choose roles
                         if (n4 == 1 || n4 == 2) {
 
                             while (n4Filled) {
-                                System.out.print(" - Berat badan: ");
+                                System.out.print(" └ Berat badan: ");
                                 try {
                                     n5 = sc.nextInt(); //berat badan input
                                     if (n5 > 0) {
@@ -85,16 +85,16 @@ public class AppSystem {
                                     }
 
                                 } catch (InputMismatchException e) {
-                                    System.out.println("⚠ - Input with number! -");
+                                    System.out.println("⚠ └ Input with number! -");
                                     sc.next();
                                 }
                             }
 
                         } else {
-                            System.out.println("⚠ - Wrong input! choose between 1 or 2. -");
+                            System.out.println("⚠ └ Wrong input! choose between 1 or 2. -");
                         }
                     } catch (InputMismatchException e) {
-                        System.out.println("⚠ - Input with number! - ");
+                        System.out.println("⚠ └ Input with number! - ");
                         sc.next();
                     }
                 }
@@ -115,7 +115,7 @@ public class AppSystem {
                     }
 
                     if (usernameExist) {
-                        System.out.println("⚠ - Username already exists! - ");
+                        System.out.println("⚠ └ Username already exists! - ");
                         return;
                     }
 
