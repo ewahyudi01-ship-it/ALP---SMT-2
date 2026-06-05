@@ -292,6 +292,7 @@ public class User {
                                             if (!listChoiceIngredients.isEmpty()) {
                                                 System.out.println("\n  - Current picked ingredient:");
                                             }
+                                            // melihat semua bahan baku yg dipilihi
                                             for (int i = 0; i < listChoiceIngredients.size(); i++) {
                                                 System.out.println(" " + (i+1) + ". "+ listChoiceIngredients.get(i));
                                             }
