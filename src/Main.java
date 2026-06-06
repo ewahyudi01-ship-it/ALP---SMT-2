@@ -22,7 +22,7 @@ public class Main {
     }
 
     // bahan baku
-    public static ArrayList<BahanBaku> bahanBakuList = new ArrayList<>(); // static karena dipakai 2 file dan banyak objek
+    public static ArrayList<KumpulanBahanBaku> bahanBakuList = new ArrayList<>(); // static karena dipakai 2 file dan banyak objek
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -40,21 +40,21 @@ public class Main {
         foodList.add(new FoodJadi("Indomilk 100ml", 72, 5000, 4, 3, 14));
 
         // memasukan bahan baku ke stock bahan baku
-        bahanBakuList.add(new BahanBaku("beef", 5));
-        bahanBakuList.add(new BahanBaku("potato", 10));
-        bahanBakuList.add(new BahanBaku("butter", 8));
-        bahanBakuList.add(new BahanBaku("white bread", 16));
-        bahanBakuList.add(new BahanBaku("margarine", 9));
-        bahanBakuList.add(new BahanBaku("condensed milk", 5));
-        bahanBakuList.add(new BahanBaku("rice", 6));
-        bahanBakuList.add(new BahanBaku("egg", 8));
-        bahanBakuList.add(new BahanBaku("chicken", 15));
-        bahanBakuList.add(new BahanBaku("sweet soy sauce", 9));
-        bahanBakuList.add(new BahanBaku("vegetable oil", 15));
-        bahanBakuList.add(new BahanBaku("spring roll wrapper", 7));
-        bahanBakuList.add(new BahanBaku("bamboo shoots", 8));
-        bahanBakuList.add(new BahanBaku("chicken", 11));
-        bahanBakuList.add(new BahanBaku("sugar", 6));
+        bahanBakuList.add(new KumpulanBahanBaku("beef", 5));
+        bahanBakuList.add(new KumpulanBahanBaku("potato", 10));
+        bahanBakuList.add(new KumpulanBahanBaku("butter", 8));
+        bahanBakuList.add(new KumpulanBahanBaku("white bread", 16));
+        bahanBakuList.add(new KumpulanBahanBaku("margarine", 9));
+        bahanBakuList.add(new KumpulanBahanBaku("condensed milk", 5));
+        bahanBakuList.add(new KumpulanBahanBaku("rice", 6));
+        bahanBakuList.add(new KumpulanBahanBaku("egg", 8));
+        bahanBakuList.add(new KumpulanBahanBaku("chicken", 15));
+        bahanBakuList.add(new KumpulanBahanBaku("sweet soy sauce", 9));
+        bahanBakuList.add(new KumpulanBahanBaku("vegetable oil", 15));
+        bahanBakuList.add(new KumpulanBahanBaku("spring roll wrapper", 7));
+        bahanBakuList.add(new KumpulanBahanBaku("bamboo shoots", 8));
+        bahanBakuList.add(new KumpulanBahanBaku("chicken", 11));
+        bahanBakuList.add(new KumpulanBahanBaku("sugar", 6));
 
         // food masak
         FoodItem steak = new FoodMasak("Steak", 23000, 0);

@@ -171,7 +171,6 @@ public class Purchase {
                         if ("failed".equalsIgnoreCase(status)) {
                             throw new RuntimeException("⚠ PDF receipt generation failed: " + statusResponse);
                         }
-
                         Thread.sleep(2000);
                     }
 

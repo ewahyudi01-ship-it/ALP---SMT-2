@@ -9,11 +9,6 @@
         "calories": 120,
         "sugar": 0
     },
-    "lomaobirghini": {
-        "protein": 23,
-        "calories": 23,
-        "sugar": 32
-    },
     "egg": {
         "protein": 7.4,
         "calories": 55,
@@ -78,10 +73,5 @@
         "protein": 0,
         "calories": 57,
         "sugar": 14
-    },
-    "10": {
-        "protein": 3,
-        "calories": 2,
-        "sugar": 4
     }
 }

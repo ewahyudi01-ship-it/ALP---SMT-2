@@ -7,7 +7,7 @@ import org.json.JSONTokener; // mengubah data-data mentah yang dapat dipahami ol
 import java.io.FileReader; // untuk membaca di dalam file
 import java.io.FileWriter; // untuk menulis di dalam file
 
-public class BahanBaku {
+public class KumpulanBahanBaku {
     private String namaBahanBaku;
     private int stockBaku;
 
@@ -15,7 +15,7 @@ public class BahanBaku {
     private double protein;
     private double sugarLvl;
 
-    public BahanBaku(String namaBahanBaku, int stockBaku) {
+    public KumpulanBahanBaku(String namaBahanBaku, int stockBaku) {
         this.namaBahanBaku = namaBahanBaku;
         this.stockBaku = stockBaku;
         ambilNutrisiLocal();
@@ -29,13 +29,9 @@ public class BahanBaku {
             JsonNode food = root.get(this.namaBahanBaku.toLowerCase());
 
             if (food != null) {
-                this.calories =
-                        food.get("calories").asDouble();
-                this.protein =
-                        food.get("protein").asDouble();
-
-                this.sugarLvl =
-                        food.get("sugar").asDouble();
+                this.calories = food.get("calories").asDouble();
+                this.protein = food.get("protein").asDouble();
+                this.sugarLvl = food.get("sugar").asDouble();
             }
             else {
                 System.out.println("Data not found: " + namaBahanBaku );
@@ -100,13 +96,11 @@ public class BahanBaku {
     public String getNamaBahanBaku() {
         return namaBahanBaku;
     }
-    public double getCalories() {
+    public double getCaloriesBahanBaku() {
         return calories;
     }
-    public double getSugarLvl() {
-        return sugarLvl;
-    }
-    public double getProtein() {
+    public double getSugarLvlBahanBaku() {return sugarLvl;}
+    public double getProteinBahanBaku() {
         return protein;
     }
 

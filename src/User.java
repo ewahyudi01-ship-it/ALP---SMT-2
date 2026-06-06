@@ -433,8 +433,8 @@ public class User {
                             int stock = sc.nextInt();
 
                             // masukin bahan baku baru ke list dan file.JSON
-                            BahanBaku.addNewIngredientToJSON(nameIngredient, (int)calories, protein, sugar);
-                            Main.bahanBakuList.add(new BahanBaku(nameIngredient, stock));
+                            KumpulanBahanBaku.addNewIngredientToJSON(nameIngredient, (int)calories, protein, sugar);
+                            Main.bahanBakuList.add(new KumpulanBahanBaku(nameIngredient, stock));
                             isOn = false;
 
                         } catch (InputMismatchException e) {
@@ -1292,7 +1292,7 @@ public class User {
     }
 
     public char reminderBahanBaku() {
-        for (BahanBaku stok : Main.bahanBakuList) {
+        for (KumpulanBahanBaku stok : Main.bahanBakuList) {
             if (stok.getStockBaku() <= 0) {
                 return 1; //almost empty
             } else if (stok.getStockBaku() < 3 && stok.getStockBaku() > 0) {
@@ -1306,7 +1306,7 @@ public class User {
         int jumlahItemYangKurang = 0;
         int j = 0;
 
-        for (BahanBaku stok : Main.bahanBakuList) {
+        for (KumpulanBahanBaku stok : Main.bahanBakuList) {
             if (stok.getStockBaku() < 3) {
                 j++;
                 System.out.println(j + ". " + stok.getNamaBahanBaku() + " | stock: " + stok.getStockBaku());

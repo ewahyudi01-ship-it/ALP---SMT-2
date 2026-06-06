@@ -28,7 +28,7 @@ public class FoodMasak extends FoodItem {
         int maks = 999;
 
         for (int i = 0; i < getResepBahan().size(); i++) {
-            for (BahanBaku stok : Main.bahanBakuList) {
+            for (KumpulanBahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {
                     if (maks > stok.getStockBaku()) {
                         maks = stok.getStockBaku();
@@ -47,7 +47,7 @@ public class FoodMasak extends FoodItem {
     @Override
     public void reduceStock(int n3) {
         for (int i = 0; i < getResepBahan().size(); i++) {
-            for (BahanBaku stok : Main.bahanBakuList) {
+            for (KumpulanBahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {
                     stok.kurangiStockBaku(n3);
                     break;
@@ -77,16 +77,15 @@ public class FoodMasak extends FoodItem {
 
         System.out.println("\n------- Kalori -------");
         for (int i = 0; i < getResepBahan().size(); i++) {
-            for (BahanBaku stok : Main.bahanBakuList) {
+            for (KumpulanBahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {
 
-                    System.out.println("Kalori "+ stok.getNamaBahanBaku() +": " + stok.getCalories());
-                    this.caloriesTotal += stok.getCalories();
+                    System.out.println("Kalori "+ stok.getNamaBahanBaku() +": " + stok.getCaloriesBahanBaku());
+                    this.caloriesTotal += stok.getCaloriesBahanBaku();
                     break;
                 }
             }
         }
-
     }
 
     public void getTotalProtein() {
@@ -94,11 +93,11 @@ public class FoodMasak extends FoodItem {
 
         System.out.println("\n------- Protein -------");
         for (int i = 0; i < getResepBahan().size(); i++) {
-            for (BahanBaku stok : Main.bahanBakuList) {
+            for (KumpulanBahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {
 
-                    System.out.println("Protein "+ stok.getNamaBahanBaku() +": " + stok.getProtein());
-                    proteinTotal += stok.getProtein();
+                    System.out.println("Protein "+ stok.getNamaBahanBaku() +": " + stok.getProteinBahanBaku());
+                    proteinTotal += stok.getProteinBahanBaku();
                     break;
                 }
             }
@@ -110,11 +109,11 @@ public class FoodMasak extends FoodItem {
 
         System.out.println("\n------- Gula -------");
         for (int i = 0; i < getResepBahan().size(); i++) {
-            for (BahanBaku stok : Main.bahanBakuList) {
+            for (KumpulanBahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {
 
-                    System.out.println("Protein "+ stok.getNamaBahanBaku() +": " + stok.getSugarLvl());
-                    sugarLvlTotal += stok.getSugarLvl();
+                    System.out.println("Gula "+ stok.getNamaBahanBaku() +": " + stok.getSugarLvlBahanBaku());
+                    sugarLvlTotal += stok.getSugarLvlBahanBaku();
                     break;
                 }
             }
