@@ -11,7 +11,7 @@ public class Cafetaria {
         this.menuList = menuList;
         this.orders = new LinkedList<Purchase>();
     }
-    //runtime polymorphism
+
     public void showAllMenu(){
         for (int i = 0; i < menuList.size(); i++) {
             System.out.println( i+1+". "+getMenu(i).getNamaMenu());
@@ -35,7 +35,6 @@ public class Cafetaria {
         if (orders == null || orders.isEmpty() || current == null) {
             return 0;
         }
-
         int timeTotal = 0;
         for (Purchase p : this.orders) {
             timeTotal += p.totalWaktu;
@@ -86,4 +85,3 @@ public class Cafetaria {
     }
 }
 
-//ductype polymorphism

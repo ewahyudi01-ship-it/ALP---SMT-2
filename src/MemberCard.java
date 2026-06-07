@@ -7,12 +7,12 @@ public class MemberCard {
     private boolean isCardActive;
     private Rank rankSubscription;
 
-    public static final int PRICE_REGULAR = 14000;
-    public static final int PRICE_PREMIUM = 850000;
+    public static final double PRICE_REGULAR = 14000;
+    public static final double PRICE_PREMIUM = 850000;
 
-    public static final int PRICE_3_DAYS = 5000;
-    public static final int PRICE_7_DAYS = 10650;
-    public static final int PRICE_30_DAYS = 34500;
+    public static final double PRICE_3_DAYS = 5000;
+    public static final double PRICE_7_DAYS = 10650;
+    public static final double PRICE_30_DAYS = 34500;
 
     public static final int DURATION_3_DAYS = 3;
     public static final int DURATION_7_DAYS = 7;
