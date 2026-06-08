@@ -196,8 +196,16 @@ public class Purchase {
         }
     }
 
-    public int getTotalWaktu() {
-        // Jika belum mulai dimasak (waktuPesan masih 0), tampilkan totalWaktu utuh
+    public User getOwner(ArrayList<User>user) {
+        for (int i = 0; i < user.size(); i++) {
+            if (user.get(i).getRoles().equals(Main.Roles.OWNER.getRoleName())) {
+                return user.get(i);
+            }
+        }
+        return null;
+    }
+
+    public int getTotalWaktu() { // Jika belum mulai dimasak (waktuPesan masih 0), tampilkan totalWaktu utuh
         if (this.waktuPesan == 0) {
             return this.totalWaktu;
         }
@@ -207,15 +215,6 @@ public class Purchase {
 
         // Cegah agar tidak mengembalikan angka minus jika delay antrean
         return sisa > 0 ? (int) sisa : 0;
-    }
-
-    public User getOwner(ArrayList<User>user) {
-        for (int i = 0; i < user.size(); i++) {
-            if (user.get(i).getRoles().equals(Main.Roles.OWNER.getRoleName())) {
-                return user.get(i);
-            }
-        }
-        return null;
     }
 
     public void addWaktu(int waktuPesan) {

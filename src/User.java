@@ -1,3 +1,5 @@
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.*;
 
 public class User {
@@ -72,6 +74,31 @@ public class User {
             System.out.println("role: " + roles);
             System.out.println("saldo: " + saldo);
             System.out.println("------------------");
+
+            //ambil data tanggal hari ini dari komputer
+            LocalDate today = LocalDate.now();
+
+            //anounymous class
+            if (today.equals(LocalDate.of(2026, 6, 11))) {
+                Event eventHariKhusus = new Event() {
+                    @Override
+                    public void displayInfo() {
+                        System.out.println("\n ┌ ! [CELEBRATION] ! National independence day! :o");
+                    }
+
+                    @Override
+                    public void reward() {
+                        // langsung berikan saldo ke akun sendiri
+                        double bonusSaldos = 15000;
+                        saldo += bonusSaldos;
+
+                        System.out.println(" ├ ! [REWARDS SUCCESS] ! Congratulations! You've received balance of: Rp." + bonusSaldos);
+                        System.out.println(" └ enjoy your day to the fullest! and happy national day! "+ username +"\n");
+                    }
+                };
+                eventHariKhusus.displayInfo();
+                eventHariKhusus.reward();
+            }
 
             if (roles.equals("Owner")) {
                 if (reminderBahanBaku() == 1) {
@@ -1361,5 +1388,4 @@ public class User {
     public String getRoles() {
         return roles;
     }
-
 }
