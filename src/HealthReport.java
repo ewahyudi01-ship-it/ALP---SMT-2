@@ -106,8 +106,8 @@ public class HealthReport {
         double totalCalAfter = getTotalCaloriesFromAllTransactions() + food.getCalories() * quantity;
         double totalSugarAfter = getTotalSugarFromAllTransactions() + food.getSugarLvl() * quantity;
 
-        double maxCalories = getRecommendedCalories() * 1.5; // hard cap: 150% daily
-        double maxSugar = getRecommendedMaxSugar() * 2;      // hard cap: 2x WHO limit
+        double maxCalories = getRecommendedCalories() * 1.5; // batas: 150% daily
+        double maxSugar = getRecommendedMaxSugar() * 2;      // batas: 2x WHO limit
 
         String errorMessage = "";
 

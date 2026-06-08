@@ -1,4 +1,4 @@
-public abstract class Event {
-    abstract void displayInfo();
-    abstract void reward();
+public interface Event { // interface
+    void displayInfo();
+    void reward();
 }

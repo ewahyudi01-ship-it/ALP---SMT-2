@@ -49,7 +49,7 @@ public class AppSystem {
         }
     }
 
-    public static void register(Scanner sc, ArrayList<User> user, Cafetaria cafe) {
+    public void register(Scanner sc, ArrayList<User> user, Cafetaria cafe) {
         sc.nextLine();
 
         System.out.print("\n - username: ");
@@ -106,7 +106,7 @@ public class AppSystem {
                             "          `-    \\`_`\"'-");
 
                     boolean usernameExist = false;
-
+                    //deteksi jika nama register sama dengan nama akun user
                     for (User u : user) {
                         if (u.getNama().equalsIgnoreCase(n)) {
                             usernameExist = true;
@@ -138,7 +138,7 @@ public class AppSystem {
         }
     }
 
-    public static void login(Scanner sc, ArrayList<User> user, Cafetaria cafe) {
+    public void login(Scanner sc, ArrayList<User> user, Cafetaria cafe) {
         sc.nextLine();
         System.out.print("\n - Enter username: ");
         String n = sc.nextLine();

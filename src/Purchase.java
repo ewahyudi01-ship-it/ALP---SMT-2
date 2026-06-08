@@ -36,7 +36,7 @@ public class Purchase {
 
     public double getCalculateTotal() {
         return foodItem.getHarga() * quantity;
-    }
+    }  // encapsulation , method: getter
 
     public void printReceipt(Scanner scanner) {
 
@@ -223,20 +223,20 @@ public class Purchase {
 
     public FoodItem getFoodItem() {
         return foodItem;
-    }
+    } // encapsulation , method: getter
 
     public User getUser() {
         return user;
-    }
+    } // encapsulation , method: getter
 
     public int getQuantity() {
         return quantity;
-    }
+    } // encapsulation , method: getter
 
     @Override
     public String toString() {
 
-        return foodItem.getFoodName() +
+        return foodItem.getFoodName() +  // encapsulation , method: getter
                 " x" + quantity;
     }
 }

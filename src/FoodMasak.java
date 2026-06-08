@@ -1,25 +1,25 @@
 import java.util.ArrayList;
 
 public class FoodMasak extends FoodItem {
-    private ArrayList<String> resepBahan = new ArrayList<>();
+    private ArrayList<String> resepBahan = new ArrayList<>(); // arraylist
     private double caloriesTotal;
     private double proteinTotal;
     private double sugarLvlTotal;
     private int waktuBuat;
 
     public FoodMasak(String foodName, double harga, int stock) {
-        super(foodName, harga, stock);
+        super(foodName, harga, stock);  // super
     }
 
     public void setWaktuBuat(int waktuBuat) {
         this.waktuBuat = waktuBuat;
-    }
+    }   // encapsulation , method: setter
 
     public void tambahResep(String namaBahan) {
         this.resepBahan.add(namaBahan);
-    }
+    }  // encapsulation , method: setter
 
-    public ArrayList<String> getResepBahan() {
+    public ArrayList<String> getResepBahan() {  // encapsulation , method: getter
         return resepBahan;
     }
 
@@ -56,19 +56,19 @@ public class FoodMasak extends FoodItem {
     @Override
     public double getCalories() {
         return caloriesTotal;
-    }
+    }  // polymorphism & encapsulation , method: getter
 
     @Override
     public double getProtein() {
         return proteinTotal;
-    }
+    }  // polymorphism & encapsulation , method: getter
 
     @Override
     public double getSugarLvl() {
         return sugarLvlTotal;
-    }
+    }  // polymorphism & encapsulation , method: getter
 
-    public void getTotalCalories() {
+    public void getTotalCalories() {  // encapsulation , method: getter
         this.caloriesTotal=0;
 
         System.out.println("\n------- Kalori -------");
@@ -84,7 +84,7 @@ public class FoodMasak extends FoodItem {
         }
     }
 
-    public void getTotalProtein() {
+    public void getTotalProtein() {  // encapsulation , method: getter
         this.proteinTotal=0;
 
         System.out.println("\n------- Protein -------");
@@ -100,7 +100,7 @@ public class FoodMasak extends FoodItem {
         }
     }
 
-    public void getTotalSugarLvl() {
+    public void getTotalSugarLvl() {  // encapsulation , method: getter
         this.sugarLvlTotal=0;
 
         System.out.println("\n------- Gula -------");
@@ -119,10 +119,10 @@ public class FoodMasak extends FoodItem {
 
     public int getWaktuBuat() {
         return this.waktuBuat;
-    }
+    }   // encapsulation , method: getter
 
     @Override
-    public String displayInfo() {
+    public String displayInfo() { // polymorrphism
         this.getStock();
         this.getTotalCalories();
         this.getTotalProtein();
@@ -134,5 +134,5 @@ public class FoodMasak extends FoodItem {
     @Override
     public boolean isHealthy() {
         return caloriesTotal < 800 && sugarLvlTotal < 25;
-    }
+    } // polymorphism
 }

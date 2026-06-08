@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Main {
 
+    // enum
     enum Roles {
         OWNER("Owner"),
         SMA("SMA"),
@@ -26,11 +27,12 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        //arraylist user
         ArrayList<User> userList = new ArrayList<>(); // <--- userList saat ini
         userList.add(new User("Owner", "smart121", 65, 2000000000, "Owner"));
 
         //cafe 1
-        ArrayList<FoodItem> foodList = new ArrayList<>();
+        ArrayList<FoodItem> foodList = new ArrayList<>(); // arraylist foodList
         // food jadi
         foodList.add(new FoodJadi("Apple", 50, 3000, 20, 0, 25));
         foodList.add(new FoodJadi("Snack beng-beng (regular)", 100, 9000, 11, 1, 10));
@@ -57,19 +59,19 @@ public class Main {
         bahanBakuList.add(new KumpulanBahanBaku("sugar", 6));
 
         // food masak
-        FoodItem steak = new FoodMasak("Steak", 23000, 0);
+        FoodItem steak = new FoodMasak("Steak", 23000, 0); // upcasting
         ((FoodMasak) steak).setWaktuBuat(320);
         ((FoodMasak) steak).tambahResep("beef");
         ((FoodMasak) steak).tambahResep("potato");
         ((FoodMasak) steak).tambahResep("butter");
 
-        FoodItem toastBread = new FoodMasak("Toast Bread", 6500, 0);
+        FoodItem toastBread = new FoodMasak("Toast Bread", 6500, 0); // upcasting
         ((FoodMasak) toastBread).setWaktuBuat(230);
         ((FoodMasak) toastBread).tambahResep("white bread");
         ((FoodMasak) toastBread).tambahResep("margarine");
         ((FoodMasak) toastBread).tambahResep("condensed milk");
 
-        FoodItem nasiGoreng = new FoodMasak("Nasi Goreng", 17000, 0);
+        FoodItem nasiGoreng = new FoodMasak("Nasi Goreng", 17000, 0); // upcasting
         ((FoodMasak) nasiGoreng).setWaktuBuat(450);
         ((FoodMasak) nasiGoreng).tambahResep("rice");
         ((FoodMasak) nasiGoreng).tambahResep("egg");
@@ -77,13 +79,13 @@ public class Main {
         ((FoodMasak) nasiGoreng).tambahResep("sweet soy sauce");
         ((FoodMasak) nasiGoreng).tambahResep("vegetable oil");
 
-        FoodItem lumpia = new FoodMasak("Lumpia", 9800, 0);
+        FoodItem lumpia = new FoodMasak("Lumpia", 9800, 0); // upcasting
         ((FoodMasak) lumpia).setWaktuBuat(10);
         ((FoodMasak) lumpia).tambahResep("spring roll wrapper");
         ((FoodMasak) lumpia).tambahResep("bamboo shoots");
         ((FoodMasak) lumpia).tambahResep("chicken");
         ((FoodMasak) lumpia).tambahResep("sugar");
-        // add FoodMasak
+        // add FoodMasak ke dalam arraylist foodList
         foodList.add(steak);
         foodList.add(toastBread);
         foodList.add(nasiGoreng);

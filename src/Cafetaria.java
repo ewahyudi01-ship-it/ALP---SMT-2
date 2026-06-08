@@ -2,8 +2,8 @@ import java.util.*;
 
 public class Cafetaria {
     //encapsulation
-    private ArrayList<Menu> menuList;
-    private Queue<Purchase> orders; //polymorphism
+    private ArrayList<Menu> menuList; // arraylist
+    private Queue<Purchase> orders; //polymorphism  queue
 
     public Cafetaria(ArrayList<Menu> menuList) {
         this.menuList = menuList;
@@ -48,33 +48,33 @@ public class Cafetaria {
     //encapsulation
     public Purchase removeOrder() {
         return orders.poll();
-    }
+    }  // encapsulation , method: setter
 
     public void addOrder(Purchase order){
         orders.add(order);
-    }
+    }  // encapsulation , method: setter
 
     //getter & setter
     public Menu getMenu(int n) {
         return menuList.get(n);
-    }
+    }  // encapsulation , method: getter
     public Menu getMainMenu() {
         return menuList.get(0);
-    }
+    }  // encapsulation , method: getter
 
     public ArrayList<Menu> getMenuList() {
         return menuList;
-    }
+    }  // encapsulation , method: getter
 
-    public Purchase getCurrentOrder() {
+    public Purchase getCurrentOrder() { // encapsulation , method: getter
         return orders.peek();
     }
 
     public  Queue<Purchase> getOrders() {
         return orders;
-    }
+    }  // encapsulation , method: getter
     public int getMenuSize() {
         return menuList.size();
-    }
+    }  // encapsulation , method: getter
 }
 

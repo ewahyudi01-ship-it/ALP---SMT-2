@@ -1,4 +1,3 @@
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -8,8 +7,8 @@ public class User {
     protected String password;
     protected int beratBadan;
     protected double saldo;
-    protected ArrayList<Purchase> historiPembelian;
-    protected Stack<Purchase> recentPurchases;
+    protected ArrayList<Purchase> historiPembelian; // arraylist
+    protected Stack<Purchase> recentPurchases; // stack
     private HealthReport healthReport;
     private MemberCard memberCard;
     private String roles;
@@ -31,9 +30,9 @@ public class User {
         Timer timerOtomatis = new Timer(true);
         timerOtomatis.scheduleAtFixedRate(new TimerTask() {
             @Override
-            public void run() {
+            public void run() { // polymorphism
 
-                Purchase current = cafe.getCurrentOrder();
+                Purchase current = cafe.getCurrentOrder(); // queue
 
                 if (current != null) {
                     long waktuSekarang = System.currentTimeMillis() / 1000;
@@ -72,18 +71,18 @@ public class User {
             System.out.println("Name: " + username);
             System.out.println("Berat badan: " + beratBadan);
             System.out.println("role: " + roles);
-            System.out.println("saldo: " + saldo);
+            System.out.println("saldo: Rp. " + saldo);
             System.out.println("------------------");
 
             //ambil data tanggal hari ini dari komputer
             LocalDate today = LocalDate.now();
 
             //anounymous class
-            if (today.equals(LocalDate.of(2026, 6, 11))) {
+            if (today.equals(LocalDate.of(2026, 6, 9))) {
                 Event eventHariKhusus = new Event() {
                     @Override
                     public void displayInfo() {
-                        System.out.println("\n ┌ ! [CELEBRATION] ! National independence day! :o");
+                        System.out.println("\n ┌ ! [CELEBRATION] ! National Donald Duck Day! :o");
                     }
 
                     @Override
@@ -93,7 +92,7 @@ public class User {
                         saldo += bonusSaldos;
 
                         System.out.println(" ├ ! [REWARDS SUCCESS] ! Congratulations! You've received balance of: Rp." + bonusSaldos);
-                        System.out.println(" └ enjoy your day to the fullest! and happy national day! "+ username +"\n");
+                        System.out.println(" └ enjoy your day to the fullest, and Happy National Donald Duck Day! "+ username +"\n");
                     }
                 };
                 eventHariKhusus.displayInfo();
@@ -119,6 +118,7 @@ public class User {
                     System.out.println("----------------------");
                 }
             }
+            //
             if (!recentPurchases.empty()) {
                 Purchase current = null;
 
@@ -223,7 +223,7 @@ public class User {
         }
     }
 
-    private void addNewProduct(Scanner sc, Cafetaria cafe) {
+    private void addNewProduct(Scanner sc, Cafetaria cafe) { // encapsulation
 
         boolean isOn = true;
         while (isOn) {
@@ -231,8 +231,7 @@ public class User {
             System.out.println("\n╔═───────────────── ADD NEW PRODUCTS ─────────────────╗");
             for (FoodItem foodItem : cafe.getMainMenu().getFoodItem()) {
                 count++;
-                System.out.println(" " + count + ". " + foodItem.getFoodName());
-            }
+                System.out.println(" " + count + ". " + foodItem.getFoodName()); }
             System.out.println("╚═────────────────────────────────────────────────────╝");
             System.out.println("1. add new product");
             System.out.println("0. back");
@@ -416,7 +415,7 @@ public class User {
         }
     }
 
-    private void addNewIngredient(Scanner sc) {
+    private void addNewIngredient(Scanner sc) { // encapsulation
 
         boolean isOn = true;
         while (isOn) {
@@ -486,7 +485,7 @@ public class User {
     }
 
 
-    private void editProfile(Scanner sc) {
+    private void editProfile(Scanner sc) { // encapsulation, method: setter
 
         boolean isOn = true;
         while (isOn) {
@@ -509,7 +508,7 @@ public class User {
                         if (newUserName.trim().equals("0")) {
                             break;
                         } else {
-                            this.username = newUserName;
+                            this.username = newUserName; // encapsulation
                             System.out.println("Successfully changed your new name to: " + username);
                         }
                         break;
@@ -522,7 +521,7 @@ public class User {
                         if (newPassword.trim().equals("0")) {
                             break;
                         } else {
-                            this.password = newPassword;
+                            this.password = newPassword; // encapsulation
                             System.out.println("Successfully changed your new password to: " + password);
                         }
                         break;
@@ -536,7 +535,7 @@ public class User {
                             if (updateBodyWeight == 0) {
                                 break;
                             } else if (updateBodyWeight > 0) {
-                                this.beratBadan = updateBodyWeight;
+                                this.beratBadan = updateBodyWeight; // encapsulation
                                 System.out.println("Successfully update your body weight to: " + beratBadan);
                             } else {
                                 System.out.println("⚠ └ Invalid input! no negative number! - ");
@@ -566,7 +565,7 @@ public class User {
                                 break;
                             } else if (updateRoles == 1) {
                                 if (!roles.equalsIgnoreCase("SMP")) {
-                                    this.roles = Main.Roles.SMP.getRoleName();
+                                    this.roles = Main.Roles.SMP.getRoleName(); // encapsulation
                                     System.out.println("Successfully update your role to: " + roles);
                                 } else {
                                     System.out.println("⚠ └ Invalid input! you already has the same role you've choosen, as SMP!");
@@ -574,7 +573,7 @@ public class User {
 
                             } else if (updateRoles == 2) {
                                 if (!roles.equalsIgnoreCase("SMA")) {
-                                    this.roles = Main.Roles.SMA.getRoleName();
+                                    this.roles = Main.Roles.SMA.getRoleName(); // encapsulation
                                     System.out.println("Successfully update your role to: " + roles);
                                 } else {
                                     System.out.println("⚠ └ Invalid input! you already has the same role you've choosen, as SMA!");
@@ -601,7 +600,7 @@ public class User {
         }
     }
 
-    private void cancelOrder() {
+    private void cancelOrder() {  // encapsulation
         if (!recentPurchases.empty()) {
             recentPurchases.pop();
             System.out.println("Your order has been cancelled!");
@@ -612,7 +611,7 @@ public class User {
 
 
 
-    private void listOfOrders(Scanner sc, Cafetaria cafe) {
+    private void listOfOrders(Scanner sc, Cafetaria cafe) {  // encapsulation
         boolean isOn = true;
         while (isOn) {
             if (roles.equals("Owner")) {
@@ -633,7 +632,7 @@ public class User {
                     switch (n) {
                         case 1:
                             if (!cafe.getOrders().isEmpty()) {   // menghapus order list dari owner, serta stack dari sisi pelanggan yang di target
-                                Purchase pesananYangDihapus = cafe.removeOrder(); // return nya objek "purchase" sebelum order menghapus datanya dengan poll()
+                                Purchase pesananYangDihapus = cafe.removeOrder(); // return nya objek "purchase" sebelum order menghapus datanya dengan poll()   , queue
                                 User targetUser = pesananYangDihapus.getUser();
                                 targetUser.recentPurchases.remove(pesananYangDihapus); // menghapus stack user yang ditargetkan
                             }
@@ -658,7 +657,7 @@ public class User {
 
 
 
-    private void restock(Scanner sc, Cafetaria cafe) {
+    private void restock(Scanner sc, Cafetaria cafe) { // encapsulation
         boolean isOn = true;
         while (isOn) {
             if (roles.equals("Owner")) {
@@ -677,7 +676,7 @@ public class User {
                     if (n == 1) {
                         System.out.println("\n-----------------------");
                         for (int i = 0; i < Main.bahanBakuList.size(); i++) {
-                            System.out.println(i + 1 + ". " + Main.bahanBakuList.get(i).getNamaBahanBaku() + " | Stock: " + Main.bahanBakuList.get(i).getStockBaku());
+                            System.out.println(i + 1 + ". " + Main.bahanBakuList.get(i).getNamaBahanBaku() + " | Stock: " + Main.bahanBakuList.get(i).getStockBaku());  // arraylist BahanBaku
                         }
 
                         System.out.print("\nChoose Ingredient: ");
@@ -692,7 +691,7 @@ public class User {
                                     if (n2 > 0) { // jika ingredient tidak dikasih 0
 
                                         Main.bahanBakuList.get(choice - 1).addIngredient(n2);
-                                        System.out.println("Successfully restock " + Main.bahanBakuList.get(choice - 1).getNamaBahanBaku() + " for " + n2);
+                                        System.out.println("Successfully restock " + Main.bahanBakuList.get(choice - 1).getNamaBahanBaku() + " for " + n2);  // arraylist BahanBaku
                                         break;
                                     }
 
@@ -713,11 +712,11 @@ public class User {
                     } else if (n == 2) {  // choose section products
                         try {
                             System.out.println("\n-----------------------");
-                            Menu mainMenu = cafe.getMainMenu();
+                            Menu mainMenu = cafe.getMainMenu();  // queue
                             int jumlahProdukJadi = 0;
 
                             for (int i = 0; i < mainMenu.getFoodItem().size(); i++) {
-                                if (mainMenu.getFoodItem().get(i) instanceof FoodJadi) { // polymorphism
+                                if (mainMenu.getFoodItem().get(i) instanceof FoodJadi) { // polymorphism , downcasting
                                     System.out.println(i+1 + ". "+((FoodJadi) mainMenu.getFoodItem().get(i)).displayStock());
                                     jumlahProdukJadi++;
                                 }
@@ -768,14 +767,14 @@ public class User {
     }
 
 
-    private void createNewMenu(Scanner sc, Cafetaria cafe) {
+    private void createNewMenu(Scanner sc, Cafetaria cafe) { // encapsulation
         if (roles == "Owner") {
             System.out.println("\n _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _ \n" +
                     "( )( )( )( )( )( )( )( )( )( )( )( )( )( )( )( )( )( )( )( )\n" +
                     "------------- C R E A T E --- N E W --- M E N U ------------\n" +
                     "(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)\n");
 
-            ArrayList<FoodItem> foodItems = new ArrayList<>();
+            ArrayList<FoodItem> foodItems = new ArrayList<>(); // arraylist
             boolean isOn = true;
             while (isOn) {
                 System.out.println("list all products:");
@@ -863,7 +862,7 @@ public class User {
         }
     }
 
-    private void memberCardUser(Scanner sc, ArrayList<User> user) {
+    private void memberCardUser(Scanner sc, ArrayList<User> user) { // encapsulation
         boolean isOn = true;
         while (isOn) {
             if (memberCard != null) { //jika ada member card
@@ -1136,7 +1135,7 @@ public class User {
                                                     //generic / parameteric polymorphism karena mengurangi bahan baku atau stok food jadi
                                                     cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).reduceStock(n3);
 
-                                                if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // polymorphism
+                                                if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // polymorphism, Downcasting
                                                     cafe.addOrder((purchase)); // orderlist Queue
                                                     recentPurchases.push(purchase); // masuk ke stack (ONLY food masak)
                                                 }
@@ -1169,12 +1168,12 @@ public class User {
                             FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
 
                             System.out.println((i + 1) + ". " + items.getFoodName() + " | harga: " + items.getHarga()); // display item
-                            if (items instanceof FoodMasak) {
+                            if (items instanceof FoodMasak) { // polymorphism
                                 if (items.getStock() <= 0) {
                                     System.out.println("⚠ └ Sorry, the stock for the " + items.getFoodName() + " is empty :( - ");
                                     semuaStokAman = false;
                                 }
-                            } else if (items instanceof FoodJadi) {
+                            } else if (items instanceof FoodJadi) { // polymorphism
                                 if (items.getStock() <= 0) {
                                     System.out.println("⚠ └ Sorry, the stock for the " + items.getFoodName() + " is empty :( - ");
                                     semuaStokAman = false;
@@ -1289,7 +1288,7 @@ public class User {
         }
     }
 
-    private void purchaseHistory(Scanner sc) {
+    private void purchaseHistory(Scanner sc) { // encapsulation
         System.out.println("\n¸,ø¤º°`°º¤ø¤º°`°º¤ø,¸, Purchase History ,¸,ø¤º°`°º¤ø¤º°`°º¤ø,¸");
         boolean isOn = true;
         while (isOn) {
@@ -1330,11 +1329,11 @@ public class User {
         return 0;
     }
 
-    private int showAllIngredientToRefill() {
+    private int showAllIngredientToRefill() { // encapsulation
         int jumlahItemYangKurang = 0;
         int j = 0;
 
-        for (KumpulanBahanBaku stok : Main.bahanBakuList) {
+        for (KumpulanBahanBaku stok : Main.bahanBakuList) { // arraylist BahanBaku
             if (stok.getStockBaku() < 3) {
                 j++;
                 System.out.println(j + ". " + stok.getNamaBahanBaku() + " | stock: " + stok.getStockBaku());
@@ -1344,7 +1343,7 @@ public class User {
         return jumlahItemYangKurang;
     }
 
-    private int showAllFoodJadiStockToRefill(Cafetaria cafe) {
+    private int showAllFoodJadiStockToRefill(Cafetaria cafe) { // encapsulation
         int jumlahItemYangKurang = 0;
         int j = 0;
 
@@ -1362,7 +1361,7 @@ public class User {
 
 
 
-    public User getOwner(ArrayList<User> user) {
+    public User getOwner(ArrayList<User> user) {  // encapsulation , method: getter
         for (int i = 0; i < user.size(); i++) {
             if (user.get(i).getRoles().equals(Main.Roles.OWNER.getRoleName())) {
                 return user.get(i);
@@ -1373,19 +1372,19 @@ public class User {
 
     // setter & getter
 
-    public void tambahSaldo(double n) {
+    public void tambahSaldo(double n) {  // encapsulation , method: setter
         this.saldo += n;
     }
 
-    public String getNama() {
+    public String getNama() {  // encapsulation , method: getter
         return username;
     }
 
-    public String getPassword() {
+    public String getPassword() {  // encapsulation , method: getter
         return password;
     }
 
-    public String getRoles() {
+    public String getRoles() {  // encapsulation , method: getter
         return roles;
     }
 }

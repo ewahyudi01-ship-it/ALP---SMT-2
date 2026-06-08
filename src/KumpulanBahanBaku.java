@@ -21,7 +21,7 @@ public class KumpulanBahanBaku {
         ambilNutrisiLocal();
     }
 
-    private void ambilNutrisiLocal() {
+    private void ambilNutrisiLocal() {   // encapsulation , method: getter
 
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -45,7 +45,7 @@ public class KumpulanBahanBaku {
             e.printStackTrace();
         }
     }
-    public static void addNewIngredientToJSON(String name, int calories, double protein, double sugar) {
+    public static void addNewIngredientToJSON(String name, int calories, double protein, double sugar) {  // encapsulation , method: setter
         try {
             File file = new File("nutrition.JSON"); // target file
             JSONObject rootObject; // menyiapkan "{" dan "}" ke dalam file JSON
@@ -85,23 +85,23 @@ public class KumpulanBahanBaku {
 
     public void addIngredient(int n) {
         stockBaku += n;
-    }
+    }   // encapsulation , method: setter
     public int getStockBaku() {
         return stockBaku;
-    }
+    }     // encapsulation , method: getter
     public void kurangiStockBaku(int n3) {
         this.stockBaku -= n3;
-    }
+    }  // encapsulation , method: setter
 
     public String getNamaBahanBaku() {
         return namaBahanBaku;
-    }
+    }  // encapsulation , method: getter
     public double getCaloriesBahanBaku() {
         return calories;
-    }
-    public double getSugarLvlBahanBaku() {return sugarLvl;}
+    }  // encapsulation , method: getter
+    public double getSugarLvlBahanBaku() {return sugarLvl;}  // encapsulation , method: getter
     public double getProteinBahanBaku() {
         return protein;
-    }
+    }  // encapsulation , method: getter
 
 }

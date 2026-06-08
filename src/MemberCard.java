@@ -31,12 +31,12 @@ public class MemberCard {
         this.cardExpiry = LocalDate.now().plusDays(n);
     }
 
-    public void upgradeCardPremium() {
+    public void upgradeCardPremium() {   // encapsulation , method: setter
         this.rankSubscription = Rank.PREMIUM;
         this.cardExpiry = null;
     }
 
-    public boolean isCardActive() {
+    public boolean isCardActive() {   // encapsulation , method: getter
         if (rankSubscription == Rank.PREMIUM) {
             return  true;
         }
@@ -49,7 +49,7 @@ public class MemberCard {
         }
     }
 
-    public void setCardExpiry(int n) {
+    public void setCardExpiry(int n) {   // encapsulation , method: setter
         LocalDate hariIni = LocalDate.now();
 
         if (isCardActive()) {
@@ -68,7 +68,7 @@ public class MemberCard {
 
     public LocalDate getMemberCardExpiry() {
         return this.cardExpiry;
-    }
+    }  // encapsulation , method: getter
 
     public boolean hasMemberCard() {
         if (this == null) {
@@ -81,10 +81,10 @@ public class MemberCard {
 
     public String getIdCard() {
         return iDCard;
-    }
+    }  // encapsulation , method: getter
 
     public Rank getRankSubscription() {
         return rankSubscription;
-    }
+    }  // encapsulation , method: getter
 
 }
