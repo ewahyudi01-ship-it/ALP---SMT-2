@@ -105,11 +105,14 @@ public class User {
 
                 // Jika pesanan milik user ini ditemukan di dalam Queue dapur
                 if (current != null) {
-                    System.out.println("Current order: " + current.getFoodItem().getFoodName() +
-                            " x" + current.getQuantity() +
-                            " | Wait for: " + cafe.totalTimeProductionFoodMasak(current) + " sec");
-                } else {
-                    System.out.println("Current order: Your order is being processed! However, please wait a little longer as there are other orders queue!.\n");
+                    if (current == cafe.getCurrentOrder()) {
+                        System.out.println("Current order: " + current.getFoodItem().getFoodName() +
+                                " x" + current.getQuantity() +
+                                " | Wait for: " + cafe.totalTimeProductionFoodMasak(current) + " sec");
+                    } else {
+                        System.out.println("Current order: Your order is being processed! However, please wait a little longer as there are other orders queue!."+
+                                "\n └ Wait for: " + cafe.totalTimeProductionFoodMasak(current) + " sec");
+                    }
                 }
             } else {
                 System.out.println("Current order: No order currently processed.");
@@ -231,8 +234,8 @@ public class User {
                         }
 
                         System.out.println("\n╔═─────────────────── Product Type ───────────────────╗");
-                        System.out.println("  1. Ready foods");
-                        System.out.println("  2. Cooks foods");
+                        System.out.println("  1. Ready product");
+                        System.out.println("  2. Cooked product");
                         System.out.println("╚═────────────────────────────────────────────────────╝");
                         System.out.print("└ Choice: ");
                         try {
@@ -275,7 +278,7 @@ public class User {
                                         }
                                         FoodJadi newFoodJadi = new FoodJadi(nameProduct, calories, price, sugar, protein, stock);
 
-                                        cafe.getMainMenu().getFoodItem().add(newFoodJadi); //add to menu utama
+                                        cafe.getMainMenu().getFoodItem().add(newFoodJadi); //add to menu utama  , polymorphism
                                         System.out.println(" » Succesfully added "+ nameProduct +" of ready products to your menu!");
                                     sc.nextLine();
                                     break;
@@ -338,14 +341,14 @@ public class User {
                                                                 break;
                                                             }
 
-                                                            FoodItem newFoodMasak = new FoodMasak(nameProduct, price, 0);
+                                                            FoodItem newFoodMasak = new FoodMasak(nameProduct, price, 0); // polymorphism
 
                                                             for (int i = 0; i < listChoiceIngredients.size(); i++) {
-                                                                ((FoodMasak) newFoodMasak).tambahResep(listChoiceIngredients.get(i)); // semua bahan baku dimasukin ke food masak
+                                                                ((FoodMasak) newFoodMasak).tambahResep(listChoiceIngredients.get(i)); // semua bahan baku dimasukin ke food masak  , polymorphism
                                                             }
-                                                            ((FoodMasak) newFoodMasak).setWaktuBuat(timeToMake); // set waktu dibutuhkan untuk membuat 1 food masak
+                                                            ((FoodMasak) newFoodMasak).setWaktuBuat(timeToMake); // set waktu dibutuhkan untuk membuat 1 food masak  , polymorphism
 
-                                                            cafe.getMainMenu().getFoodItem().add(newFoodMasak);
+                                                            cafe.getMainMenu().getFoodItem().add(newFoodMasak); // polymorphism
                                                             System.out.println(" » Succesfully added "+ nameProduct +" of cooks products to your menu!");
                                                             sc.nextLine();
                                                             isOn2 =  false;
@@ -374,15 +377,10 @@ public class User {
                             System.out.println("⚠ └ Input with number! - ");
                             sc.next();
                         }
-
-
                         break;
-
                     case 0:
                         isOn = false;
-
                 }
-
 
             } catch (InputMismatchException e) {
                 System.out.println("⚠ └ Input with number! - ");
@@ -692,7 +690,7 @@ public class User {
                             int jumlahProdukJadi = 0;
 
                             for (int i = 0; i < mainMenu.getFoodItem().size(); i++) {
-                                if (mainMenu.getFoodItem().get(i) instanceof FoodJadi) {
+                                if (mainMenu.getFoodItem().get(i) instanceof FoodJadi) { // polymorphism
                                     System.out.println(i+1 + ". "+((FoodJadi) mainMenu.getFoodItem().get(i)).displayStock());
                                     jumlahProdukJadi++;
                                 }
@@ -1035,12 +1033,16 @@ public class User {
                             try {
                                 int n2 = sc.nextInt(); // choose products
 
-                                if (!recentPurchases.empty() && cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
+                                if (!recentPurchases.empty() && cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // polymorphism
                                     System.out.println("Tidak bisa order food masak lagi! tunggu sampai selesai pesanan sebelumnya!");
                                     return;
                                 }
 
                                 if (n2 <= cafe.getMenu(n - 1).getFoodItem().size() && n2 > 0) {
+                                    if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getStock() == 0) { // cek jika stock habis atau tidak
+                                        System.out.println("⚠ └ Sorry but stock for " + cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getFoodName() + " is empty! - ");
+                                        return;
+                                    }
                                     System.out.println("Produk dipilih: " + cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).displayInfo());
                                     System.out.print("-- Quantity: ");
 
@@ -1107,7 +1109,7 @@ public class User {
                                                     //generic / parameteric polymorphism karena mengurangi bahan baku atau stok food jadi
                                                     cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).reduceStock(n3);
 
-                                                if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) {
+                                                if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // polymorphism
                                                     cafe.addOrder((purchase)); // orderlist Queue
                                                     recentPurchases.push(purchase); // masuk ke stack (ONLY food masak)
                                                 }
@@ -1139,8 +1141,8 @@ public class User {
                         for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
                             FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
 
+                            System.out.println((i + 1) + ". " + items.getFoodName() + " | harga: " + items.getHarga()); // display item
                             if (items instanceof FoodMasak) {
-                                ((FoodMasak) items).getStockFoodMasak();
                                 if (items.getStock() <= 0) {
                                     System.out.println("⚠ └ Sorry, the stock for the " + items.getFoodName() + " is empty :( - ");
                                     semuaStokAman = false;
@@ -1151,7 +1153,6 @@ public class User {
                                     semuaStokAman = false;
                                 }
                             }
-                            System.out.println((i + 1) + ". " + items.getFoodName() + " | harga: " + items.getHarga());
                             hargaTotaldariMenuPaket += items.getHarga();
                         }
                         System.out.println("-------------------------------------");

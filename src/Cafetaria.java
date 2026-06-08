@@ -2,12 +2,10 @@ import java.util.*;
 
 public class Cafetaria {
 
-    private String namaCafeteria;
     private ArrayList<Menu> menuList;
     private Queue<Purchase> orders;
 
-    public Cafetaria(String namaCafeteria, ArrayList<Menu> menuList) {
-        this.namaCafeteria = namaCafeteria;
+    public Cafetaria(ArrayList<Menu> menuList) {
         this.menuList = menuList;
         this.orders = new LinkedList<Purchase>();
     }
@@ -31,19 +29,20 @@ public class Cafetaria {
     }
 
     public int totalTimeProductionFoodMasak(Purchase current) {
-        // 1. Validasi awal: Jika antrean kosong atau pesanan yang dicari null, waktunya jelas 0
         if (orders == null || orders.isEmpty() || current == null) {
             return 0;
         }
+
         int timeTotal = 0;
         for (Purchase p : this.orders) {
-            timeTotal += p.totalWaktu;
+            // JANGAN pakai p.totalWaktu lagi. Ganti dengan sisa waktu berjalannya!
+            timeTotal += p.getTotalWaktu();
+
             if (p == current) {
                 return timeTotal;
             }
-
         }
-    return 0;
+        return 0;
     }
 
     public Purchase removeOrder() {
@@ -75,13 +74,6 @@ public class Cafetaria {
     }
     public int getMenuSize() {
         return menuList.size();
-    }
-
-    public String getNamaCafeteria() {
-        return namaCafeteria;
-    }
-    public void setNamaCafeteria(String namaCafeteria) {
-        this.namaCafeteria = namaCafeteria;
     }
 }
 

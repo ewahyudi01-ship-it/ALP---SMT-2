@@ -92,7 +92,7 @@ public class Main {
         ArrayList<Menu> menuList = new ArrayList<>();
         menuList.add(new Menu("Menu utama", foodList));
 
-        Cafetaria cafe = new Cafetaria("Cafe utama", menuList);
+        Cafetaria cafe = new Cafetaria( menuList);
 
         // start apps
         AppSystem appSystem = new AppSystem();

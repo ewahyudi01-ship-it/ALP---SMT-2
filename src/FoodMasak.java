@@ -23,8 +23,8 @@ public class FoodMasak extends FoodItem {
         return resepBahan;
     }
 
-
-    public boolean getStockFoodMasak() {
+    @Override
+    public int getStock() {
         int maks = 999;
 
         for (int i = 0; i < getResepBahan().size(); i++) {
@@ -38,11 +38,7 @@ public class FoodMasak extends FoodItem {
             }
         }
         this.stock = maks;
-        if (maks != 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return stock;
     }
     @Override
     public void reduceStock(int n3) {
@@ -127,7 +123,7 @@ public class FoodMasak extends FoodItem {
 
     @Override
     public String displayInfo() {
-        this.getStockFoodMasak();
+        this.getStock();
         this.getTotalCalories();
         this.getTotalProtein();
         this.getTotalSugarLvl();

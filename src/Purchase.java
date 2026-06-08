@@ -38,11 +38,6 @@ public class Purchase {
         return foodItem.getHarga() * quantity;
     }
 
-    public double calculateCheck(User user, FoodItem foodItem, int quantity) {
-        return user.saldo - foodItem.harga * quantity;
-
-    }
-
     public void printReceipt(Scanner scanner) {
 
         System.out.println("Transaction completed! you bought " + foodItem.foodName + " for " + this.quantity);
@@ -201,6 +196,19 @@ public class Purchase {
         }
     }
 
+    public int getTotalWaktu() {
+        // Jika belum mulai dimasak (waktuPesan masih 0), tampilkan totalWaktu utuh
+        if (this.waktuPesan == 0) {
+            return this.totalWaktu;
+        }
+
+        long waktuSekarang = System.currentTimeMillis() / 1000;
+        long sisa = this.totalWaktu - (waktuSekarang - this.waktuPesan);
+
+        // Cegah agar tidak mengembalikan angka minus jika delay antrean
+        return sisa > 0 ? (int) sisa : 0;
+    }
+
     public User getOwner(ArrayList<User>user) {
         for (int i = 0; i < user.size(); i++) {
             if (user.get(i).getRoles().equals(Main.Roles.OWNER.getRoleName())) {
@@ -220,10 +228,6 @@ public class Purchase {
 
     public User getUser() {
         return user;
-    }
-
-    public int getTotalWaktu() {
-        return totalWaktu;
     }
 
     public int getQuantity() {
