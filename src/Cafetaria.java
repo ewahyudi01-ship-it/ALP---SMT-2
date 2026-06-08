@@ -1,9 +1,9 @@
 import java.util.*;
 
 public class Cafetaria {
-
+    //encapsulation
     private ArrayList<Menu> menuList;
-    private Queue<Purchase> orders;
+    private Queue<Purchase> orders; //polymorphism
 
     public Cafetaria(ArrayList<Menu> menuList) {
         this.menuList = menuList;
@@ -45,6 +45,7 @@ public class Cafetaria {
         return 0;
     }
 
+    //encapsulation
     public Purchase removeOrder() {
         return orders.poll();
     }
