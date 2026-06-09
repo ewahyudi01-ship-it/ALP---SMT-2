@@ -2,12 +2,12 @@ import java.io.File;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONObject; // membuat struktur berupa key, value seperti 'hashmap'
+import org.json.JSONObject; // membuat struktur berupa (key, value) seperti 'hashmap'
 import org.json.JSONTokener; // mengubah data-data mentah yang dapat dipahami oleh java seperti translator
 import java.io.FileReader; // untuk membaca di dalam file
 import java.io.FileWriter; // untuk menulis di dalam file
 
-public class KumpulanBahanBaku {
+public class BahanBaku {
     private String namaBahanBaku;
     private int stockBaku;
 
@@ -15,7 +15,7 @@ public class KumpulanBahanBaku {
     private double protein;
     private double sugarLvl;
 
-    public KumpulanBahanBaku(String namaBahanBaku, int stockBaku) {
+    public BahanBaku(String namaBahanBaku, int stockBaku) {
         this.namaBahanBaku = namaBahanBaku;
         this.stockBaku = stockBaku;
         ambilNutrisiLocal();
@@ -52,7 +52,7 @@ public class KumpulanBahanBaku {
 
             // 1. Cek apakah file sudah ada isinya. Jika ada, baca data lamanya dulu.
             if (file.exists() && file.length() > 0) {
-                FileReader reader = new FileReader(file); // Membuka jalur pipa pembacaan data dari file fisik.
+                FileReader reader = new FileReader(file); // Membuka jalur pipa pembacaan data dari file fisik.   filereader
                 JSONTokener tokener = new JSONTokener(reader);
                 rootObject = new JSONObject(tokener);
                 reader.close();                          // menutup jalur pipa

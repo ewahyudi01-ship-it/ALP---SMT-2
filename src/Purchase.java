@@ -21,10 +21,13 @@ public class Purchase {
     public long waktuPesan = 0;
     public int totalWaktu;
 
+    private double hargaFinalTerbayar;
+
     public Purchase(User user, FoodItem foodItem, int quantity) {
         this.user = user;
         this.foodItem = foodItem;
         this.quantity = quantity;
+        this.hargaFinalTerbayar = this.getCalculateTotal();
 
         if (foodItem instanceof FoodMasak) {
             this.totalWaktu = ((FoodMasak) foodItem).getWaktuBuat() * quantity;
@@ -33,9 +36,25 @@ public class Purchase {
         }
     }
 
-    public double getCalculateTotal() {
-        return foodItem.getHarga() * quantity;
-    }  // encapsulation , method: getter
+    public double getCalculateTotal() {// encapsulation , method: getter
+
+        double hargaAsli = foodItem.getHarga() * quantity;;
+        double diskon = 0;
+        //cek memberr card
+        if (user.getMemberCard() != null) {
+            if (user.getMemberCard().isCardActive()) {
+                if (user.getMemberCard().getRankSubscription().equals(MemberCard.Rank.REGULAR)) {
+                    diskon = 0.10; // diskon 10%
+
+                } else if (user.getMemberCard().getRankSubscription().equals(MemberCard.Rank.PREMIUM)) {
+                    diskon = 0.20; // diskon 20%
+                }
+            }
+            double totalSetelahDiskon = hargaAsli - (hargaAsli * diskon);
+            return totalSetelahDiskon;
+        }
+            return hargaAsli;
+    }
 
     public void printReceipt(Scanner scanner) {
 
@@ -237,5 +256,9 @@ public class Purchase {
 
         return foodItem.getFoodName() +  // encapsulation , method: getter
                 " x" + quantity;
+    }
+
+    public double getHargaFinalTerbayar() {
+        return this.hargaFinalTerbayar;
     }
 }

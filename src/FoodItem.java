@@ -32,6 +32,9 @@ public abstract class FoodItem {
         return harga;
     }
 
+    public void setHarga(double harga) {
+        this.harga = harga;
+    }
     public FoodItem getFoodItem(){
         return this;
     }

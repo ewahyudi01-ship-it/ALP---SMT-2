@@ -67,6 +67,13 @@ public class User {
                     " o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o\n" +
                     "---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---\n");
 
+            //ambil data tanggal hari ini dari komputer
+            LocalDate today = LocalDate.now();
+            //part of anounymous
+            if (today.equals(LocalDate.of(2026, 6, 9))) {
+                cafe.getMainMenu().getFoodItem().get(0).setHarga(1500);
+            }
+
             System.out.println(" - Profile - ");
             System.out.println("Name: " + username);
             System.out.println("Berat badan: " + beratBadan);
@@ -184,9 +191,6 @@ public class User {
                         break;
 
                     case 12:
-                        //ambil data tanggal hari ini dari komputer
-                        LocalDate today = LocalDate.now();
-
                         //anounymous class
                         if (today.equals(LocalDate.of(2026, 6, 9))) {
                             Event eventHariKhusus = new Event() {
@@ -195,7 +199,7 @@ public class User {
                                     boolean isOn = true;
                                     while (isOn) {
                                         System.out.println("\n ┌ ! [CELEBRATION] ! National Donald Duck Day! :o");
-                                        System.out.println("1. Buy apple with discount 15%: Rp. 1500");
+                                        System.out.println("1. Buy apple with discount 50%: Rp. 1500");
                                         System.out.println("0. Back");
 
                                         try{
@@ -218,6 +222,7 @@ public class User {
                                     if (cafe.getMainMenu().getFoodItem().get(0).getStock() > 0) {
                                         // melakukan transaksi
                                         Purchase purchase = new Purchase(User.this, cafe.getMainMenu().getFoodItem().get(0), 1);
+
                                         historiPembelian.add(purchase); // arraylist
                                         purchase.printReceipt(sc); // receipt
 
@@ -488,8 +493,8 @@ public class User {
                             int stock = sc.nextInt();
 
                             // masukin bahan baku baru ke list dan file.JSON
-                            KumpulanBahanBaku.addNewIngredientToJSON(nameIngredient, (int) calories, protein, sugar);
-                            Main.bahanBakuList.add(new KumpulanBahanBaku(nameIngredient, stock));
+                            BahanBaku.addNewIngredientToJSON(nameIngredient, (int) calories, protein, sugar);
+                            Main.bahanBakuList.add(new BahanBaku(nameIngredient, stock));
                             isOn = false;
 
                         } catch (InputMismatchException e) {
@@ -1088,6 +1093,10 @@ public class User {
                             try {
                                 int n2 = sc.nextInt(); // choose products
 
+                                if (n2 <= 0 || n2 > cafe.getMenu(n - 1).getFoodItem().size()) {
+                                    System.out.println("⚠ └ Please choose inside of list product!");
+                                    return;
+                                }
                                 if (!recentPurchases.empty() && cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // polymorphism
                                     System.out.println("Tidak bisa order food masak lagi! tunggu sampai selesai pesanan sebelumnya!");
                                     return;
@@ -1151,6 +1160,7 @@ public class User {
 
                                                 // melakukan transaksi
                                                 Purchase purchase = new Purchase(this, cafe.getMenu(n - 1).getFoodItem().get(n2 - 1), n3);
+
                                                 historiPembelian.add(purchase); // arraylist
                                                 purchase.printReceipt(sc);
 
@@ -1324,7 +1334,7 @@ public class User {
             if (!historiPembelian.isEmpty()) {
                 for (int i = 0; i < historiPembelian.size(); i++) {
                     System.out.println(i + 1 + ". " + historiPembelian.get(i).getFoodItem().getFoodName() + " | Quantity: " + historiPembelian.get(i).getQuantity() +
-                            " | total: " + historiPembelian.get(i).getCalculateTotal());
+                            " | total: " + historiPembelian.get(i).getHargaFinalTerbayar());
                 }
             } else {
                 System.out.println("There's no transaction. yet!");
@@ -1348,7 +1358,7 @@ public class User {
     }
 
     public char reminderBahanBaku() {
-        for (KumpulanBahanBaku stok : Main.bahanBakuList) {
+        for (BahanBaku stok : Main.bahanBakuList) {
             if (stok.getStockBaku() <= 0) {
                 return 1; //almost empty
             } else if (stok.getStockBaku() < 3 && stok.getStockBaku() > 0) {
@@ -1362,7 +1372,7 @@ public class User {
         int jumlahItemYangKurang = 0;
         int j = 0;
 
-        for (KumpulanBahanBaku stok : Main.bahanBakuList) { // arraylist BahanBaku
+        for (BahanBaku stok : Main.bahanBakuList) { // arraylist BahanBaku
             if (stok.getStockBaku() < 3) {
                 j++;
                 System.out.println(j + ". " + stok.getNamaBahanBaku() + " | stock: " + stok.getStockBaku());
@@ -1414,5 +1424,9 @@ public class User {
 
     public String getRoles() {  // encapsulation , method: getter
         return roles;
+    }
+
+    public MemberCard getMemberCard() {
+        return memberCard;
     }
 }

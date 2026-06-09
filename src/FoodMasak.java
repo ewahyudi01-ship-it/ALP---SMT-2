@@ -28,7 +28,7 @@ public class FoodMasak extends FoodItem {
         int maks = 999;
 
         for (int i = 0; i < getResepBahan().size(); i++) {
-            for (KumpulanBahanBaku stok : Main.bahanBakuList) {
+            for (BahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {
                     if (maks > stok.getStockBaku()) {
                         maks = stok.getStockBaku();
@@ -43,7 +43,7 @@ public class FoodMasak extends FoodItem {
     @Override
     public void reduceStock(int n3) {
         for (int i = 0; i < getResepBahan().size(); i++) {
-            for (KumpulanBahanBaku stok : Main.bahanBakuList) {
+            for (BahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {
                     stok.kurangiStockBaku(n3);
                     break;
@@ -73,7 +73,7 @@ public class FoodMasak extends FoodItem {
 
         System.out.println("\n------- Kalori -------");
         for (int i = 0; i < getResepBahan().size(); i++) {
-            for (KumpulanBahanBaku stok : Main.bahanBakuList) {
+            for (BahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {
 
                     System.out.println("Kalori "+ stok.getNamaBahanBaku() +": " + stok.getCaloriesBahanBaku());
@@ -89,7 +89,7 @@ public class FoodMasak extends FoodItem {
 
         System.out.println("\n------- Protein -------");
         for (int i = 0; i < getResepBahan().size(); i++) {
-            for (KumpulanBahanBaku stok : Main.bahanBakuList) {
+            for (BahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {
 
                     System.out.println("Protein "+ stok.getNamaBahanBaku() +": " + stok.getProteinBahanBaku());
@@ -105,7 +105,7 @@ public class FoodMasak extends FoodItem {
 
         System.out.println("\n------- Gula -------");
         for (int i = 0; i < getResepBahan().size(); i++) {
-            for (KumpulanBahanBaku stok : Main.bahanBakuList) {
+            for (BahanBaku stok : Main.bahanBakuList) {
                 if (stok.getNamaBahanBaku().equals(getResepBahan().get(i))) {
 
                     System.out.println("Gula "+ stok.getNamaBahanBaku() +": " + stok.getSugarLvlBahanBaku());
