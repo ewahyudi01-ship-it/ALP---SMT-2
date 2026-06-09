@@ -1,7 +1,6 @@
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-// 1. URL Alamat Resmi DynamicPDF Cloud API (Tanpa sub-folder /file/create)
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;

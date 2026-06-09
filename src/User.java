@@ -46,7 +46,7 @@ public class User {
                     if (sisaWaktu <= 0) {
                         Purchase selesai = cafe.removeOrder();
                         selesai.getUser().recentPurchases.remove(selesai);
-                        System.out.print("\n╔═───────────────── [NOTIFICATION] ─────────────────╗\n"+
+                        System.out.print("\n╔═───────────────── [NOTIFICATION] ─────────────────╗\n" +
                                 "Order " + selesai.getFoodItem().getFoodName() + " is finished!\n" +
                                 " └ choice: ");
                     }
@@ -73,31 +73,6 @@ public class User {
             System.out.println("role: " + roles);
             System.out.println("saldo: Rp. " + saldo);
             System.out.println("------------------");
-
-            //ambil data tanggal hari ini dari komputer
-            LocalDate today = LocalDate.now();
-
-            //anounymous class
-            if (today.equals(LocalDate.of(2026, 6, 9))) {
-                Event eventHariKhusus = new Event() {
-                    @Override
-                    public void displayInfo() {
-                        System.out.println("\n ┌ ! [CELEBRATION] ! National Donald Duck Day! :o");
-                    }
-
-                    @Override
-                    public void reward() {
-                        // langsung berikan saldo ke akun sendiri
-                        double bonusSaldos = 15000;
-                        saldo += bonusSaldos;
-
-                        System.out.println(" ├ ! [REWARDS SUCCESS] ! Congratulations! You've received balance of: Rp." + bonusSaldos);
-                        System.out.println(" └ enjoy your day to the fullest, and Happy National Donald Duck Day! "+ username +"\n");
-                    }
-                };
-                eventHariKhusus.displayInfo();
-                eventHariKhusus.reward();
-            }
 
             if (roles.equals("Owner")) {
                 if (reminderBahanBaku() == 1) {
@@ -137,7 +112,7 @@ public class User {
                                 " x" + current.getQuantity() +
                                 " | Wait for: " + cafe.totalTimeProductionFoodMasak(current) + " sec");
                     } else {
-                        System.out.println("Current order: Your order is being processed! However, please wait a little longer as there are other orders queue!."+
+                        System.out.println("Current order: Your order is being processed! However, please wait a little longer as there are other orders queue!." +
                                 "\n └ Wait for: " + cafe.totalTimeProductionFoodMasak(current) + " sec");
                     }
                 }
@@ -157,6 +132,7 @@ public class User {
             System.out.println("9.  Edit profile");
             System.out.println("10. Add new Product");
             System.out.println("11. Add new Ingredient");
+            System.out.println("12. Events");  // anounymous class
             System.out.println("0.  Log out");
             System.out.print("Choice: ");
 
@@ -188,7 +164,7 @@ public class User {
                         break;
 
                     case 7:
-                        listOfOrders(sc,  cafe);
+                        listOfOrders(sc, cafe);
                         break;
 
                     case 8:
@@ -207,6 +183,60 @@ public class User {
                         addNewIngredient(sc);
                         break;
 
+                    case 12:
+                        //ambil data tanggal hari ini dari komputer
+                        LocalDate today = LocalDate.now();
+
+                        //anounymous class
+                        if (today.equals(LocalDate.of(2026, 6, 9))) {
+                            Event eventHariKhusus = new Event() {
+                                @Override
+                                public void displayInfo() {
+                                    boolean isOn = true;
+                                    while (isOn) {
+                                        System.out.println("\n ┌ ! [CELEBRATION] ! National Donald Duck Day! :o");
+                                        System.out.println("1. Buy apple with discount 15%: Rp. 1500");
+                                        System.out.println("0. Back");
+
+                                        try{
+                                            int n = sc.nextInt();
+                                            switch (n){
+                                                case 1:
+                                                    orderSpecial();
+                                                case 0:
+                                                    isOn = false;
+                                            }
+
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("⚠ └ Input with number! - ");
+                                            sc.next(); // tanpa perintah ini maka infinite loop
+                                        }
+                                    }
+                                }
+                                @Override
+                                public void orderSpecial() {
+                                    if (cafe.getMainMenu().getFoodItem().get(0).getStock() > 0) {
+                                        // melakukan transaksi
+                                        Purchase purchase = new Purchase(User.this, cafe.getMainMenu().getFoodItem().get(0), 1);
+                                        historiPembelian.add(purchase); // arraylist
+                                        purchase.printReceipt(sc); // receipt
+
+                                        saldo -= purchase.getCalculateTotal(); // kurangi saldo kustomer
+                                        User owner = getOwner(user);
+                                        owner.tambahSaldo(purchase.getCalculateTotal()); // tambahi saldo owner
+
+                                        System.out.println(" └ enjoy your day to the fullest, and Happy National Donald Duck Day! " + username + "\n");
+
+                                    } else {
+                                        System.out.println("Sorry stock for "+ cafe.getMainMenu().getFoodItem().get(0).getFoodName() +" is empty! :(");
+                                    }
+                                }
+                            };
+                            eventHariKhusus.displayInfo();
+                        } else {
+                            System.out.println("There's no events yet!");
+                        }
+                        break;
                     case 0:
                         timerOtomatis.cancel();
                         isTrue = false;
@@ -231,7 +261,8 @@ public class User {
             System.out.println("\n╔═───────────────── ADD NEW PRODUCTS ─────────────────╗");
             for (FoodItem foodItem : cafe.getMainMenu().getFoodItem()) {
                 count++;
-                System.out.println(" " + count + ". " + foodItem.getFoodName()); }
+                System.out.println(" " + count + ". " + foodItem.getFoodName());
+            }
             System.out.println("╚═────────────────────────────────────────────────────╝");
             System.out.println("1. add new product");
             System.out.println("0. back");
@@ -270,27 +301,27 @@ public class User {
                                 case 1:
                                     System.out.print(" ├ Calories: ");
                                     double calories = sc.nextDouble();
-                                        if (calories < 0){
-                                            System.out.println("⚠ - You can't input negative number!");
-                                            break;
-                                        }
+                                    if (calories < 0) {
+                                        System.out.println("⚠ - You can't input negative number!");
+                                        break;
+                                    }
 
                                     System.out.print(" ├ Sugar: ");
                                     double sugar = sc.nextDouble();
-                                        if (sugar < 0){
-                                            System.out.println("⚠ - You can't input negative number!");
-                                            break;
-                                        }
+                                    if (sugar < 0) {
+                                        System.out.println("⚠ - You can't input negative number!");
+                                        break;
+                                    }
 
                                     System.out.print(" ├ Protein: ");
                                     double protein = sc.nextDouble();
-                                        if (protein < 0){
-                                            System.out.println("⚠ - You can't input negative number!");
-                                            break;
-                                        }
+                                    if (protein < 0) {
+                                        System.out.println("⚠ - You can't input negative number!");
+                                        break;
+                                    }
                                     System.out.print(" ├ Price: ");
                                     double price = sc.nextDouble();
-                                    if (price < 0){
+                                    if (price < 0) {
                                         System.out.println("⚠ - You can't input negative number!");
                                         break;
                                     }
@@ -298,101 +329,101 @@ public class User {
                                     System.out.println(" │ (type '0' to skip)");
                                     System.out.print(" └ Stock: ");
                                     int stock = sc.nextInt();
-                                        if (stock < 0){
-                                            System.out.println("⚠ - You can't input negative number!");
-                                            break;
-                                        }
-                                        FoodJadi newFoodJadi = new FoodJadi(nameProduct, calories, price, sugar, protein, stock);
+                                    if (stock < 0) {
+                                        System.out.println("⚠ - You can't input negative number!");
+                                        break;
+                                    }
+                                    FoodJadi newFoodJadi = new FoodJadi(nameProduct, calories, price, sugar, protein, stock);
 
-                                        cafe.getMainMenu().getFoodItem().add(newFoodJadi); //add to menu utama  , polymorphism
-                                        System.out.println(" » Succesfully added "+ nameProduct +" of ready products to your menu!");
+                                    cafe.getMainMenu().getFoodItem().add(newFoodJadi); //add to menu utama  , polymorphism
+                                    System.out.println(" » Succesfully added " + nameProduct + " of ready products to your menu!");
                                     sc.nextLine();
                                     break;
 
-                                    case 2:
-                                        ArrayList<String>listChoiceIngredients = new ArrayList<>();
+                                case 2:
+                                    ArrayList<String> listChoiceIngredients = new ArrayList<>();
 
-                                        boolean isOn2 = true;
-                                        while (isOn2) {
-                                            System.out.println("\n╔═───────────────── Pick ingredient ──────────────────╗");
-                                            for (int i = 0; i < Main.bahanBakuList.size(); i++) {
-                                                System.out.println(" " + (i+1) + ". "+ Main.bahanBakuList.get(i).getNamaBahanBaku());
-                                            }
-                                            if (!listChoiceIngredients.isEmpty()) {
-                                                System.out.println("\n  - Current picked ingredient:");
-                                            }
-                                            // melihat semua bahan baku yg dipilihi
-                                            for (int i = 0; i < listChoiceIngredients.size(); i++) {
-                                                System.out.println(" " + (i+1) + ". "+ listChoiceIngredients.get(i));
-                                            }
-                                            System.out.println("╚═────────────────────────────────────────────────────╝");
-                                            System.out.println("1. Pick an ingredient");
-                                            System.out.println("2. Finish");
-                                            System.out.println("0. Back");
-                                            System.out.print("- Choice: ");
-
-                                            try {
-                                                n = sc.nextInt();
-
-                                                switch (n){
-                                                    case 1:
-                                                        System.out.print("Picks: ");
-                                                        try {
-                                                            int n2 = sc.nextInt(); //pick ingreddient
-
-                                                            if (n2 > 0 && n2 <= Main.bahanBakuList.size()){
-                                                                listChoiceIngredients.add(Main.bahanBakuList.get(n2-1).getNamaBahanBaku()); // pengambilan nama bahan baku
-                                                            }
-
-                                                        } catch (InputMismatchException e) {
-                                                            System.out.println("⚠ - Input with number! - ");
-                                                            sc.next();
-                                                        }
-                                                        break;
-
-                                                    case 2:
-                                                        if (listChoiceIngredients.size() > 0){
-
-                                                            System.out.print(" ├ Time to make: ");
-                                                            int timeToMake = sc.nextInt();
-                                                            if (timeToMake < 0){
-                                                                System.out.println("⚠ - You can't input negative number!");
-                                                                break;
-                                                            }
-
-                                                            System.out.print(" └ Price: ");
-                                                            price = sc.nextDouble();
-                                                            if (price < 0){
-                                                                System.out.println("⚠ - You can't input negative number!");
-                                                                break;
-                                                            }
-
-                                                            FoodItem newFoodMasak = new FoodMasak(nameProduct, price, 0); // polymorphism
-
-                                                            for (int i = 0; i < listChoiceIngredients.size(); i++) {
-                                                                ((FoodMasak) newFoodMasak).tambahResep(listChoiceIngredients.get(i)); // semua bahan baku dimasukin ke food masak  , polymorphism
-                                                            }
-                                                            ((FoodMasak) newFoodMasak).setWaktuBuat(timeToMake); // set waktu dibutuhkan untuk membuat 1 food masak  , polymorphism
-
-                                                            cafe.getMainMenu().getFoodItem().add(newFoodMasak); // polymorphism
-                                                            System.out.println(" » Succesfully added "+ nameProduct +" of cooks products to your menu!");
-                                                            sc.nextLine();
-                                                            isOn2 =  false;
-
-                                                        } else {
-                                                            System.out.println("⚠ - Invalid input! Your Cooks products doesn't have any ingredient!");
-                                                        }
-                                                        break;
-
-                                                    case 0:
-                                                        isOn2 = false;
-                                                }
-                                            } catch (InputMismatchException e) {
-                                                System.out.println("⚠ └ Input with number! - ");
-                                                sc.next();
-                                            }
+                                    boolean isOn2 = true;
+                                    while (isOn2) {
+                                        System.out.println("\n╔═───────────────── Pick ingredient ──────────────────╗");
+                                        for (int i = 0; i < Main.bahanBakuList.size(); i++) {
+                                            System.out.println(" " + (i + 1) + ". " + Main.bahanBakuList.get(i).getNamaBahanBaku());
                                         }
-                                        break;
+                                        if (!listChoiceIngredients.isEmpty()) {
+                                            System.out.println("\n  - Current picked ingredient:");
+                                        }
+                                        // melihat semua bahan baku yg dipilihi
+                                        for (int i = 0; i < listChoiceIngredients.size(); i++) {
+                                            System.out.println(" " + (i + 1) + ". " + listChoiceIngredients.get(i));
+                                        }
+                                        System.out.println("╚═────────────────────────────────────────────────────╝");
+                                        System.out.println("1. Pick an ingredient");
+                                        System.out.println("2. Finish");
+                                        System.out.println("0. Back");
+                                        System.out.print("- Choice: ");
+
+                                        try {
+                                            n = sc.nextInt();
+
+                                            switch (n) {
+                                                case 1:
+                                                    System.out.print("Picks: ");
+                                                    try {
+                                                        int n2 = sc.nextInt(); //pick ingreddient
+
+                                                        if (n2 > 0 && n2 <= Main.bahanBakuList.size()) {
+                                                            listChoiceIngredients.add(Main.bahanBakuList.get(n2 - 1).getNamaBahanBaku()); // pengambilan nama bahan baku
+                                                        }
+
+                                                    } catch (InputMismatchException e) {
+                                                        System.out.println("⚠ - Input with number! - ");
+                                                        sc.next();
+                                                    }
+                                                    break;
+
+                                                case 2:
+                                                    if (listChoiceIngredients.size() > 0) {
+
+                                                        System.out.print(" ├ Time to make: ");
+                                                        int timeToMake = sc.nextInt();
+                                                        if (timeToMake < 0) {
+                                                            System.out.println("⚠ - You can't input negative number!");
+                                                            break;
+                                                        }
+
+                                                        System.out.print(" └ Price: ");
+                                                        price = sc.nextDouble();
+                                                        if (price < 0) {
+                                                            System.out.println("⚠ - You can't input negative number!");
+                                                            break;
+                                                        }
+
+                                                        FoodItem newFoodMasak = new FoodMasak(nameProduct, price, 0); // polymorphism
+
+                                                        for (int i = 0; i < listChoiceIngredients.size(); i++) {
+                                                            ((FoodMasak) newFoodMasak).tambahResep(listChoiceIngredients.get(i)); // semua bahan baku dimasukin ke food masak  , polymorphism
+                                                        }
+                                                        ((FoodMasak) newFoodMasak).setWaktuBuat(timeToMake); // set waktu dibutuhkan untuk membuat 1 food masak  , polymorphism
+
+                                                        cafe.getMainMenu().getFoodItem().add(newFoodMasak); // polymorphism
+                                                        System.out.println(" » Succesfully added " + nameProduct + " of cooks products to your menu!");
+                                                        sc.nextLine();
+                                                        isOn2 = false;
+
+                                                    } else {
+                                                        System.out.println("⚠ - Invalid input! Your Cooks products doesn't have any ingredient!");
+                                                    }
+                                                    break;
+
+                                                case 0:
+                                                    isOn2 = false;
+                                            }
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("⚠ └ Input with number! - ");
+                                            sc.next();
+                                        }
+                                    }
+                                    break;
 
                                 default:
                                     System.out.println("⚠ └ Invalid input! - ");
@@ -441,8 +472,8 @@ public class User {
                 }
             }
             try {
-            System.out.print(" ├ Enter calories: ");
-            double calories = sc.nextDouble();
+                System.out.print(" ├ Enter calories: ");
+                double calories = sc.nextDouble();
 
                 try {
                     System.out.print(" ├ Enter protein: ");
@@ -457,7 +488,7 @@ public class User {
                             int stock = sc.nextInt();
 
                             // masukin bahan baku baru ke list dan file.JSON
-                            KumpulanBahanBaku.addNewIngredientToJSON(nameIngredient, (int)calories, protein, sugar);
+                            KumpulanBahanBaku.addNewIngredientToJSON(nameIngredient, (int) calories, protein, sugar);
                             Main.bahanBakuList.add(new KumpulanBahanBaku(nameIngredient, stock));
                             isOn = false;
 
@@ -476,9 +507,9 @@ public class User {
                     sc.next();
                 }
 
-                } catch (InputMismatchException e) {
-            System.out.println("⚠ └ Input with number! - ");
-            sc.next();
+            } catch (InputMismatchException e) {
+                System.out.println("⚠ └ Input with number! - ");
+                sc.next();
             }
 
         }
@@ -550,8 +581,8 @@ public class User {
                     case 4:
                         if (this.roles.equalsIgnoreCase(Main.Roles.OWNER.toString())) {
                             System.out.println("╔─────────────────────────────────────────────────────────────────╗\n" +
-                                               "│      ⚠ - You can't change your own role, you're the owner!      │\n" +
-                                               "╚─────────────────────────────────────────────────────────────────╝");
+                                    "│      ⚠ - You can't change your own role, you're the owner!      │\n" +
+                                    "╚─────────────────────────────────────────────────────────────────╝");
                             break;
                         }
                         System.out.println("type below for update roles | type '0' to cancel)");
@@ -610,7 +641,6 @@ public class User {
     }
 
 
-
     private void listOfOrders(Scanner sc, Cafetaria cafe) {  // encapsulation
         boolean isOn = true;
         while (isOn) {
@@ -654,7 +684,6 @@ public class User {
             }
         }
     }
-
 
 
     private void restock(Scanner sc, Cafetaria cafe) { // encapsulation
@@ -717,7 +746,7 @@ public class User {
 
                             for (int i = 0; i < mainMenu.getFoodItem().size(); i++) {
                                 if (mainMenu.getFoodItem().get(i) instanceof FoodJadi) { // polymorphism , downcasting
-                                    System.out.println(i+1 + ". "+((FoodJadi) mainMenu.getFoodItem().get(i)).displayStock());
+                                    System.out.println(i + 1 + ". " + ((FoodJadi) mainMenu.getFoodItem().get(i)).displayStock());
                                     jumlahProdukJadi++;
                                 }
                             }
@@ -839,7 +868,7 @@ public class User {
                             }
                             try {
                                 n = sc.nextInt();
-                                if (n == 1){
+                                if (n == 1) {
                                     isOn = false;
                                 } else {
                                     isOn = true;
@@ -870,8 +899,8 @@ public class User {
                 System.out.println("Info Stats:");
                 System.out.println("ID       : " + memberCard.getIdCard());
                 System.out.println("Rank     : " + memberCard.getRankSubscription());
-                System.out.print("Expire in: " );
-                if (memberCard.getRankSubscription().equals(MemberCard.Rank.PREMIUM)){
+                System.out.print("Expire in: ");
+                if (memberCard.getRankSubscription().equals(MemberCard.Rank.PREMIUM)) {
                     System.out.println("UNLIMITED");
                 } else {
                     System.out.println(memberCard.getMemberCardExpiry());
@@ -1012,7 +1041,7 @@ public class User {
                     switch (choice) {
                         case 1:
                             if (saldo >= MemberCard.PRICE_REGULAR) {
-                                memberCard = new MemberCard("ID#" + getNama() + "-" + roles , MemberCard.Rank.REGULAR, MemberCard.DURATION_3_DAYS);
+                                memberCard = new MemberCard("ID#" + getNama() + "-" + roles, MemberCard.Rank.REGULAR, MemberCard.DURATION_3_DAYS);
                                 saldo -= MemberCard.PRICE_REGULAR;
                                 owner.tambahSaldo(MemberCard.PRICE_REGULAR);
 
@@ -1094,14 +1123,14 @@ public class User {
                                                     System.out.println("  " + safetyWarning);
                                                     System.out.println("  Please check your health report (option 3) for more info.");
 
-                                                    System.out.println("Are you still willing to purchase: "+ cafe.getMenu(n-1).getFoodItem().get(n2-1).getFoodName() + "?");
+                                                    System.out.println("Are you still willing to purchase: " + cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).getFoodName() + "?");
                                                     System.out.println("1. yes");
                                                     System.out.println("2. no");
                                                     System.out.print("Choice: ");
 
-                                                    try{
+                                                    try {
                                                         int n4 = sc.nextInt();
-                                                        switch (n4){
+                                                        switch (n4) {
                                                             case 1:
                                                                 break;
 
@@ -1132,8 +1161,8 @@ public class User {
                                                 sc.nextLine();
                                                 isOn = false;  //transaction completed
 
-                                                    //generic / parameteric polymorphism karena mengurangi bahan baku atau stok food jadi
-                                                    cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).reduceStock(n3);
+                                                //generic / parameteric polymorphism karena mengurangi bahan baku atau stok food jadi
+                                                cafe.getMenu(n - 1).getFoodItem().get(n2 - 1).reduceStock(n3);
 
                                                 if (cafe.getMenu(n - 1).getFoodItem().get(n2 - 1) instanceof FoodMasak) { // polymorphism, Downcasting
                                                     cafe.addOrder((purchase)); // orderlist Queue
@@ -1196,8 +1225,8 @@ public class User {
                         double packetCal = 0, packetProt = 0, packetSugar = 0;
                         for (int i = 0; i < cafe.getMenu(n - 1).getFoodItem().size(); i++) {
                             FoodItem items = cafe.getMenu(n - 1).getFoodItem().get(i);
-                            packetCal   += items.getCalories();
-                            packetProt  += items.getProtein();
+                            packetCal += items.getCalories();
+                            packetProt += items.getProtein();
                             packetSugar += items.getSugarLvl();
                         }
                         System.out.printf("  Total Calories : %.1f kcal%n", packetCal);
@@ -1220,14 +1249,14 @@ public class User {
                             System.out.println("  " + packetWarning);
                             System.out.println("  Please check your health report (option 3) for more info.");
 
-                            System.out.println("Are you still willing to purchase: "+ cafe.getMenu(n-1).getNamaMenu() + "?");
+                            System.out.println("Are you still willing to purchase: " + cafe.getMenu(n - 1).getNamaMenu() + "?");
                             System.out.println("1. yes");
                             System.out.println("2. no");
                             System.out.print("Choice: ");
 
-                            try{
+                            try {
                                 int n4 = sc.nextInt();
-                                switch (n4){
+                                switch (n4) {
                                     case 1:
                                         break;
 
@@ -1358,7 +1387,6 @@ public class User {
         }
         return jumlahItemYangKurang;
     }
-
 
 
     public User getOwner(ArrayList<User> user) {  // encapsulation , method: getter

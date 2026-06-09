@@ -1,4 +1,4 @@
 public interface Event { // interface
     void displayInfo();
-    void reward();
+    void orderSpecial();
 }

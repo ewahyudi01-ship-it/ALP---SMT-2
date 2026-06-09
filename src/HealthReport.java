@@ -76,7 +76,7 @@ public class HealthReport {
         System.out.println("╚══════════════════════════════════════════════════════════════╝");
         System.out.println("Body weight      : " + user.beratBadan + " kg");
         System.out.println("──────────────────────────────────────────────────────────────");
-        System.out.printf("%-25s %-15s %-15s%n", "Nutrition", "Consumed", "Recommended");
+        System.out.printf("%-25s %-15s %-15s%n", "Nutrition", "Consumed", "Recommended");  // %-25s (String Formatting , %-15.1f (Decimal Number Formatting) , %n (New Line)
         System.out.println("──────────────────────────────────────────────────────────────");
         System.out.printf("%-25s %-15.1f %-15.1f%n",
                 "Calories (kcal):", getTotalCaloriesFromAllTransactions(), getRecommendedCalories());

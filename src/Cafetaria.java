@@ -35,7 +35,6 @@ public class Cafetaria {
 
         int timeTotal = 0;
         for (Purchase p : this.orders) {
-            // JANGAN pakai p.totalWaktu lagi. Ganti dengan sisa waktu berjalannya!
             timeTotal += p.getTotalWaktu();
 
             if (p == current) {
